@@ -117,9 +117,6 @@ function beta_theme_setup() {
   /* Enable custom logo */
   add_theme_support( 'beta-custom-logo' );
 
-  /* Enable child themes page */
-  add_theme_support( 'beta-child-themes-page' );
-
   /* Enable responsive support */
   add_theme_support( 'beta-responsive' );
 

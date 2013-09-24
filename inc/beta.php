@@ -21,15 +21,12 @@ function beta_theme_inc() {
 	require $beta_inc . '/inc/functions/image.php';
 
 	if ( is_admin() ) {
-		/* Load  theme settings page */		
-		require  $beta_inc  . '/inc/admin/meta-box-theme-options.php';		
+		/* Load  theme settings page */
+		require  $beta_inc  . '/inc/admin/meta-box-theme-options.php';
 		require  $beta_inc  . '/inc/admin/meta-box-theme-comments.php';
 		require  $beta_inc  . '/inc/admin/meta-box-theme-archives.php';
-		require  $beta_inc  . '/inc/admin/meta-box-theme-general.php';		
+		require  $beta_inc  . '/inc/admin/meta-box-theme-general.php';
 	}
-
-	/* Load  child themes page if supported. */
-	require_if_theme_supports( 'beta-child-themes-page', $beta_inc . '/inc/extensions/child-themes-page.php' );
 
 	/* Load wraps extension if supported. */
 	require_if_theme_supports( 'beta-wraps', $beta_inc . '/inc/extensions/wraps.php' );
