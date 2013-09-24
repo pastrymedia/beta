@@ -348,6 +348,9 @@ class ExMachina {
 
 		/* Load the Responsive extension if supported. */
 		require_if_theme_supports( 'responsive', trailingslashit( EXMACHINA_EXTENSIONS ) . 'responsive.php' );
+
+		/* Load the Custom CSS extension if supported. */
+		require_if_theme_supports( 'custom-css', trailingslashit( EXMACHINA_EXTENSIONS ) . 'custom-css.php' );
 	}
 
 	/**

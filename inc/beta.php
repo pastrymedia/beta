@@ -31,9 +31,6 @@ function beta_theme_inc() {
 	/* Load custom footer extension if supported. */
 	require_if_theme_supports( 'beta-custom-footer', $beta_inc . '/inc/extensions/custom-footer.php' );
 
-	/* Load custom css extension if supported. */
-	require_if_theme_supports( 'beta-custom-css', $beta_inc . '/inc/extensions/custom-css.php' );
-
 	/* Load custom logo extension if supported. */
 	require_if_theme_supports( 'beta-custom-logo', $beta_inc . '/inc/extensions/custom-logo.php' );
 

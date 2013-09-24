@@ -112,7 +112,7 @@ function beta_theme_setup() {
   add_theme_support( 'structural-wraps' );
 
   /* Enable custom css */
-  add_theme_support( 'beta-custom-css' );
+  add_theme_support( 'custom-css' );
 
   /* Enable custom footer */
   add_theme_support( 'beta-custom-footer' );
