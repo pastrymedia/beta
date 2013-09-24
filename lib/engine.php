@@ -342,6 +342,9 @@ class ExMachina {
 
 		/* Load the Footer Widgets extension if supported. */
 		require_if_theme_supports( 'footer-widgets', trailingslashit( EXMACHINA_EXTENSIONS ) . 'footer-widgets.php' );
+
+		/* Load the Structural Wraps extension if supported. */
+		require_if_theme_supports( 'structural-wraps', trailingslashit( EXMACHINA_EXTENSIONS ) . 'wraps.php' );
 	}
 
 	/**

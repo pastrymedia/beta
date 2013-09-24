@@ -109,7 +109,7 @@ function beta_theme_setup() {
   add_theme_support( 'footer-widgets', 3 );
 
   /* Enable wraps */
-  add_theme_support( 'beta-wraps' );
+  add_theme_support( 'structural-wraps' );
 
   /* Enable custom css */
   add_theme_support( 'beta-custom-css' );

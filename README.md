@@ -10,7 +10,7 @@ Roadmap
 + Remove custom footer
 - Move footer widgets
 + Move responsive
-+ Move wraps
+- Move wraps
 + Move custom CSS
 + Move custom logo
 
