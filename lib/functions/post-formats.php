@@ -1,26 +1,26 @@
 <?php
 /**
  * Functions and filters for handling the output of post formats.  Most of this file is for continuing the 
- * use of previous Hybrid Core functionality related to post formats as well as fixing the backwards-
+ * use of previous ExMachina Core functionality related to post formats as well as fixing the backwards-
  * compatibility issues that WordPress 3.6 created with its new post format functionality.
  *
  * This file is only loaded if themes declare support for 'post-formats'.  If a theme declares support for 
  * 'post-formats', the content filters will not run for the individual formats that the theme 
  * supports.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Add support for structured post formats. */
-add_action( 'wp_loaded', 'hybrid_structured_post_formats', 1 );
+add_action( 'wp_loaded', 'exmachina_structured_post_formats', 1 );
 
 /* Filter the post format archive title. */
-add_filter( 'single_term_title', 'hybrid_single_post_format_title' );
+add_filter( 'single_term_title', 'exmachina_single_post_format_title' );
 
 /**
  * Theme compatibility for post formats.  This function adds appropriate filters to 'the_content' for 
@@ -31,30 +31,30 @@ add_filter( 'single_term_title', 'hybrid_single_post_format_title' );
  * @access public
  * @return void
  */
-function hybrid_structured_post_formats() {
+function exmachina_structured_post_formats() {
 
 	/* Add infinity symbol to aside posts. */
 	if ( current_theme_supports( 'post-formats', 'aside' ) )
-		add_filter( 'the_content', 'hybrid_aside_infinity', 9 ); // run before wpautop
+		add_filter( 'the_content', 'exmachina_aside_infinity', 9 ); // run before wpautop
 
 	/* Add image to content if the user didn't add it. */
 	if ( current_theme_supports( 'post-formats', 'image' ) )
-		add_filter( 'the_content', 'hybrid_image_content' );
+		add_filter( 'the_content', 'exmachina_image_content' );
 
 	/* Adds the link to the content if it's not in the post. */
 	if ( current_theme_supports( 'post-formats', 'link' ) )
-		add_filter( 'the_content', 'hybrid_link_content', 9 ); // run before wpautop
+		add_filter( 'the_content', 'exmachina_link_content', 9 ); // run before wpautop
 
 	/* Wraps <blockquote> around quote posts. */
 	if ( current_theme_supports( 'post-formats', 'quote' ) )
-		add_filter( 'the_content', 'hybrid_quote_content' );
+		add_filter( 'the_content', 'exmachina_quote_content' );
 
 	/* Filter the content of chat posts. */
 	if ( current_theme_supports( 'post-formats', 'chat' ) ) {
-		add_filter( 'the_content', 'hybrid_chat_content' );
+		add_filter( 'the_content', 'exmachina_chat_content' );
 
 		/* Auto-add paragraphs to the chat text. */
-		add_filter( 'hybrid_post_format_chat_text', 'wpautop' );
+		add_filter( 'exmachina_post_format_chat_text', 'wpautop' );
 	}
 }
 
@@ -67,11 +67,11 @@ function hybrid_structured_post_formats() {
  * @param  string $title The term name.
  * @return string
  */
-function hybrid_single_post_format_title( $title ) {
+function exmachina_single_post_format_title( $title ) {
 
 	if ( is_tax( 'post_format' ) ) {
 		$term   = get_queried_object();
-		$plural = hybrid_get_plural_post_format_string( $term->slug );
+		$plural = exmachina_get_plural_post_format_string( $term->slug );
 		$title  = !empty( $plural ) ? $plural : $title;
 	}
 
@@ -86,11 +86,11 @@ function hybrid_single_post_format_title( $title ) {
  * @param  string $slug The term slug.
  * @return string
  */
-function hybrid_get_plural_post_format_string( $slug ) {
+function exmachina_get_plural_post_format_string( $slug ) {
 
-	$strings = hybrid_get_plural_post_format_strings();
+	$strings = exmachina_get_plural_post_format_strings();
 
-	$slug = hybrid_clean_post_format_slug( $slug );
+	$slug = exmachina_clean_post_format_slug( $slug );
 
 	return isset( $strings[ $slug ] ) ? $strings[ $slug ] : '';
 }
@@ -104,22 +104,22 @@ function hybrid_get_plural_post_format_string( $slug ) {
  * @access public
  * @return array
  */
-function hybrid_get_plural_post_format_strings() {
+function exmachina_get_plural_post_format_strings() {
 
 	$strings = array(
-	//	'standard' => __( 'Articles',       'hybrid-core' ), // Would this ever be used?
-		'aside'    => __( 'Asides',         'hybrid-core' ),
-		'audio'    => __( 'Audio',          'hybrid-core' ), // Leave as "Audio"?
-		'chat'     => __( 'Chats',          'hybrid-core' ),
-		'image'    => __( 'Images',         'hybrid-core' ),
-		'gallery'  => __( 'Galleries',      'hybrid-core' ),
-		'link'     => __( 'Links',          'hybrid-core' ),
-		'quote'    => __( 'Quotes',         'hybrid-core' ), // Use "Quotations"?
-		'status'   => __( 'Status Updates', 'hybrid-core' ),
-		'video'    => __( 'Videos',         'hybrid-core' ),
+	//	'standard' => __( 'Articles',       'exmachina-core' ), // Would this ever be used?
+		'aside'    => __( 'Asides',         'exmachina-core' ),
+		'audio'    => __( 'Audio',          'exmachina-core' ), // Leave as "Audio"?
+		'chat'     => __( 'Chats',          'exmachina-core' ),
+		'image'    => __( 'Images',         'exmachina-core' ),
+		'gallery'  => __( 'Galleries',      'exmachina-core' ),
+		'link'     => __( 'Links',          'exmachina-core' ),
+		'quote'    => __( 'Quotes',         'exmachina-core' ), // Use "Quotations"?
+		'status'   => __( 'Status Updates', 'exmachina-core' ),
+		'video'    => __( 'Videos',         'exmachina-core' ),
 	);
 
-	return apply_filters( 'hybrid_plural_post_format_strings', $strings );
+	return apply_filters( 'exmachina_plural_post_format_strings', $strings );
 }
 
 /**
@@ -130,7 +130,7 @@ function hybrid_get_plural_post_format_strings() {
  * @param  string $slug The slug of the post format.
  * @return string
  */
-function hybrid_clean_post_format_slug( $slug ) {
+function exmachina_clean_post_format_slug( $slug ) {
 	return str_replace( 'post-format-', '', $slug );
 }
 
@@ -144,7 +144,7 @@ function hybrid_clean_post_format_slug( $slug ) {
  * @param  string $content The post content.
  * @return string $content
  */
-function hybrid_aside_infinity( $content ) {
+function exmachina_aside_infinity( $content ) {
 
 	if ( has_post_format( 'aside' ) && !is_singular() )
 		$content .= ' <a class="permalink" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'echo' => false ) ) . '">&#8734;</a>';
@@ -158,7 +158,7 @@ function hybrid_aside_infinity( $content ) {
  * Gets the gallery *item* count.  This is different from getting the gallery *image* count.  By default, 
  * WordPress only allows attachments with the 'image' mime type in galleries.  However, some scripts such 
  * as Cleaner Gallery allow for other mime types.  This is a more accurate count than the 
- * hybrid_get_gallery_image_count() function since it will count all gallery items regardless of mime type.
+ * exmachina_get_gallery_image_count() function since it will count all gallery items regardless of mime type.
  *
  * @todo Check for the [gallery] shortcode with the 'mime_type' parameter and use that in get_posts().
  *
@@ -166,7 +166,7 @@ function hybrid_aside_infinity( $content ) {
  * @access public
  * @return int
  */
-function hybrid_get_gallery_item_count() {
+function exmachina_get_gallery_item_count() {
 
 	/* Check the post content for galleries. */
 	$galleries = get_post_galleries( get_the_ID(), true );
@@ -209,7 +209,7 @@ function hybrid_get_gallery_item_count() {
  * @access public
  * @return int
  */
-function hybrid_get_gallery_image_count() {
+function exmachina_get_gallery_image_count() {
 
 	/* Set up an empty array for images. */
 	$images = array();
@@ -248,7 +248,7 @@ function hybrid_get_gallery_image_count() {
  * @param  string  $content
  * @return string
  */
-function hybrid_image_content( $content ) {
+function exmachina_image_content( $content ) {
 
 	if ( has_post_format( 'image' ) ) {
 		preg_match( '/<img.*?>/', $content, $matches );
@@ -273,7 +273,7 @@ function hybrid_image_content( $content ) {
  * @param  string  $content
  * @return string
  */
-function hybrid_get_content_url( $content ) {
+function exmachina_get_content_url( $content ) {
 
 	/* Catch links that are not wrapped in an '<a>' tag. */
 	preg_match( '/<a\s[^>]*?href=[\'"](.+?)[\'"]/is', make_clickable( $content ), $matches );
@@ -292,13 +292,13 @@ function hybrid_get_content_url( $content ) {
  * @note   Setting defaults for the parameters so that this function can become a filter in future WP versions.
  * @return string
  */
-function hybrid_get_the_post_format_url( $url = '', $post = null ) {
+function exmachina_get_the_post_format_url( $url = '', $post = null ) {
 
 	if ( empty( $url ) ) {
 
 		$post = is_null( $post ) ? get_post() : $post;
 
-		$content_url = hybrid_get_content_url( $post->post_content );
+		$content_url = exmachina_get_content_url( $post->post_content );
 
 		$url = !empty( $content_url ) ? $content_url : get_permalink( $post->ID );
 	}
@@ -315,7 +315,7 @@ function hybrid_get_the_post_format_url( $url = '', $post = null ) {
  * @param  string $content The post content.
  * @return string $content
  */
-function hybrid_link_content( $content ) {
+function exmachina_link_content( $content ) {
 
 	if ( has_post_format( 'link' ) && !preg_match( '/<a\s[^>]*?href=[\'"](.+?)[\'"]/is', $content ) )
 		$content = make_clickable( $content );
@@ -334,7 +334,7 @@ function hybrid_link_content( $content ) {
  * @param  string $content The post content.
  * @return string $content
  */
-function hybrid_quote_content( $content ) {
+function exmachina_quote_content( $content ) {
 
 	if ( has_post_format( 'quote' ) ) {
 		preg_match( '/<blockquote.*?>/', $content, $matches );
@@ -356,10 +356,10 @@ function hybrid_quote_content( $content ) {
  * @param  string $content
  * @return array
  */
-function hybrid_get_the_post_format_chat( $content ) {
+function exmachina_get_the_post_format_chat( $content ) {
 
 	/* Allow the separator (separator for speaker/text) to be filtered. */
-	$separator = apply_filters( 'hybrid_post_format_chat_separator', ':' );
+	$separator = apply_filters( 'exmachina_post_format_chat_separator', ':' );
 
 	/* Split the content to get individual chat rows. */
 	$chat_rows = preg_split( "/(\r?\n)+|(<br\s*\/?>\s*)+/", $content );
@@ -417,11 +417,11 @@ function hybrid_get_the_post_format_chat( $content ) {
  *
  * @since  1.6.0
  * @access public
- * @global array   $_hybrid_post_chat_ids  An array of IDs for the chat rows based on the author.
+ * @global array   $_exmachina_post_chat_ids  An array of IDs for the chat rows based on the author.
  * @param  string  $content                The content of the post.
  * @return string  $chat_output            The formatted content of the post.
  */
-function hybrid_chat_content( $content ) {
+function exmachina_chat_content( $content ) {
 
 	/* If this isn't a chat, return. */
 	if ( !has_post_format( 'chat' ) )
@@ -431,10 +431,10 @@ function hybrid_chat_content( $content ) {
 	$chat_output = "\n\t\t\t" . '<div id="chat-transcript-' . esc_attr( get_the_ID() ) . '" class="chat-transcript">';
 
 	/* Allow the separator (separator for speaker/text) to be filtered. */
-	$separator = apply_filters( 'hybrid_post_format_chat_separator', ':' );
+	$separator = apply_filters( 'exmachina_post_format_chat_separator', ':' );
 
 	/* Get the stanzas from the post content. */
-	$stanzas = hybrid_get_the_post_format_chat( $content );
+	$stanzas = exmachina_get_the_post_format_chat( $content );
 
 	/* Loop through the stanzas that were returned. */
 	foreach ( $stanzas as $stanza ) {
@@ -447,7 +447,7 @@ function hybrid_chat_content( $content ) {
 			$chat_text   = $row['message'];
 
 			/* Get the speaker/row ID. */
-			$speaker_id = hybrid_chat_row_id( $chat_author );
+			$speaker_id = exmachina_chat_row_id( $chat_author );
 
 			/* Format the time if there was one given. */
 			$time = empty( $row['time'] ) ? '' : '<time class="chat-timestamp">' . esc_html( $row['time'] ) . '</time> ';
@@ -457,10 +457,10 @@ function hybrid_chat_content( $content ) {
 
 			/* Add the chat row author. */
 			if ( !empty( $chat_author ) )
-				$chat_output .= "\n\t\t\t\t\t" . '<div class="chat-author ' . sanitize_html_class( strtolower( "chat-author-{$chat_author}" ) ) . ' vcard">' . $time . '<cite class="fn">' . apply_filters( 'hybrid_post_format_chat_author', $chat_author, $speaker_id ) . '</cite>:</div>';
+				$chat_output .= "\n\t\t\t\t\t" . '<div class="chat-author ' . sanitize_html_class( strtolower( "chat-author-{$chat_author}" ) ) . ' vcard">' . $time . '<cite class="fn">' . apply_filters( 'exmachina_post_format_chat_author', $chat_author, $speaker_id ) . '</cite>:</div>';
 
 			/* Add the chat row text. */
-			$chat_output .= "\n\t\t\t\t\t" . '<div class="chat-text">' . str_replace( array( "\r", "\n", "\t" ), '', apply_filters( 'hybrid_post_format_chat_text', $chat_text, $chat_author, $speaker_id ) ) . '</div>';
+			$chat_output .= "\n\t\t\t\t\t" . '<div class="chat-text">' . str_replace( array( "\r", "\n", "\t" ), '', apply_filters( 'exmachina_post_format_chat_text', $chat_text, $chat_author, $speaker_id ) ) . '</div>';
 
 			/* Close the chat row. */
 			$chat_output .= "\n\t\t\t\t" . '</div><!-- .chat-row -->';
@@ -489,24 +489,24 @@ function hybrid_chat_content( $content ) {
  *
  * @since  1.6.0
  * @access public
- * @global array   $_hybrid_post_chat_ids  An array of IDs for the chat rows based on the author.
+ * @global array   $_exmachina_post_chat_ids  An array of IDs for the chat rows based on the author.
  * @param  string  $chat_author            Author of the current chat row.
  * @return int                             The ID for the chat row based on the author.
  */
-function hybrid_chat_row_id( $chat_author ) {
-	global $_hybrid_post_chat_ids;
+function exmachina_chat_row_id( $chat_author ) {
+	global $_exmachina_post_chat_ids;
 
 	/* Let's sanitize the chat author to avoid craziness and differences like "John" and "john". */
 	$chat_author = strtolower( strip_tags( $chat_author ) );
 
 	/* Add the chat author to the array. */
-	$_hybrid_post_chat_ids[] = $chat_author;
+	$_exmachina_post_chat_ids[] = $chat_author;
 
 	/* Make sure the array only holds unique values. */
-	$_hybrid_post_chat_ids = array_unique( $_hybrid_post_chat_ids );
+	$_exmachina_post_chat_ids = array_unique( $_exmachina_post_chat_ids );
 
 	/* Return the array key for the chat author and add "1" to avoid an ID of "0". */
-	return absint( array_search( $chat_author, $_hybrid_post_chat_ids ) ) + 1;
+	return absint( array_search( $chat_author, $_exmachina_post_chat_ids ) ) + 1;
 }
 
 ?>

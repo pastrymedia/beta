@@ -4,11 +4,11 @@
  * control over the output to the user by allowing the input of all the arguments typically seen
  * in the wp_list_pages() function.
  *
- * @package    Hybrid
+ * @package    ExMachina
  * @subpackage Widgets
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -17,7 +17,7 @@
  *
  * @since 0.6.0
  */
-class Hybrid_Widget_Pages extends WP_Widget {
+class ExMachina_Widget_Pages extends WP_Widget {
 
 	/**
 	 * Set up the widget's unique name, ID, class, description, and other options.
@@ -29,7 +29,7 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname'   => 'pages',
-			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your page links.', 'hybrid-core' )
+			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your page links.', 'exmachina-core' )
 		);
 
 		/* Set up the widget control options. */
@@ -40,8 +40,8 @@ class Hybrid_Widget_Pages extends WP_Widget {
 
 		/* Create the widget. */
 		$this->WP_Widget(
-			'hybrid-pages',              // $this->id_base
-			__( 'Pages', 'hybrid-core'), // $this->name
+			'exmachina-pages',              // $this->id_base
+			__( 'Pages', 'exmachina-core'), // $this->name
 			$widget_options,             // $this->widget_options
 			$control_options             // $this->control_options
 		);
@@ -122,7 +122,7 @@ class Hybrid_Widget_Pages extends WP_Widget {
 
 		/* Set up the default form values. */
 		$defaults = array(
-			'title'        => esc_attr__( 'Pages', 'hybrid-core'),
+			'title'        => esc_attr__( 'Pages', 'exmachina-core'),
 			'post_type'    => 'page',
 			'depth'        => 0,
 			'number'       => '',
@@ -149,33 +149,33 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		$post_types = get_post_types( array( 'public' => true, 'hierarchical' => true ), 'objects' );
 
 		$sort_order = array( 
-			'ASC'  => esc_attr__( 'Ascending', 'hybrid-core' ), 
-			'DESC' => esc_attr__( 'Descending', 'hybrid-core' ) 
+			'ASC'  => esc_attr__( 'Ascending', 'exmachina-core' ), 
+			'DESC' => esc_attr__( 'Descending', 'exmachina-core' ) 
 		);
 
 		$sort_column = array( 
-			'post_author'   => esc_attr__( 'Author', 'hybrid-core' ), 
-			'post_date'     => esc_attr__( 'Date', 'hybrid-core' ), 
-			'ID'            => esc_attr__( 'ID', 'hybrid-core' ), 
-			'menu_order'    => esc_attr__( 'Menu Order', 'hybrid-core' ), 
-			'post_modified' => esc_attr__( 'Modified', 'hybrid-core' ), 
-			'post_name'     => esc_attr__( 'Slug', 'hybrid-core' ), 
-			'post_title'    => esc_attr__( 'Title', 'hybrid-core' ) 
+			'post_author'   => esc_attr__( 'Author', 'exmachina-core' ), 
+			'post_date'     => esc_attr__( 'Date', 'exmachina-core' ), 
+			'ID'            => esc_attr__( 'ID', 'exmachina-core' ), 
+			'menu_order'    => esc_attr__( 'Menu Order', 'exmachina-core' ), 
+			'post_modified' => esc_attr__( 'Modified', 'exmachina-core' ), 
+			'post_name'     => esc_attr__( 'Slug', 'exmachina-core' ), 
+			'post_title'    => esc_attr__( 'Title', 'exmachina-core' ) 
 		);
 
 		$show_date = array( 
 			''         => '', 
-			'created'  => esc_attr__( 'Created', 'hybrid-core' ), 
-			'modified' => esc_attr__( 'Modified', 'hybrid-core' ) 
+			'created'  => esc_attr__( 'Created', 'exmachina-core' ), 
+			'modified' => esc_attr__( 'Modified', 'exmachina-core' ) 
 		);
 
 		$meta_key = array_merge( array( '' ), (array) get_meta_keys() );
 
 		?>
 
-		<div class="hybrid-widget-controls columns-3">
+		<div class="exmachina-widget-controls columns-3">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hybrid-core' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'exmachina-core' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
@@ -212,7 +212,7 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		</p>
 		</div>
 
-		<div class="hybrid-widget-controls columns-3">
+		<div class="exmachina-widget-controls columns-3">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'offset' ); ?>"><code>offset</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'offset' ); ?>" name="<?php echo $this->get_field_name( 'offset' ); ?>" value="<?php echo esc_attr( $instance['offset'] ); ?>"  />
@@ -247,7 +247,7 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		</p>
 		</div>
 
-		<div class="hybrid-widget-controls columns-3 column-last">
+		<div class="exmachina-widget-controls columns-3 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'authors' ); ?>"><code>authors</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'authors' ); ?>" name="<?php echo $this->get_field_name( 'authors' ); ?>" value="<?php echo esc_attr( $instance['authors'] ); ?>" />
@@ -274,7 +274,7 @@ class Hybrid_Widget_Pages extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'hierarchical' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['hierarchical'], true ); ?> id="<?php echo $this->get_field_id( 'hierarchical' ); ?>" name="<?php echo $this->get_field_name( 'hierarchical' ); ?>" /> <?php _e( 'Hierarchical?', 'hybrid-core'); ?> <code>hierarchical</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['hierarchical'], true ); ?> id="<?php echo $this->get_field_id( 'hierarchical' ); ?>" name="<?php echo $this->get_field_name( 'hierarchical' ); ?>" /> <?php _e( 'Hierarchical?', 'exmachina-core'); ?> <code>hierarchical</code></label>
 		</p>
 		</div>
 		<div style="clear:both;">&nbsp;</div>

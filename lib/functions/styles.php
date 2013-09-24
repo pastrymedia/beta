@@ -1,25 +1,25 @@
 <?php
 /**
  * Functions for handling stylesheets in the framework.  Themes can add support for the 
- * 'hybrid-core-styles' feature to allow the framework to handle loading the stylesheets into the 
+ * 'exmachina-core-styles' feature to allow the framework to handle loading the stylesheets into the 
  * theme header at an appropriate point.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
-/* Register Hybrid Core styles. */
-add_action( 'wp_enqueue_scripts', 'hybrid_register_styles', 1 );
+/* Register ExMachina Core styles. */
+add_action( 'wp_enqueue_scripts', 'exmachina_register_styles', 1 );
 
-/* Load Hybrid Core styles. */
-add_action( 'wp_enqueue_scripts', 'hybrid_enqueue_styles', 5 );
+/* Load ExMachina Core styles. */
+add_action( 'wp_enqueue_scripts', 'exmachina_enqueue_styles', 5 );
 
 /* Load the development stylsheet in script debug mode. */
-add_filter( 'stylesheet_uri', 'hybrid_min_stylesheet_uri', 10, 2 );
+add_filter( 'stylesheet_uri', 'exmachina_min_stylesheet_uri', 10, 2 );
 
 /**
  * Registers stylesheets for the framework.  This function merely registers styles with WordPress using
@@ -30,10 +30,10 @@ add_filter( 'stylesheet_uri', 'hybrid_min_stylesheet_uri', 10, 2 );
  * @access private
  * @return void
  */
-function hybrid_register_styles() {
+function exmachina_register_styles() {
 
 	/* Get framework styles. */
-	$styles = hybrid_get_styles();
+	$styles = exmachina_get_styles();
 
 	/* Use the .min stylesheet if SCRIPT_DEBUG is turned off. */
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
@@ -43,7 +43,7 @@ function hybrid_register_styles() {
 
 		$defaults = array( 
 			'handle'  => $style, 
-			'src'     => trailingslashit( HYBRID_CSS ) . "{$style}{$suffix}.css",
+			'src'     => trailingslashit( EXMACHINA_CSS ) . "{$style}{$suffix}.css",
 			'deps'    => null,
 			'version' => false,
 			'media'   => 'all'
@@ -68,17 +68,17 @@ function hybrid_register_styles() {
  * @access private
  * @return void
  */
-function hybrid_enqueue_styles() {
+function exmachina_enqueue_styles() {
 
 	/* Get the theme-supported stylesheets. */
-	$supports = get_theme_support( 'hybrid-core-styles' );
+	$supports = get_theme_support( 'exmachina-core-styles' );
 
 	/* If the theme doesn't add support for any styles, return. */
 	if ( !is_array( $supports[0] ) )
 		return;
 
 	/* Get framework styles. */
-	$styles = hybrid_get_styles();
+	$styles = exmachina_get_styles();
 
 	/* Loop through each of the core framework styles and enqueue them if supported. */
 	foreach ( $supports[0] as $style ) {
@@ -95,7 +95,7 @@ function hybrid_enqueue_styles() {
  * @access private
  * @return array $styles All the available framework styles.
  */
-function hybrid_get_styles() {
+function exmachina_get_styles() {
 
 	/* Use the .min stylesheet if SCRIPT_DEBUG is turned off. */
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
@@ -132,7 +132,7 @@ function hybrid_get_styles() {
 	$styles['style'] = array( 'src' => get_stylesheet_uri(), 'version' => wp_get_theme()->get( 'Version' ) );
 
 	/* Return the array of styles. */
-	return apply_filters( hybrid_get_prefix() . '_styles', $styles );
+	return apply_filters( exmachina_get_prefix() . '_styles', $styles );
 }
 
 /**
@@ -146,7 +146,7 @@ function hybrid_get_styles() {
  * @param  string $stylesheet_dir_uri The directory URI of the active theme's stylesheet.
  * @return string $stylesheet_uri
  */
-function hybrid_min_stylesheet_uri( $stylesheet_uri, $stylesheet_dir_uri ) {
+function exmachina_min_stylesheet_uri( $stylesheet_uri, $stylesheet_dir_uri ) {
 
 	/* Use the .min stylesheet if SCRIPT_DEBUG is turned off. */
 	if ( !defined( 'SCRIPT_DEBUG' ) || false === SCRIPT_DEBUG ) {

@@ -6,7 +6,7 @@
 		echo apply_atomic_shortcode( 'entry_author', __( 'Posted ', 'beta' ) ); 
 	}?>
 	<?php
-	if (  hybrid_get_setting( 'trackbacks_posts' ) || hybrid_get_setting( 'comments_posts' ) ) {
+	if (  exmachina_get_setting( 'trackbacks_posts' ) || exmachina_get_setting( 'comments_posts' ) ) {
 		echo apply_atomic_shortcode( 'entry_byline', __( 'on [entry-published] [entry-comments-link before=" | "] [entry-edit-link before=" | "]', 'beta' ) ); 
 	} else {
 		echo apply_atomic_shortcode( 'entry_byline', __( 'on [entry-published] [entry-edit-link before=" | "]', 'beta' ) ); 				

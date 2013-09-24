@@ -604,7 +604,7 @@ function theme_layouts_get_meta_key() {
  * @author Justin Tadlock <justin@justintadlock.com>
  * @author Sami Keijonen <sami.keijonen@foxnet.fi>
  * @copyright Copyright (c) 2012
- * @link http://themehybrid.com/support/topic/add-theme-layout-in-theme-customize
+ * @link http://themeexmachina.com/support/topic/add-theme-layout-in-theme-customize
  * @access public
  * @param object $wp_customize
  */
@@ -677,7 +677,7 @@ function theme_layouts_customize_register( $wp_customize ) {
  * @author Justin Tadlock <justin@justintadlock.com>
  * @author Sami Keijonen <sami.keijonen@foxnet.fi>
  * @copyright Copyright (c) 2012
- * @link http://themehybrid.com/support/topic/add-theme-layout-in-theme-customize
+ * @link http://themeexmachina.com/support/topic/add-theme-layout-in-theme-customize
  * @return void
  */
 function theme_layouts_customize_preview_script() { ?>

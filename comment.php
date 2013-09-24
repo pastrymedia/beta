@@ -1,8 +1,8 @@
-<li id="comment-<?php comment_ID(); ?>" class="<?php hybrid_comment_class(); ?>">
+<li id="comment-<?php comment_ID(); ?>" class="<?php exmachina_comment_class(); ?>">
 
 	<article itemtype="http://schema.org/UserComments" class="comment-item" itemscope="itemscope" itemprop="comment">
 		<p class="comment-author" itemtype="http://schema.org/Person" itemscope="itemscope" itemprop="creator">
-			<?php echo hybrid_avatar(); ?>
+			<?php echo exmachina_avatar(); ?>
 			<?php echo apply_atomic_shortcode( 'comment_author', '[comment-author]' ); ?>
 		</p>
 		<p class="comment-meta"> 
@@ -12,7 +12,7 @@
 			<?php comment_text(); ?>
 		</div><!-- .comment-content -->
 
-		<?php echo hybrid_comment_reply_link_shortcode( array() ); ?>
+		<?php echo exmachina_comment_reply_link_shortcode( array() ); ?>
 		
 	</article>	
 

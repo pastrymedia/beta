@@ -4,11 +4,11 @@
  * Menus screen, by the theme, or by plugins using the wp_nav_menu() function.  It replaces the default
  * WordPress navigation menu class.
  *
- * @package    Hybrid
+ * @package    ExMachina
  * @subpackage Classes
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -17,7 +17,7 @@
  *
  * @since 0.8.0
  */
-class Hybrid_Widget_Nav_Menu extends WP_Widget {
+class ExMachina_Widget_Nav_Menu extends WP_Widget {
 
 	/**
 	 * Set up the widget's unique name, ID, class, description, and other options.
@@ -29,7 +29,7 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname'   => 'nav-menu',
-			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your menus.', 'hybrid-core' )
+			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your menus.', 'exmachina-core' )
 		);
 
 		/* Set up the widget control options. */
@@ -40,8 +40,8 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 
 		/* Create the widget. */
 		$this->WP_Widget(
-			'hybrid-nav-menu',                      // $this->id_base
-			__( 'Navigation Menu', 'hybrid-core' ), // $this->name
+			'exmachina-nav-menu',                      // $this->id_base
+			__( 'Navigation Menu', 'exmachina-core' ), // $this->name
 			$widget_options,                        // $this->widget_options
 			$control_options                        // $this->control_options
 		);
@@ -105,7 +105,7 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 
 		/* Set up the default form values. */
 		$defaults = array(
-			'title'           => esc_attr__( 'Navigation', 'hybrid-core' ),
+			'title'           => esc_attr__( 'Navigation', 'exmachina-core' ),
 			'menu'            => '',
 			'container'       => 'div',
 			'container_id'    => '',
@@ -126,9 +126,9 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		$container = apply_filters( 'wp_nav_menu_container_allowedtags', array( 'div', 'nav' ) );
 		?>
 
-		<div class="hybrid-widget-controls columns-2">
+		<div class="exmachina-widget-controls columns-2">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hybrid-core' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'exmachina-core' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
@@ -161,7 +161,7 @@ class Hybrid_Widget_Nav_Menu extends WP_Widget {
 		</p>
 		</div>
 
-		<div class="hybrid-widget-controls columns-2 column-last">
+		<div class="exmachina-widget-controls columns-2 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'menu_class' ); ?>"><code>menu_class</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'menu_class' ); ?>" name="<?php echo $this->get_field_name( 'menu_class' ); ?>" value="<?php echo esc_attr( $instance['menu_class'] ); ?>" />

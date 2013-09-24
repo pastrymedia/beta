@@ -3,21 +3,21 @@
  * Sets up the core framework's widgets and unregisters some of the default WordPress widgets if the 
  * theme supports this feature.  The framework's widgets are meant to extend the default WordPress
  * widgets by giving users highly-customizable widget settings.  A theme must register support for the 
- * 'hybrid-core-widgets' feature to use the framework widgets.
+ * 'exmachina-core-widgets' feature to use the framework widgets.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Unregister WP widgets. */
-add_action( 'widgets_init', 'hybrid_unregister_widgets' );
+add_action( 'widgets_init', 'exmachina_unregister_widgets' );
 
-/* Register Hybrid widgets. */
-add_action( 'widgets_init', 'hybrid_register_widgets' );
+/* Register ExMachina widgets. */
+add_action( 'widgets_init', 'exmachina_register_widgets' );
 
 /**
  * Registers the core frameworks widgets.  These widgets typically overwrite the equivalent default WordPress
@@ -29,63 +29,63 @@ add_action( 'widgets_init', 'hybrid_register_widgets' );
  * @link http://codex.wordpress.org/Function_Reference/register_widget
  * @return void
  */
-function hybrid_register_widgets() {
+function exmachina_register_widgets() {
 
 	/* Load the archives widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-archives.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-archives.php' );
 
 	/* Load the authors widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-authors.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-authors.php' );
 
 	/* Load the bookmarks widget class. */
 	if ( get_option( 'link_manager_enabled' ) )
-		require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-bookmarks.php' );
+		require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-bookmarks.php' );
 
 	/* Load the calendar widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-calendar.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-calendar.php' );
 
 	/* Load the categories widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-categories.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-categories.php' );
 
 	/* Load the nav menu widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-nav-menu.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-nav-menu.php' );
 
 	/* Load the pages widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-pages.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-pages.php' );
 
 	/* Load the search widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-search.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-search.php' );
 
 	/* Load the tags widget class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'widget-tags.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-tags.php' );
 
 	/* Register the archives widget. */
-	register_widget( 'Hybrid_Widget_Archives' );
+	register_widget( 'ExMachina_Widget_Archives' );
 
 	/* Register the authors widget. */
-	register_widget( 'Hybrid_Widget_Authors' );
+	register_widget( 'ExMachina_Widget_Authors' );
 
 	/* Register the bookmarks widget. */
 	if ( get_option( 'link_manager_enabled' ) )
-		register_widget( 'Hybrid_Widget_Bookmarks' );
+		register_widget( 'ExMachina_Widget_Bookmarks' );
 
 	/* Register the calendar widget. */
-	register_widget( 'Hybrid_Widget_Calendar' );
+	register_widget( 'ExMachina_Widget_Calendar' );
 
 	/* Register the categories widget. */
-	register_widget( 'Hybrid_Widget_Categories' );
+	register_widget( 'ExMachina_Widget_Categories' );
 
 	/* Register the nav menu widget. */
-	register_widget( 'Hybrid_Widget_Nav_Menu' );
+	register_widget( 'ExMachina_Widget_Nav_Menu' );
 
 	/* Register the pages widget. */
-	register_widget( 'Hybrid_Widget_Pages' );
+	register_widget( 'ExMachina_Widget_Pages' );
 
 	/* Register the search widget. */
-	register_widget( 'Hybrid_Widget_Search' );
+	register_widget( 'ExMachina_Widget_Search' );
 
 	/* Register the tags widget. */
-	register_widget( 'Hybrid_Widget_Tags' );
+	register_widget( 'ExMachina_Widget_Tags' );
 }
 
 /**
@@ -98,7 +98,7 @@ function hybrid_register_widgets() {
  * @link http://codex.wordpress.org/Function_Reference/unregister_widget
  * @return void
  */
-function hybrid_unregister_widgets() {
+function exmachina_unregister_widgets() {
 
 	/* Unregister the default WordPress widgets. */
 	unregister_widget( 'WP_Widget_Archives' );

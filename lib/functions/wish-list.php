@@ -3,11 +3,11 @@
  * Functions that I've found useful that I wish WordPress had equivalents for baked right into core.  If 
  * there's a relevant Trac ticket, it'll be listed in with the function.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -22,7 +22,7 @@
  * @param  array  $file_names The files to search for.
  * @return string
  */
-function hybrid_locate_theme_file( $file_names ) {
+function exmachina_locate_theme_file( $file_names ) {
 
 	$located = '';
 
@@ -54,7 +54,7 @@ function hybrid_locate_theme_file( $file_names ) {
  * @param  int    $id  The ID of the post.
  * @return bool
  */
-function hybrid_post_has_content( $id = 0 ) {
+function exmachina_post_has_content( $id = 0 ) {
 	$post = get_post( $id );
 	return !empty( $post->post_content ) ? true : false;
 }
@@ -67,7 +67,7 @@ function hybrid_post_has_content( $id = 0 ) {
  * @param  int    $post_id
  * @return bool
  */
-function hybrid_attachment_is_audio( $post_id = 0 ) {
+function exmachina_attachment_is_audio( $post_id = 0 ) {
 
 	$post_id = empty( $post_id ) ? get_the_ID() : $post_id;
 
@@ -85,7 +85,7 @@ function hybrid_attachment_is_audio( $post_id = 0 ) {
  * @param  int    $post_id
  * @return bool
  */
-function hybrid_attachment_is_video( $post_id = 0 ) {
+function exmachina_attachment_is_video( $post_id = 0 ) {
 
 	$post_id = empty( $post_id ) ? get_the_ID() : $post_id;
 

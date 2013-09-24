@@ -1,46 +1,46 @@
 <?php
 /**
- * The core functions file for the Hybrid framework. Functions defined here are generally
+ * The core functions file for the ExMachina framework. Functions defined here are generally
  * used across the entire framework to make various tasks faster. This file should be loaded
  * prior to any other files because its functions are needed to run the framework.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /**
  * Defines the theme prefix. This allows developers to infinitely change the theme. In theory,
- * one could use the Hybrid core to create their own theme or filter 'hybrid_prefix' with a 
+ * one could use the ExMachina core to create their own theme or filter 'exmachina_prefix' with a 
  * plugin to make it easier to use hooks across multiple themes without having to figure out
  * each theme's hooks (assuming other themes used the same system).
  *
  * @since 0.7.0
  * @access public
  * @uses get_template() Defines the theme prefix based on the theme directory.
- * @global object $hybrid The global Hybrid object.
- * @return string $hybrid->prefix The prefix of the theme.
+ * @global object $exmachina The global ExMachina object.
+ * @return string $exmachina->prefix The prefix of the theme.
  */
-function hybrid_get_prefix() {
-	global $hybrid;
+function exmachina_get_prefix() {
+	global $exmachina;
 
 	/* If the global prefix isn't set, define it. Plugin/theme authors may also define a custom prefix. */
-	if ( empty( $hybrid->prefix ) )
-		$hybrid->prefix = sanitize_key( apply_filters( 'hybrid_prefix', get_template() ) );
+	if ( empty( $exmachina->prefix ) )
+		$exmachina->prefix = sanitize_key( apply_filters( 'exmachina_prefix', get_template() ) );
 
-	return $hybrid->prefix;
+	return $exmachina->prefix;
 }
 
 /**
  * Adds contextual action hooks to the theme.  This allows users to easily add context-based content 
  * without having to know how to use WordPress conditional tags.  The theme handles the logic.
  *
- * An example of a basic hook would be 'hybrid_header'.  The do_atomic() function extends that to 
- * give extra hooks such as 'hybrid_singular_header', 'hybrid_singular-post_header', and 
- * 'hybrid_singular-post-ID_header'.
+ * An example of a basic hook would be 'exmachina_header'.  The do_atomic() function extends that to 
+ * give extra hooks such as 'exmachina_singular_header', 'exmachina_singular-post_header', and 
+ * 'exmachina_singular-post-ID_header'.
  *
  * @author Justin Tadlock <justin@justintadlock.com>
  * @author Ptah Dunbar <pt@ptahd.com>
@@ -48,8 +48,8 @@ function hybrid_get_prefix() {
  *
  * @since 0.7.0
  * @access public
- * @uses hybrid_get_prefix() Gets the theme prefix.
- * @uses hybrid_get_context() Gets the context of the current page.
+ * @uses exmachina_get_prefix() Gets the theme prefix.
+ * @uses exmachina_get_context() Gets the context of the current page.
  * @param string $tag Usually the location of the hook but defines what the base hook is.
  * @param mixed $arg,... Optional additional arguments which are passed on to the functions hooked to the action.
  */
@@ -59,7 +59,7 @@ function do_atomic( $tag = '', $arg = '' ) {
 		return false;
 
 	/* Get the theme prefix. */
-	$pre = hybrid_get_prefix();
+	$pre = exmachina_get_prefix();
 
 	/* Get the args passed into the function and remove $tag. */
 	$args = func_get_args();
@@ -69,7 +69,7 @@ function do_atomic( $tag = '', $arg = '' ) {
 	do_action_ref_array( "{$pre}_{$tag}", $args );
 
 	/* Loop through context array and fire actions on a contextual scale. */
-	foreach ( (array) hybrid_get_context() as $context )
+	foreach ( (array) exmachina_get_context() as $context )
 		do_action_ref_array( "{$pre}_{$context}_{$tag}", $args );
 }
 
@@ -77,14 +77,14 @@ function do_atomic( $tag = '', $arg = '' ) {
  * Adds contextual filter hooks to the theme.  This allows users to easily filter context-based content 
  * without having to know how to use WordPress conditional tags.  The theme handles the logic.
  *
- * An example of a basic hook would be 'hybrid_entry_meta'.  The apply_atomic() function extends 
- * that to give extra hooks such as 'hybrid_singular_entry_meta', 'hybrid_singular-post_entry_meta', 
- * and 'hybrid_singular-post-ID_entry_meta'.
+ * An example of a basic hook would be 'exmachina_entry_meta'.  The apply_atomic() function extends 
+ * that to give extra hooks such as 'exmachina_singular_entry_meta', 'exmachina_singular-post_entry_meta', 
+ * and 'exmachina_singular-post-ID_entry_meta'.
  *
  * @since 0.7.0
  * @access public
- * @uses hybrid_get_prefix() Gets the theme prefix.
- * @uses hybrid_get_context() Gets the context of the current page.
+ * @uses exmachina_get_prefix() Gets the theme prefix.
+ * @uses exmachina_get_context() Gets the context of the current page.
  * @param string $tag Usually the location of the hook but defines what the base hook is.
  * @param mixed $value The value on which the filters hooked to $tag are applied on.
  * @param mixed $var,... Additional variables passed to the functions hooked to $tag.
@@ -96,7 +96,7 @@ function apply_atomic( $tag = '', $value = '' ) {
 		return false;
 
 	/* Get theme prefix. */
-	$pre = hybrid_get_prefix();
+	$pre = exmachina_get_prefix();
 
 	/* Get the args passed into the function and remove $tag. */
 	$args = func_get_args();
@@ -106,7 +106,7 @@ function apply_atomic( $tag = '', $value = '' ) {
 	$value = $args[0] = apply_filters_ref_array( "{$pre}_{$tag}", $args );
 
 	/* Loop through context array and apply filters on a contextual scale. */
-	foreach ( (array) hybrid_get_context() as $context )
+	foreach ( (array) exmachina_get_context() as $context )
 		$value = $args[0] = apply_filters_ref_array( "{$pre}_{$context}_{$tag}", $args );
 
 	/* Return the final value once all filters have been applied. */
@@ -136,8 +136,8 @@ function apply_atomic_shortcode( $tag = '', $value = '' ) {
  * @access public
  * @return int Transient expiration time in seconds.
  */
-function hybrid_get_transient_expiration() {
-	return apply_filters( hybrid_get_prefix() . '_transient_expiration', 43200 );
+function exmachina_get_transient_expiration() {
+	return apply_filters( exmachina_get_prefix() . '_transient_expiration', 43200 );
 }
 
 /**
@@ -149,8 +149,8 @@ function hybrid_get_transient_expiration() {
  * @param string $tag The basic name of the hook (e.g., 'before_header').
  * @param string $context A specific context/value to be added to the hook.
  */
-function hybrid_format_hook( $tag, $context = '' ) {
-	return hybrid_get_prefix() . ( ( !empty( $context ) ) ? "_{$context}" : "" ). "_{$tag}";
+function exmachina_format_hook( $tag, $context = '' ) {
+	return exmachina_get_prefix() . ( ( !empty( $context ) ) ? "_{$context}" : "" ). "_{$tag}";
 }
 
 /**
@@ -162,7 +162,7 @@ function hybrid_format_hook( $tag, $context = '' ) {
  * @global int $content_width The width for the theme's content area.
  * @param int $width Numeric value of the width to set.
  */
-function hybrid_set_content_width( $width = '' ) {
+function exmachina_set_content_width( $width = '' ) {
 	global $content_width;
 
 	$content_width = absint( $width );
@@ -176,7 +176,7 @@ function hybrid_set_content_width( $width = '' ) {
  * @global int $content_width The width for the theme's content area.
  * @return int $content_width
  */
-function hybrid_get_content_width() {
+function exmachina_get_content_width() {
 	global $content_width;
 
 	return $content_width;

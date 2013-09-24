@@ -4,11 +4,11 @@
  * control over the output to the user by allowing the input of all the arguments typically seen
  * in the wp_get_archives() function.
  *
- * @package    Hybrid
+ * @package    ExMachina
  * @subpackage Classes
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -17,7 +17,7 @@
  *
  * @since 0.6.0
  */
-class Hybrid_Widget_Archives extends WP_Widget {
+class ExMachina_Widget_Archives extends WP_Widget {
 
 	/**
 	 * Set up the widget's unique name, ID, class, description, and other options.
@@ -29,7 +29,7 @@ class Hybrid_Widget_Archives extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname'   => 'archives',
-			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your archives.', 'hybrid-core' )
+			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your archives.', 'exmachina-core' )
 		);
 
 		/* Set up the widget control options. */
@@ -40,8 +40,8 @@ class Hybrid_Widget_Archives extends WP_Widget {
 
 		/* Create the widget. */
 		$this->WP_Widget(
-			'hybrid-archives',               // $this->id_base
-			__( 'Archives', 'hybrid-core' ), // $this->name
+			'exmachina-archives',               // $this->id_base
+			__( 'Archives', 'exmachina-core' ), // $this->name
 			$widget_options,                 // $this->widget_options
 			$control_options                 // $this->control_options
 		);
@@ -76,19 +76,19 @@ class Hybrid_Widget_Archives extends WP_Widget {
 
 			/* Create a title for the drop-down based on the archive type. */
 			if ( 'yearly' == $args['type'] )
-				$option_title = esc_html__( 'Select Year', 'hybrid-core' );
+				$option_title = esc_html__( 'Select Year', 'exmachina-core' );
 
 			elseif ( 'monthly' == $args['type'] )
-				$option_title = esc_html__( 'Select Month', 'hybrid-core' );
+				$option_title = esc_html__( 'Select Month', 'exmachina-core' );
 
 			elseif ( 'weekly' == $args['type'] )
-				$option_title = esc_html__( 'Select Week', 'hybrid-core' );
+				$option_title = esc_html__( 'Select Week', 'exmachina-core' );
 
 			elseif ( 'daily' == $args['type'] )
-				$option_title = esc_html__( 'Select Day', 'hybrid-core' );
+				$option_title = esc_html__( 'Select Day', 'exmachina-core' );
 
 			elseif ( 'postbypost' == $args['type'] || 'alpha' == $args['type'] )
-				$option_title = esc_html__( 'Select Post', 'hybrid-core' );
+				$option_title = esc_html__( 'Select Post', 'exmachina-core' );
 
 			/* Output the <select> element and each <option>. */
 			echo '<p><select name="archive-dropdown" onchange=\'document.location.href=this.options[this.selectedIndex].value;\'>';
@@ -139,7 +139,7 @@ class Hybrid_Widget_Archives extends WP_Widget {
 
 		/* Set up the default form values. */
 		$defaults = array(
-			'title'           => esc_attr__( 'Archives', 'hybrid-core' ),
+			'title'           => esc_attr__( 'Archives', 'exmachina-core' ),
 			'limit'           => 10,
 			'type'            => 'monthly',
 			'order'           => 'DESC',
@@ -154,31 +154,31 @@ class Hybrid_Widget_Archives extends WP_Widget {
 
 		/* Create an array of archive types. */
 		$type = array( 
-			'alpha'      => esc_attr__( 'Alphabetical', 'hybrid-core' ), 
-			'daily'      => esc_attr__( 'Daily', 'hybrid-core' ), 
-			'monthly'    => esc_attr__( 'Monthly', 'hybrid-core' ),
-			'postbypost' => esc_attr__( 'Post By Post', 'hybrid-core' ), 
-			'weekly'     => esc_attr__( 'Weekly', 'hybrid-core' ), 
-			'yearly'     => esc_attr__( 'Yearly', 'hybrid-core' ) 
+			'alpha'      => esc_attr__( 'Alphabetical', 'exmachina-core' ), 
+			'daily'      => esc_attr__( 'Daily', 'exmachina-core' ), 
+			'monthly'    => esc_attr__( 'Monthly', 'exmachina-core' ),
+			'postbypost' => esc_attr__( 'Post By Post', 'exmachina-core' ), 
+			'weekly'     => esc_attr__( 'Weekly', 'exmachina-core' ), 
+			'yearly'     => esc_attr__( 'Yearly', 'exmachina-core' ) 
 		);
 
 		/* Create an array of order options. */
 		$order = array(
-			'ASC'  => esc_attr__( 'Ascending', 'hybrid-core' ),
-			'DESC' => esc_attr__( 'Descending', 'hybrid-core' )
+			'ASC'  => esc_attr__( 'Ascending', 'exmachina-core' ),
+			'DESC' => esc_attr__( 'Descending', 'exmachina-core' )
 		);
 
 		/* Create an array of archive formats. */
 		$format = array( 
-			'custom' => esc_attr__( 'Custom', 'hybrid-core' ), 
-			'html'   => esc_attr__( 'HTML', 'hybrid-core' ), 
-			'option' => esc_attr__( 'Option', 'hybrid-core' ) 
+			'custom' => esc_attr__( 'Custom', 'exmachina-core' ), 
+			'html'   => esc_attr__( 'HTML', 'exmachina-core' ), 
+			'option' => esc_attr__( 'Option', 'exmachina-core' ) 
 		);
 		?>
 
-		<div class="hybrid-widget-controls columns-2">
+		<div class="exmachina-widget-controls columns-2">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hybrid-core' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'exmachina-core' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
@@ -203,7 +203,7 @@ class Hybrid_Widget_Archives extends WP_Widget {
 		</p>
 		</div>
 
-		<div class="hybrid-widget-controls columns-2 column-last">
+		<div class="exmachina-widget-controls columns-2 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'format' ); ?>"><code>format</code></label> 
 			<select class="widefat" id="<?php echo $this->get_field_id( 'format' ); ?>" name="<?php echo $this->get_field_name( 'format' ); ?>">
@@ -222,7 +222,7 @@ class Hybrid_Widget_Archives extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_post_count' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_post_count'], true ); ?> id="<?php echo $this->get_field_id( 'show_post_count' ); ?>" name="<?php echo $this->get_field_name( 'show_post_count' ); ?>" /> <?php _e( 'Show post count?', 'hybrid-core' ); ?> <code>show_post_count</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_post_count'], true ); ?> id="<?php echo $this->get_field_id( 'show_post_count' ); ?>" name="<?php echo $this->get_field_name( 'show_post_count' ); ?>" /> <?php _e( 'Show post count?', 'exmachina-core' ); ?> <code>show_post_count</code></label>
 		</p>
 		</div>
 		<div style="clear:both;">&nbsp;</div>

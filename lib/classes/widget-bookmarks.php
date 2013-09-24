@@ -4,11 +4,11 @@
  * control over the output to the user by allowing the input of all the arguments typically seen
  * in the wp_list_bookmarks() function.
  *
- * @package    Hybrid
+ * @package    ExMachina
  * @subpackage Classes
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -17,7 +17,7 @@
  *
  * @since 0.6.0
  */
-class Hybrid_Widget_Bookmarks extends WP_Widget {
+class ExMachina_Widget_Bookmarks extends WP_Widget {
 
 	/**
 	 * Set up the widget's unique name, ID, class, description, and other options.
@@ -29,7 +29,7 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname'   => 'bookmarks',
-			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your bookmarks (links).', 'hybrid-core' )
+			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your bookmarks (links).', 'exmachina-core' )
 		);
 
 		/* Set up the widget control options. */
@@ -40,8 +40,8 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 
 		/* Create the widget. */
 		$this->WP_Widget(
-			'hybrid-bookmarks',               // $this->id_base
-			__( 'Bookmarks', 'hybrid-core' ), // $this->name	
+			'exmachina-bookmarks',               // $this->id_base
+			__( 'Bookmarks', 'exmachina-core' ), // $this->name	
 			$widget_options,                  // $this->widget_options
 			$control_options                  // $this->control_options
 		);
@@ -83,7 +83,7 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		$args['limit'] = empty( $args['limit'] ) ? -1 : $args['limit'];
 
 		/* Some arguments must be set to the sidebar arguments to be output correctly. */
-		$args['title_li']        = apply_filters( 'widget_title', ( empty( $args['title_li'] ) ? __( 'Bookmarks', 'hybrid-core' ) : $args['title_li'] ), $instance, $this->id_base );
+		$args['title_li']        = apply_filters( 'widget_title', ( empty( $args['title_li'] ) ? __( 'Bookmarks', 'exmachina-core' ) : $args['title_li'] ), $instance, $this->id_base );
 		$args['title_before']    = $before_title;
 		$args['title_after']     = $after_title;
 		$args['category_before'] = $before_widget;
@@ -147,7 +147,7 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 
 		/* Set up the default form values. */
 		$defaults = array(
-			'title_li'         => esc_attr__( 'Bookmarks', 'hybrid-core' ),
+			'title_li'         => esc_attr__( 'Bookmarks', 'exmachina-core' ),
 			'categorize'       => true,
 			'category_order'   => 'ASC',
 			'category_orderby' => 'name',
@@ -179,42 +179,42 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		$bookmarks = get_bookmarks( array( 'hide_invisible' => false ) );
 
 		$category_order = array( 
-			'ASC'  => esc_attr__( 'Ascending', 'hybrid-core' ), 
-			'DESC' => esc_attr__( 'Descending', 'hybrid-core' ) 
+			'ASC'  => esc_attr__( 'Ascending', 'exmachina-core' ), 
+			'DESC' => esc_attr__( 'Descending', 'exmachina-core' ) 
 		);
 
 		$category_orderby = array( 
-			'count' => esc_attr__( 'Count', 'hybrid-core' ), 
-			'ID'    => esc_attr__( 'ID', 'hybrid-core' ), 
-			'name'  => esc_attr__( 'Name', 'hybrid-core' ), 
-			'slug'  => esc_attr__( 'Slug', 'hybrid-core' ) 
+			'count' => esc_attr__( 'Count', 'exmachina-core' ), 
+			'ID'    => esc_attr__( 'ID', 'exmachina-core' ), 
+			'name'  => esc_attr__( 'Name', 'exmachina-core' ), 
+			'slug'  => esc_attr__( 'Slug', 'exmachina-core' ) 
 		);
 
 		$order = array( 
-			'ASC'  => esc_attr__( 'Ascending', 'hybrid-core' ), 
-			'DESC' => esc_attr__( 'Descending', 'hybrid-core' ) 
+			'ASC'  => esc_attr__( 'Ascending', 'exmachina-core' ), 
+			'DESC' => esc_attr__( 'Descending', 'exmachina-core' ) 
 		);
 
 		$orderby = array( 
-			'id'          => esc_attr__( 'ID', 'hybrid-core' ), 
-			'description' => esc_attr__( 'Description', 'hybrid-core' ), 
-			'length'      => esc_attr__( 'Length', 'hybrid-core' ), 
-			'name'        => esc_attr__( 'Name', 'hybrid-core' ), 
-			'notes'       => esc_attr__( 'Notes', 'hybrid-core' ), 
-			'owner'       => esc_attr__( 'Owner', 'hybrid-core' ), 
-			'rand'        => esc_attr__( 'Random', 'hybrid-core' ), 
-			'rating'      => esc_attr__( 'Rating', 'hybrid-core' ), 
-			'rel'         => esc_attr__( 'Rel', 'hybrid-core' ), 
-			'rss'         => esc_attr__( 'RSS', 'hybrid-core' ), 
-			'target'      => esc_attr__( 'Target', 'hybrid-core' ), 
-			'updated'     => esc_attr__( 'Updated', 'hybrid-core' ), 
-			'url'         => esc_attr__( 'URL', 'hybrid-core' ) 
+			'id'          => esc_attr__( 'ID', 'exmachina-core' ), 
+			'description' => esc_attr__( 'Description', 'exmachina-core' ), 
+			'length'      => esc_attr__( 'Length', 'exmachina-core' ), 
+			'name'        => esc_attr__( 'Name', 'exmachina-core' ), 
+			'notes'       => esc_attr__( 'Notes', 'exmachina-core' ), 
+			'owner'       => esc_attr__( 'Owner', 'exmachina-core' ), 
+			'rand'        => esc_attr__( 'Random', 'exmachina-core' ), 
+			'rating'      => esc_attr__( 'Rating', 'exmachina-core' ), 
+			'rel'         => esc_attr__( 'Rel', 'exmachina-core' ), 
+			'rss'         => esc_attr__( 'RSS', 'exmachina-core' ), 
+			'target'      => esc_attr__( 'Target', 'exmachina-core' ), 
+			'updated'     => esc_attr__( 'Updated', 'exmachina-core' ), 
+			'url'         => esc_attr__( 'URL', 'exmachina-core' ) 
 		);
 		?>
 
-		<div class="hybrid-widget-controls columns-3">
+		<div class="exmachina-widget-controls columns-3">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title_li' ); ?>"><?php _e( 'Title:', 'hybrid-core' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title_li' ); ?>"><?php _e( 'Title:', 'exmachina-core' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title_li' ); ?>" name="<?php echo $this->get_field_name( 'title_li' ); ?>" value="<?php echo esc_attr( $instance['title_li'] ); ?>" />
 		</p>
 		<p>
@@ -256,7 +256,7 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 
 		</div>
 
-		<div class="hybrid-widget-controls columns-3">
+		<div class="exmachina-widget-controls columns-3">
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'limit' ); ?>"><code>limit</code></label>
@@ -301,7 +301,7 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 
 		</div>
 
-		<div class="hybrid-widget-controls columns-3 column-last">
+		<div class="exmachina-widget-controls columns-3 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'between' ); ?>"><code>between</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'between' ); ?>" name="<?php echo $this->get_field_name( 'between' ); ?>" value="<?php echo esc_attr( $instance['between'] ); ?>" />
@@ -316,35 +316,35 @@ class Hybrid_Widget_Bookmarks extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'categorize' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['categorize'], true ); ?> id="<?php echo $this->get_field_id( 'categorize' ); ?>" name="<?php echo $this->get_field_name( 'categorize' ); ?>" /> <?php _e( 'Categorize?', 'hybrid-core' ); ?> <code>categorize</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['categorize'], true ); ?> id="<?php echo $this->get_field_id( 'categorize' ); ?>" name="<?php echo $this->get_field_name( 'categorize' ); ?>" /> <?php _e( 'Categorize?', 'exmachina-core' ); ?> <code>categorize</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_description' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_description'], true ); ?> id="<?php echo $this->get_field_id( 'show_description' ); ?>" name="<?php echo $this->get_field_name( 'show_description' ); ?>" /> <?php _e( 'Show description?', 'hybrid-core' ); ?> <code>show_description</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_description'], true ); ?> id="<?php echo $this->get_field_id( 'show_description' ); ?>" name="<?php echo $this->get_field_name( 'show_description' ); ?>" /> <?php _e( 'Show description?', 'exmachina-core' ); ?> <code>show_description</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'hide_invisible' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['hide_invisible'], true ); ?> id="<?php echo $this->get_field_id( 'hide_invisible' ); ?>" name="<?php echo $this->get_field_name( 'hide_invisible' ); ?>" /> <?php _e( 'Hide invisible?', 'hybrid-core' ); ?> <code>hide_invisible</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['hide_invisible'], true ); ?> id="<?php echo $this->get_field_id( 'hide_invisible' ); ?>" name="<?php echo $this->get_field_name( 'hide_invisible' ); ?>" /> <?php _e( 'Hide invisible?', 'exmachina-core' ); ?> <code>hide_invisible</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_rating' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_rating'], true ); ?> id="<?php echo $this->get_field_id( 'show_rating' ); ?>" name="<?php echo $this->get_field_name( 'show_rating' ); ?>" /> <?php _e( 'Show rating?', 'hybrid-core' ); ?> <code>show_rating</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_rating'], true ); ?> id="<?php echo $this->get_field_id( 'show_rating' ); ?>" name="<?php echo $this->get_field_name( 'show_rating' ); ?>" /> <?php _e( 'Show rating?', 'exmachina-core' ); ?> <code>show_rating</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_updated' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_updated'], true ); ?> id="<?php echo $this->get_field_id( 'show_updated' ); ?>" name="<?php echo $this->get_field_name( 'show_updated' ); ?>" /> <?php _e( 'Show updated?', 'hybrid-core' ); ?> <code>show_updated</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_updated'], true ); ?> id="<?php echo $this->get_field_id( 'show_updated' ); ?>" name="<?php echo $this->get_field_name( 'show_updated' ); ?>" /> <?php _e( 'Show updated?', 'exmachina-core' ); ?> <code>show_updated</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_images' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_images'], true ); ?> id="<?php echo $this->get_field_id( 'show_images' ); ?>" name="<?php echo $this->get_field_name( 'show_images' ); ?>" /> <?php _e( 'Show images?', 'hybrid-core' ); ?> <code>show_images</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_images'], true ); ?> id="<?php echo $this->get_field_id( 'show_images' ); ?>" name="<?php echo $this->get_field_name( 'show_images' ); ?>" /> <?php _e( 'Show images?', 'exmachina-core' ); ?> <code>show_images</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_name' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_name'], true ); ?> id="<?php echo $this->get_field_id( 'show_name' ); ?>" name="<?php echo $this->get_field_name( 'show_name' ); ?>" /> <?php _e( 'Show name?', 'hybrid-core' ); ?> <code>show_name</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_name'], true ); ?> id="<?php echo $this->get_field_id( 'show_name' ); ?>" name="<?php echo $this->get_field_name( 'show_name' ); ?>" /> <?php _e( 'Show name?', 'exmachina-core' ); ?> <code>show_name</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_private' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_private'], true ); ?> id="<?php echo $this->get_field_id( 'show_private' ); ?>" name="<?php echo $this->get_field_name( 'show_private' ); ?>" /> <?php _e( 'Show private?', 'hybrid-core' ); ?> <code>show_private</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_private'], true ); ?> id="<?php echo $this->get_field_id( 'show_private' ); ?>" name="<?php echo $this->get_field_name( 'show_private' ); ?>" /> <?php _e( 'Show private?', 'exmachina-core' ); ?> <code>show_private</code></label>
 		</p>
 
 		</div>

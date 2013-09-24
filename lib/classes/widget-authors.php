@@ -4,11 +4,11 @@
  * there was no equivalent WordPress widget that offered the functionality. This widget allows full
  * control over its output by giving access to the parameters of wp_list_authors().
  *
- * @package    Hybrid
+ * @package    ExMachina
  * @subpackage Classes
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -17,7 +17,7 @@
  *
  * @since 0.6.0
  */
-class Hybrid_Widget_Authors extends WP_Widget {
+class ExMachina_Widget_Authors extends WP_Widget {
 
 	/**
 	 * Set up the widget's unique name, ID, class, description, and other options.
@@ -29,7 +29,7 @@ class Hybrid_Widget_Authors extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname'   => 'authors',
-			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your author lists.', 'hybrid-core' )
+			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your author lists.', 'exmachina-core' )
 		);
 
 		/* Set up the widget control options. */
@@ -40,8 +40,8 @@ class Hybrid_Widget_Authors extends WP_Widget {
 
 		/* Create the widget. */
 		$this->WP_Widget(
-			'hybrid-authors',               // $this->id_base
-			__( 'Authors', 'hybrid-core' ), // $this->name
+			'exmachina-authors',               // $this->id_base
+			__( 'Authors', 'exmachina-core' ), // $this->name
 			$widget_options,                // $this->widget_options
 			$control_options                // $this->control_options
 		);
@@ -120,7 +120,7 @@ class Hybrid_Widget_Authors extends WP_Widget {
 
 		/* Set up the default form values. */
 		$defaults = array(
-			'title'         => esc_attr__( 'Authors', 'hybrid-core' ),
+			'title'         => esc_attr__( 'Authors', 'exmachina-core' ),
 			'order'         => 'ASC',
 			'orderby'       => 'display_name',
 			'number'        => '',
@@ -138,26 +138,26 @@ class Hybrid_Widget_Authors extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
 		$order = array( 
-			'ASC'  => esc_attr__( 'Ascending', 'hybrid-core' ), 
-			'DESC' => esc_attr__( 'Descending', 'hybrid-core' ) 
+			'ASC'  => esc_attr__( 'Ascending', 'exmachina-core' ), 
+			'DESC' => esc_attr__( 'Descending', 'exmachina-core' ) 
 		);
 
 		$orderby = array( 
-			'display_name' => esc_attr__( 'Display Name', 'hybrid-core' ), 
-			'email'        => esc_attr__( 'Email', 'hybrid-core' ), 
-			'ID'           => esc_attr__( 'ID', 'hybrid-core' ), 
-			'nicename'     => esc_attr__( 'Nice Name', 'hybrid-core' ), 
-			'post_count'   => esc_attr__( 'Post Count', 'hybrid-core' ), 
-			'registered'   => esc_attr__( 'Registered', 'hybrid-core' ), 
-			'url'          => esc_attr__( 'URL', 'hybrid-core' ), 
-			'user_login'   => esc_attr__( 'Login', 'hybrid-core' ) 
+			'display_name' => esc_attr__( 'Display Name', 'exmachina-core' ), 
+			'email'        => esc_attr__( 'Email', 'exmachina-core' ), 
+			'ID'           => esc_attr__( 'ID', 'exmachina-core' ), 
+			'nicename'     => esc_attr__( 'Nice Name', 'exmachina-core' ), 
+			'post_count'   => esc_attr__( 'Post Count', 'exmachina-core' ), 
+			'registered'   => esc_attr__( 'Registered', 'exmachina-core' ), 
+			'url'          => esc_attr__( 'URL', 'exmachina-core' ), 
+			'user_login'   => esc_attr__( 'Login', 'exmachina-core' ) 
 		);
 
 		?>
 
-		<div class="hybrid-widget-controls columns-2">
+		<div class="exmachina-widget-controls columns-2">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hybrid-core' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'exmachina-core' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
@@ -183,14 +183,14 @@ class Hybrid_Widget_Authors extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'style' ); ?>"><code>style</code></label> 
 			<select class="widefat" id="<?php echo $this->get_field_id( 'style' ); ?>" name="<?php echo $this->get_field_name( 'style' ); ?>">
-				<?php foreach ( array( 'list' => esc_attr__( 'List', 'hybrid-core'), 'none' => esc_attr__( 'None', 'hybrid-core' ) ) as $option_value => $option_label ) { ?>
+				<?php foreach ( array( 'list' => esc_attr__( 'List', 'exmachina-core'), 'none' => esc_attr__( 'None', 'exmachina-core' ) ) as $option_value => $option_label ) { ?>
 					<option value="<?php echo esc_attr( $option_value ); ?>" <?php selected( $instance['style'], $option_value ); ?>><?php echo esc_html( $option_label ); ?></option>
 				<?php } ?>
 			</select>
 		</p>
 		</div>
 
-		<div class="hybrid-widget-controls columns-2 column-last">
+		<div class="exmachina-widget-controls columns-2 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'feed' ); ?>"><code>feed</code></label>
 			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'feed' ); ?>" name="<?php echo $this->get_field_name( 'feed' ); ?>" value="<?php echo esc_attr( $instance['feed'] ); ?>" />
@@ -201,23 +201,23 @@ class Hybrid_Widget_Authors extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'html' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['html'], true ); ?> id="<?php echo $this->get_field_id( 'html' ); ?>" name="<?php echo $this->get_field_name( 'html' ); ?>" /> <?php _e( '<acronym title="Hypertext Markup Language">HTML</acronym>?', 'hybrid-core' ); ?> <code>html</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['html'], true ); ?> id="<?php echo $this->get_field_id( 'html' ); ?>" name="<?php echo $this->get_field_name( 'html' ); ?>" /> <?php _e( '<acronym title="Hypertext Markup Language">HTML</acronym>?', 'exmachina-core' ); ?> <code>html</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'optioncount' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['optioncount'], true ); ?> id="<?php echo $this->get_field_id( 'optioncount' ); ?>" name="<?php echo $this->get_field_name( 'optioncount' ); ?>" /> <?php _e( 'Show post count?', 'hybrid-core' ); ?> <code>optioncount</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['optioncount'], true ); ?> id="<?php echo $this->get_field_id( 'optioncount' ); ?>" name="<?php echo $this->get_field_name( 'optioncount' ); ?>" /> <?php _e( 'Show post count?', 'exmachina-core' ); ?> <code>optioncount</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'exclude_admin' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['exclude_admin'], true ); ?> id="<?php echo $this->get_field_id( 'exclude_admin' ); ?>" name="<?php echo $this->get_field_name( 'exclude_admin' ); ?>" /> <?php _e( 'Exclude admin?', 'hybrid-core' ); ?> <code>exclude_admin</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['exclude_admin'], true ); ?> id="<?php echo $this->get_field_id( 'exclude_admin' ); ?>" name="<?php echo $this->get_field_name( 'exclude_admin' ); ?>" /> <?php _e( 'Exclude admin?', 'exmachina-core' ); ?> <code>exclude_admin</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'show_fullname' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_fullname'], true ); ?> id="<?php echo $this->get_field_id( 'show_fullname' ); ?>" name="<?php echo $this->get_field_name( 'show_fullname' ); ?>" /> <?php _e( 'Show full name?', 'hybrid-core' ); ?> <code>show_fullname</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_fullname'], true ); ?> id="<?php echo $this->get_field_id( 'show_fullname' ); ?>" name="<?php echo $this->get_field_name( 'show_fullname' ); ?>" /> <?php _e( 'Show full name?', 'exmachina-core' ); ?> <code>show_fullname</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'hide_empty' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['hide_empty'], true ); ?> id="<?php echo $this->get_field_id( 'hide_empty' ); ?>" name="<?php echo $this->get_field_name( 'hide_empty' ); ?>" /> <?php _e( 'Hide empty?', 'hybrid-core' ); ?> <code>hide_empty</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['hide_empty'], true ); ?> id="<?php echo $this->get_field_id( 'hide_empty' ); ?>" name="<?php echo $this->get_field_name( 'hide_empty' ); ?>" /> <?php _e( 'Hide empty?', 'exmachina-core' ); ?> <code>hide_empty</code></label>
 		</p>
 		</div>
 		<div style="clear:both;">&nbsp;</div>

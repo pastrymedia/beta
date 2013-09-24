@@ -14,7 +14,7 @@ function beta_theme_inc() {
 	/* Customizer additions. */
 	require $beta_inc . '/inc/functions/customizer.php';
 
-	/* override hybrid code. */
+	/* override exmachina code. */
 	require $beta_inc . '/inc/functions/override.php';
 
 	/* image function */
@@ -49,7 +49,7 @@ function beta_theme_inc() {
 	/* Load  footer widgets extension if supported. */
 	require_if_theme_supports( 'beta-footer-widgets', $beta_inc . '/inc/extensions/footer-widgets.php' );
 
-	remove_action( 'wp_head', 'hybrid_meta_template', 4 );
+	remove_action( 'wp_head', 'exmachina_meta_template', 4 );
 
 }
 

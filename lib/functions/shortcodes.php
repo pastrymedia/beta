@@ -4,18 +4,18 @@
  * editor.  Their purpose is to make it easier for users to filter hooks without having to know too much PHP code
  * and to provide access to specific functionality in other (non-post content) shortcode-aware areas.  Note that 
  * some shortcodes are specific to posts and comments and would be useless outside of the post and comment 
- * loops.  To use the shortcodes, a theme must register support for 'hybrid-core-shortcodes'.
+ * loops.  To use the shortcodes, a theme must register support for 'exmachina-core-shortcodes'.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Register shortcodes. */
-add_action( 'init', 'hybrid_add_shortcodes' );
+add_action( 'init', 'exmachina_add_shortcodes' );
 
 /**
  * Creates new shortcodes for use in any shortcode-ready area.  This function uses the add_shortcode() 
@@ -27,35 +27,35 @@ add_action( 'init', 'hybrid_add_shortcodes' );
  * @link http://codex.wordpress.org/Shortcode_API
  * @return void
  */
-function hybrid_add_shortcodes() {
+function exmachina_add_shortcodes() {
 
 	/* Add theme-specific shortcodes. */
-	add_shortcode( 'the-year',      'hybrid_the_year_shortcode' );
-	add_shortcode( 'site-link',     'hybrid_site_link_shortcode' );
-	add_shortcode( 'wp-link',       'hybrid_wp_link_shortcode' );
-	add_shortcode( 'theme-link',    'hybrid_theme_link_shortcode' );
-	add_shortcode( 'child-link',    'hybrid_child_link_shortcode' );
-	add_shortcode( 'loginout-link', 'hybrid_loginout_link_shortcode' );
-	add_shortcode( 'query-counter', 'hybrid_query_counter_shortcode' );
-	add_shortcode( 'nav-menu',      'hybrid_nav_menu_shortcode' );
+	add_shortcode( 'the-year',      'exmachina_the_year_shortcode' );
+	add_shortcode( 'site-link',     'exmachina_site_link_shortcode' );
+	add_shortcode( 'wp-link',       'exmachina_wp_link_shortcode' );
+	add_shortcode( 'theme-link',    'exmachina_theme_link_shortcode' );
+	add_shortcode( 'child-link',    'exmachina_child_link_shortcode' );
+	add_shortcode( 'loginout-link', 'exmachina_loginout_link_shortcode' );
+	add_shortcode( 'query-counter', 'exmachina_query_counter_shortcode' );
+	add_shortcode( 'nav-menu',      'exmachina_nav_menu_shortcode' );
 
 	/* Add entry-specific shortcodes. */
-	add_shortcode( 'entry-title',         'hybrid_entry_title_shortcode' );
-	add_shortcode( 'entry-author',        'hybrid_entry_author_shortcode' );
-	add_shortcode( 'entry-terms',         'hybrid_entry_terms_shortcode' );
-	add_shortcode( 'entry-comments-link', 'hybrid_entry_comments_link_shortcode' );
-	add_shortcode( 'entry-published',     'hybrid_entry_published_shortcode' );
-	add_shortcode( 'entry-edit-link',     'hybrid_entry_edit_link_shortcode' );
-	add_shortcode( 'entry-shortlink',     'hybrid_entry_shortlink_shortcode' );
-	add_shortcode( 'entry-permalink',     'hybrid_entry_permalink_shortcode' );
-	add_shortcode( 'post-format-link',    'hybrid_post_format_link_shortcode' );
+	add_shortcode( 'entry-title',         'exmachina_entry_title_shortcode' );
+	add_shortcode( 'entry-author',        'exmachina_entry_author_shortcode' );
+	add_shortcode( 'entry-terms',         'exmachina_entry_terms_shortcode' );
+	add_shortcode( 'entry-comments-link', 'exmachina_entry_comments_link_shortcode' );
+	add_shortcode( 'entry-published',     'exmachina_entry_published_shortcode' );
+	add_shortcode( 'entry-edit-link',     'exmachina_entry_edit_link_shortcode' );
+	add_shortcode( 'entry-shortlink',     'exmachina_entry_shortlink_shortcode' );
+	add_shortcode( 'entry-permalink',     'exmachina_entry_permalink_shortcode' );
+	add_shortcode( 'post-format-link',    'exmachina_post_format_link_shortcode' );
 
 	/* Add comment-specific shortcodes. */
-	add_shortcode( 'comment-published',  'hybrid_comment_published_shortcode' );
-	add_shortcode( 'comment-author',     'hybrid_comment_author_shortcode' );
-	add_shortcode( 'comment-edit-link',  'hybrid_comment_edit_link_shortcode' );
-	add_shortcode( 'comment-reply-link', 'hybrid_comment_reply_link_shortcode' );
-	add_shortcode( 'comment-permalink',  'hybrid_comment_permalink_shortcode' );
+	add_shortcode( 'comment-published',  'exmachina_comment_published_shortcode' );
+	add_shortcode( 'comment-author',     'exmachina_comment_author_shortcode' );
+	add_shortcode( 'comment-edit-link',  'exmachina_comment_edit_link_shortcode' );
+	add_shortcode( 'comment-reply-link', 'exmachina_comment_reply_link_shortcode' );
+	add_shortcode( 'comment-permalink',  'exmachina_comment_permalink_shortcode' );
 }
 
 /**
@@ -66,8 +66,8 @@ function hybrid_add_shortcodes() {
  * @uses date() Gets the current year.
  * @return string
  */
-function hybrid_the_year_shortcode() {
-	return date( __( 'Y', 'hybrid-core' ) );
+function exmachina_the_year_shortcode() {
+	return date( __( 'Y', 'exmachina-core' ) );
 }
 
 /**
@@ -78,7 +78,7 @@ function hybrid_the_year_shortcode() {
  * @uses get_bloginfo() Gets information about the install.
  * @return string
  */
-function hybrid_site_link_shortcode() {
+function exmachina_site_link_shortcode() {
 	return '<a class="site-link" href="' . home_url() . '" title="' . esc_attr( get_bloginfo( 'name' ) ) . '" rel="home"><span>' . get_bloginfo( 'name' ) . '</span></a>';
 }
 
@@ -89,8 +89,8 @@ function hybrid_site_link_shortcode() {
  * @access public
  * @return string
  */
-function hybrid_wp_link_shortcode() {
-	return '<a class="wp-link" href="http://wordpress.org" title="' . esc_attr__( 'State-of-the-art semantic personal publishing platform', 'hybrid-core' ) . '"><span>' . __( 'WordPress', 'hybrid-core' ) . '</span></a>';
+function exmachina_wp_link_shortcode() {
+	return '<a class="wp-link" href="http://wordpress.org" title="' . esc_attr__( 'State-of-the-art semantic personal publishing platform', 'exmachina-core' ) . '"><span>' . __( 'WordPress', 'exmachina-core' ) . '</span></a>';
 }
 
 /**
@@ -101,9 +101,9 @@ function hybrid_wp_link_shortcode() {
  * @uses get_theme_data() Gets theme (parent theme) information.
  * @return string
  */
-function hybrid_theme_link_shortcode() {
+function exmachina_theme_link_shortcode() {
 	$theme = wp_get_theme( get_template() );
-	return '<a class="theme-link" href="' . esc_url( $theme->get( 'ThemeURI' ) ) . '" title="' . sprintf( esc_attr__( '%s WordPress Theme', 'hybrid-core' ), $theme->get( 'Name' ) ) . '"><span>' . esc_attr( $theme->get( 'Name' ) ) . '</span></a>';
+	return '<a class="theme-link" href="' . esc_url( $theme->get( 'ThemeURI' ) ) . '" title="' . sprintf( esc_attr__( '%s WordPress Theme', 'exmachina-core' ), $theme->get( 'Name' ) ) . '"><span>' . esc_attr( $theme->get( 'Name' ) ) . '</span></a>';
 }
 
 /**
@@ -114,7 +114,7 @@ function hybrid_theme_link_shortcode() {
  * @uses get_theme_data() Gets theme (child theme) information.
  * @return string
  */
-function hybrid_child_link_shortcode() {
+function exmachina_child_link_shortcode() {
 	$theme = wp_get_theme();
 	return '<a class="child-link" href="' . esc_url( $theme->get( 'ThemeURI' ) ) . '" title="' . esc_attr( $theme->get( 'Name' ) ) . '"><span>' . esc_html( $theme->get( 'Name' ) ) . '</span></a>';
 }
@@ -129,11 +129,11 @@ function hybrid_child_link_shortcode() {
  * @uses wp_login_url() Creates a login URL.
  * @return string
  */
-function hybrid_loginout_link_shortcode() {
+function exmachina_loginout_link_shortcode() {
 	if ( is_user_logged_in() )
-		$out = '<a class="logout-link" href="' . esc_url( wp_logout_url( site_url( $_SERVER['REQUEST_URI'] ) ) ) . '" title="' . esc_attr__( 'Log out', 'hybrid-core' ) . '">' . __( 'Log out', 'hybrid-core' ) . '</a>';
+		$out = '<a class="logout-link" href="' . esc_url( wp_logout_url( site_url( $_SERVER['REQUEST_URI'] ) ) ) . '" title="' . esc_attr__( 'Log out', 'exmachina-core' ) . '">' . __( 'Log out', 'exmachina-core' ) . '</a>';
 	else
-		$out = '<a class="login-link" href="' . esc_url( wp_login_url( site_url( $_SERVER['REQUEST_URI'] ) ) ) . '" title="' . esc_attr__( 'Log in', 'hybrid-core' ) . '">' . __( 'Log in', 'hybrid-core' ) . '</a>';
+		$out = '<a class="login-link" href="' . esc_url( wp_login_url( site_url( $_SERVER['REQUEST_URI'] ) ) ) . '" title="' . esc_attr__( 'Log in', 'exmachina-core' ) . '">' . __( 'Log in', 'exmachina-core' ) . '</a>';
 
 	return $out;
 }
@@ -146,9 +146,9 @@ function hybrid_loginout_link_shortcode() {
  * @uses current_user_can() Checks if the current user can edit themes.
  * @return string
  */
-function hybrid_query_counter_shortcode() {
+function exmachina_query_counter_shortcode() {
 	if ( current_user_can( 'edit_theme_options' ) )
-		return sprintf( __( 'This page loaded in %1$s seconds with %2$s database queries.', 'hybrid-core' ), timer_stop( 0, 3 ), get_num_queries() );
+		return sprintf( __( 'This page loaded in %1$s seconds with %2$s database queries.', 'exmachina-core' ), timer_stop( 0, 3 ), get_num_queries() );
 	return '';
 }
 
@@ -160,7 +160,7 @@ function hybrid_query_counter_shortcode() {
  * @uses wp_nav_menu() Displays the nav menu.
  * @return string
  */
-function hybrid_nav_menu_shortcode( $attr ) {
+function exmachina_nav_menu_shortcode( $attr ) {
 
 	$attr = shortcode_atts(
 		array(
@@ -193,7 +193,7 @@ function hybrid_nav_menu_shortcode( $attr ) {
  * @param array $attr
  * @return string
  */
-function hybrid_entry_edit_link_shortcode( $attr ) {
+function exmachina_entry_edit_link_shortcode( $attr ) {
 
 	$post_type = get_post_type_object( get_post_type() );
 
@@ -202,7 +202,7 @@ function hybrid_entry_edit_link_shortcode( $attr ) {
 
 	$attr = shortcode_atts( array( 'before' => '', 'after' => '' ), $attr, 'entry-edit-link' );
 
-	return $attr['before'] . '<span class="edit"><a class="post-edit-link" href="' . esc_url( get_edit_post_link( get_the_ID() ) ) . '" title="' . sprintf( esc_attr__( 'Edit %1$s', 'hybrid-core' ), $post_type->labels->singular_name ) . '">' . __( 'Edit', 'hybrid-core' ) . '</a></span>' . $attr['after'];
+	return $attr['before'] . '<span class="edit"><a class="post-edit-link" href="' . esc_url( get_edit_post_link( get_the_ID() ) ) . '" title="' . sprintf( esc_attr__( 'Edit %1$s', 'exmachina-core' ), $post_type->labels->singular_name ) . '">' . __( 'Edit', 'exmachina-core' ) . '</a></span>' . $attr['after'];
 }
 
 /**
@@ -213,7 +213,7 @@ function hybrid_entry_edit_link_shortcode( $attr ) {
  * @param array $attr
  * @return string
  */
-function hybrid_entry_published_shortcode( $attr ) {
+function exmachina_entry_published_shortcode( $attr ) {
 
 	$attr = shortcode_atts( 
 		array( 
@@ -234,7 +234,7 @@ function hybrid_entry_published_shortcode( $attr ) {
 	else
 		$time = get_the_time( $attr['format'] );
 
-	$published = '<time class="published" datetime="' . get_the_time( 'Y-m-d\TH:i:sP' ) . '" title="' . get_the_time( esc_attr__( 'l, F jS, Y, g:i a', 'hybrid-core' ) ) . '">' . $time . '</time>';
+	$published = '<time class="published" datetime="' . get_the_time( 'Y-m-d\TH:i:sP' ) . '" title="' . get_the_time( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '">' . $time . '</time>';
 
 	return $attr['before'] . $published . $attr['after'];
 }
@@ -247,16 +247,16 @@ function hybrid_entry_published_shortcode( $attr ) {
  * @param array $attr
  * @return string
  */
-function hybrid_entry_comments_link_shortcode( $attr ) {
+function exmachina_entry_comments_link_shortcode( $attr ) {
 
 	$comments_link = '';
 	$number = doubleval( get_comments_number() );
 
 	$attr = shortcode_atts( 
 		array( 
-			'zero'      => __( 'Leave a response', 'hybrid-core' ), 
-			'one'       => __( '%1$s Response', 'hybrid-core' ), 
-			'more'      => __( '%1$s Responses', 'hybrid-core' ), 
+			'zero'      => __( 'Leave a response', 'exmachina-core' ), 
+			'one'       => __( '%1$s Response', 'exmachina-core' ), 
+			'more'      => __( '%1$s Responses', 'exmachina-core' ), 
 			'css_class' => 'comments-link', 
 			'none'      => '', 
 			'before'    => '', 
@@ -271,11 +271,11 @@ function hybrid_entry_comments_link_shortcode( $attr ) {
 			$comments_link = '<span class="' . esc_attr( $attr['css_class'] ) . '">' . sprintf( $attr['none'], number_format_i18n( $number ) ) . '</span>';
 	}
 	elseif ( 0 == $number )
-		$comments_link = '<a class="' . esc_attr( $attr['css_class'] ) . '" href="' . get_permalink() . '#respond" title="' . sprintf( esc_attr__( 'Comment on %1$s', 'hybrid-core' ), the_title_attribute( 'echo=0' ) ) . '">' . sprintf( $attr['zero'], number_format_i18n( $number ) ) . '</a>';
+		$comments_link = '<a class="' . esc_attr( $attr['css_class'] ) . '" href="' . get_permalink() . '#respond" title="' . sprintf( esc_attr__( 'Comment on %1$s', 'exmachina-core' ), the_title_attribute( 'echo=0' ) ) . '">' . sprintf( $attr['zero'], number_format_i18n( $number ) ) . '</a>';
 	elseif ( 1 == $number )
-		$comments_link = '<a class="' . esc_attr( $attr['css_class'] ) . '" href="' . get_comments_link() . '" title="' . sprintf( esc_attr__( 'Comment on %1$s', 'hybrid-core' ), the_title_attribute( 'echo=0' ) ) . '">' . sprintf( $attr['one'], number_format_i18n( $number ) ) . '</a>';
+		$comments_link = '<a class="' . esc_attr( $attr['css_class'] ) . '" href="' . get_comments_link() . '" title="' . sprintf( esc_attr__( 'Comment on %1$s', 'exmachina-core' ), the_title_attribute( 'echo=0' ) ) . '">' . sprintf( $attr['one'], number_format_i18n( $number ) ) . '</a>';
 	elseif ( 1 < $number )
-		$comments_link = '<a class="' . esc_attr( $attr['css_class'] ) . '" href="' . get_comments_link() . '" title="' . sprintf( esc_attr__( 'Comment on %1$s', 'hybrid-core' ), the_title_attribute( 'echo=0' ) ) . '">' . sprintf( $attr['more'], number_format_i18n( $number ) ) . '</a>';
+		$comments_link = '<a class="' . esc_attr( $attr['css_class'] ) . '" href="' . get_comments_link() . '" title="' . sprintf( esc_attr__( 'Comment on %1$s', 'exmachina-core' ), the_title_attribute( 'echo=0' ) ) . '">' . sprintf( $attr['more'], number_format_i18n( $number ) ) . '</a>';
 
 	if ( $comments_link )
 		$comments_link = $attr['before'] . $comments_link . $attr['after'];
@@ -291,7 +291,7 @@ function hybrid_entry_comments_link_shortcode( $attr ) {
  * @param array $attr
  * @return string
  */
-function hybrid_entry_author_shortcode( $attr ) {
+function exmachina_entry_author_shortcode( $attr ) {
 
 	$post_type = get_post_type();
 
@@ -322,7 +322,7 @@ function hybrid_entry_author_shortcode( $attr ) {
  * @param array $attr
  * @return string
  */
-function hybrid_entry_terms_shortcode( $attr ) {
+function exmachina_entry_terms_shortcode( $attr ) {
 
 	$attr = shortcode_atts( 
 		array( 
@@ -349,7 +349,7 @@ function hybrid_entry_terms_shortcode( $attr ) {
  * @access public
  * @return string
  */
-function hybrid_entry_title_shortcode( $attr ) {
+function exmachina_entry_title_shortcode( $attr ) {
 
 	$attr = shortcode_atts(
 		array( 
@@ -378,11 +378,11 @@ function hybrid_entry_title_shortcode( $attr ) {
  * @access public
  * @return string
  */
-function hybrid_entry_shortlink_shortcode( $attr ) {
+function exmachina_entry_shortlink_shortcode( $attr ) {
 
 	$attr = shortcode_atts(
 		array(
-			'text' => __( 'Shortlink', 'hybrid-core' ),
+			'text' => __( 'Shortlink', 'exmachina-core' ),
 			'title' => the_title_attribute( array( 'echo' => false ) ),
 			'before' => '',
 			'after' => ''
@@ -403,11 +403,11 @@ function hybrid_entry_shortlink_shortcode( $attr ) {
  * @param array $attr The shortcode arguments.
  * @return string A permalink back to the post.
  */
-function hybrid_entry_permalink_shortcode( $attr ) {
+function exmachina_entry_permalink_shortcode( $attr ) {
 
 	$attr = shortcode_atts( array( 'before' => '', 'after' => '' ), $attr, 'entry-permalink' );
 
-	return $attr['before'] . '<a href="' . esc_url( get_permalink() ) . '" class="permalink">' . __( 'Permalink', 'hybrid-core' ) . '</a>' . $attr['after'];
+	return $attr['before'] . '<a href="' . esc_url( get_permalink() ) . '" class="permalink">' . __( 'Permalink', 'exmachina-core' ) . '</a>' . $attr['after'];
 }
 
 /**
@@ -418,7 +418,7 @@ function hybrid_entry_permalink_shortcode( $attr ) {
  * @param array $attr The shortcode arguments.
  * @return string A link to the post format archive.
  */
-function hybrid_post_format_link_shortcode( $attr ) {
+function exmachina_post_format_link_shortcode( $attr ) {
 
 	$attr = shortcode_atts( array( 'before' => '', 'after' => '' ), $attr, 'post-format-link' );
 	$format = get_post_format();
@@ -434,7 +434,7 @@ function hybrid_post_format_link_shortcode( $attr ) {
  * @access public
  * @return string
  */
-function hybrid_comment_published_shortcode( $attr ) {
+function exmachina_comment_published_shortcode( $attr ) {
 
 	$attr = shortcode_atts(
 		array(
@@ -448,11 +448,11 @@ function hybrid_comment_published_shortcode( $attr ) {
 
 	/* If $human_time is passed in, allow for '%s ago' where '%s' is the return value of human_time_diff(). */
 	if ( !empty( $attr['human_time'] ) )
-		$published = '<time class="published" datetime="' . get_comment_time( 'Y-m-d\TH:i:sP' ) . '" title="' . get_comment_date( esc_attr__( 'l, F jS, Y, g:i a', 'hybrid-core' ) ) . '">' . sprintf( $attr['human_time'], human_time_diff( get_comment_time( 'U' ), current_time( 'timestamp' ) ) ) . '</time>';
+		$published = '<time class="published" datetime="' . get_comment_time( 'Y-m-d\TH:i:sP' ) . '" title="' . get_comment_date( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '">' . sprintf( $attr['human_time'], human_time_diff( get_comment_time( 'U' ), current_time( 'timestamp' ) ) ) . '</time>';
 
 	/* Else, just return the default. */
 	else
-		$published = '<span class="published">' . sprintf( __( '%1$s at %2$s', 'hybrid-core' ), '<time class="comment-date" datetime="' . get_comment_time( 'Y-m-d\TH:i:sP' ) . '" title="' . get_comment_date( esc_attr__( 'l, F jS, Y, g:i a', 'hybrid-core' ) ) . '">' . get_comment_date() . '</time>', '<time class="comment-time" title="' . get_comment_date( esc_attr__( 'l, F jS, Y, g:i a', 'hybrid-core' ) ) . '">' . get_comment_time() . '</time>' ) . '</span>';
+		$published = '<span class="published">' . sprintf( __( '%1$s at %2$s', 'exmachina-core' ), '<time class="comment-date" datetime="' . get_comment_time( 'Y-m-d\TH:i:sP' ) . '" title="' . get_comment_date( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '">' . get_comment_date() . '</time>', '<time class="comment-time" title="' . get_comment_date( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '">' . get_comment_time() . '</time>' ) . '</span>';
 
 	return $attr['before'] . $published . $attr['after'];
 }
@@ -465,7 +465,7 @@ function hybrid_comment_published_shortcode( $attr ) {
  * @global $comment The current comment's DB object.
  * @return string
  */
-function hybrid_comment_author_shortcode( $attr ) {
+function exmachina_comment_author_shortcode( $attr ) {
 	global $comment;
 
 	$attr = shortcode_atts(
@@ -499,11 +499,11 @@ function hybrid_comment_author_shortcode( $attr ) {
  * @access public
  * @return string
  */
-function hybrid_comment_permalink_shortcode( $attr ) {
+function exmachina_comment_permalink_shortcode( $attr ) {
 	global $comment;
 
 	$attr = shortcode_atts( array( 'before' => '', 'after' => '' ), $attr, 'comment-permalink' );
-	$link = '<a class="permalink" href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '" title="' . sprintf( esc_attr__( 'Permalink to comment %1$s', 'hybrid-core' ), $comment->comment_ID ) . '">' . __( 'Permalink', 'hybrid-core' ) . '</a>';
+	$link = '<a class="permalink" href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '" title="' . sprintf( esc_attr__( 'Permalink to comment %1$s', 'exmachina-core' ), $comment->comment_ID ) . '">' . __( 'Permalink', 'exmachina-core' ) . '</a>';
 	return $attr['before'] . $link . $attr['after'];
 }
 
@@ -514,7 +514,7 @@ function hybrid_comment_permalink_shortcode( $attr ) {
  * @access public
  * @return string
  */
-function hybrid_comment_edit_link_shortcode( $attr ) {
+function exmachina_comment_edit_link_shortcode( $attr ) {
 	global $comment;
 
 	$edit_link = get_edit_comment_link( $comment->comment_ID );
@@ -524,7 +524,7 @@ function hybrid_comment_edit_link_shortcode( $attr ) {
 
 	$attr = shortcode_atts( array( 'before' => '', 'after' => '' ), $attr, 'comment-edit-link' );
 
-	$link = '<a class="comment-edit-link" href="' . esc_url( $edit_link ) . '" title="' . sprintf( esc_attr__( 'Edit %1$s', 'hybrid-core' ), $comment->comment_type ) . '"><span class="edit">' . __( 'Edit', 'hybrid-core' ) . '</span></a>';
+	$link = '<a class="comment-edit-link" href="' . esc_url( $edit_link ) . '" title="' . sprintf( esc_attr__( 'Edit %1$s', 'exmachina-core' ), $comment->comment_type ) . '"><span class="edit">' . __( 'Edit', 'exmachina-core' ) . '</span></a>';
 	$link = apply_filters( 'edit_comment_link', $link, $comment->comment_ID );
 
 	return $attr['before'] . $link . $attr['after'];
@@ -537,14 +537,14 @@ function hybrid_comment_edit_link_shortcode( $attr ) {
  * @access public
  * @return string
  */
-function hybrid_comment_reply_link_shortcode( $attr ) {
+function exmachina_comment_reply_link_shortcode( $attr ) {
 
 	if ( !get_option( 'thread_comments' ) || 'comment' !== get_comment_type() )
 		return '';
 
 	$defaults = array(
-		'reply_text' => __( 'Reply', 'hybrid-core' ),
-		'login_text' => __( 'Log in to reply.', 'hybrid-core' ),
+		'reply_text' => __( 'Reply', 'exmachina-core' ),
+		'login_text' => __( 'Log in to reply.', 'exmachina-core' ),
 		'depth' => intval( $GLOBALS['comment_depth'] ),
 		'max_depth' => get_option( 'thread_comments_depth' ),
 		'before' => '',

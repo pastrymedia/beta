@@ -9,7 +9,7 @@ if ( is_admin() ) {
 		$page = add_theme_page( 
 			sprintf( esc_html__( 'Beta Child Themes', 'beta' ) ),	// Settings page name.
 			esc_html__( 'Beta Child Themes', 'beta' ), 			// Menu item name.
-			hybrid_settings_page_capability(), 						// Required capability.
+			exmachina_settings_page_capability(), 						// Required capability.
 			'beta-child-themes', 									// Screen name.
 			'beta_child_themes_list' );							// Callback function.
 

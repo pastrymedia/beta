@@ -1,7 +1,7 @@
 <?php
 /**
  * Functions for registering and setting theme settings that tie into the WordPress theme customizer.  
- * This file loads additional classes and adds settings to the customizer for the built-in Hybrid Core 
+ * This file loads additional classes and adds settings to the customizer for the built-in ExMachina Core 
  * settings.
  */
 
@@ -25,7 +25,7 @@ add_action( 'wp_ajax_nopriv_beta_customize_footer_content', 'beta_customize_foot
 function beta_load_footer_customize_controls() {
 
 	/* Loads the textarea customize control class. */
-	require_once( trailingslashit( HYBRID_CLASSES ) . 'customize-control-textarea.php' );
+	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'customize-control-textarea.php' );
 }
 
 /**
@@ -52,7 +52,7 @@ function beta_customize_footer_register( $wp_customize ) {
 
 	/* Add the textarea control for the 'footer_insert' setting. */
 	$wp_customize->add_control(
-		new Hybrid_Customize_Control_Textarea(
+		new ExMachina_Customize_Control_Textarea(
 			$wp_customize,
 			'beta-footer',
 			array(
@@ -82,7 +82,7 @@ function beta_customize_footer_register( $wp_customize ) {
 function beta_customize_sanitize( $setting, $object ) {
 
 	/* Get the theme prefix. */
-	$prefix = hybrid_get_prefix();
+	$prefix = exmachina_get_prefix();
 
 	/* Make sure we kill evil scripts from users without the 'unfiltered_html' cap. */
 	if ( "{$prefix}_theme_settings[footer_insert]" == $object->id && !current_user_can( 'unfiltered_html' )  )

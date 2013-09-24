@@ -15,7 +15,7 @@ function beta_theme_admin_general() {
 	$theme_settings_page = 'appearance_page_theme-settings';
 
 	/* Get the theme prefix. */
-	$prefix = hybrid_get_prefix();
+	$prefix = exmachina_get_prefix();
 
 	/* Create a settings meta box only on the theme settings page. */
 	add_action( 'load-appearance_page_theme-settings', 'beta_theme_settings_general' );
@@ -52,17 +52,17 @@ function beta_theme_settings_general() {
 function beta_meta_box_theme_display_general() {
 ?>
 	<p>
-		<label for="<?php echo hybrid_settings_field_id( 'header_scripts' ); ?>"><?php printf( __( 'Insert scripts or code before the closing %s tag in the document source', 'beta' ), '<code>&lt;/head&gt;</code>' ); ?>:</label>
+		<label for="<?php echo exmachina_settings_field_id( 'header_scripts' ); ?>"><?php printf( __( 'Insert scripts or code before the closing %s tag in the document source', 'beta' ), '<code>&lt;/head&gt;</code>' ); ?>:</label>
 	</p>
 	
-	<textarea name="<?php echo hybrid_settings_field_name( 'header_scripts' ) ?>" id="<?php echo hybrid_settings_field_id( 'header_scripts' ); ?>" cols="78" rows="8"><?php echo hybrid_get_setting( 'header_scripts' ); ?></textarea>
+	<textarea name="<?php echo exmachina_settings_field_name( 'header_scripts' ) ?>" id="<?php echo exmachina_settings_field_id( 'header_scripts' ); ?>" cols="78" rows="8"><?php echo exmachina_get_setting( 'header_scripts' ); ?></textarea>
 
 
 	<p>
-		<label for="<?php echo hybrid_settings_field_id( 'footer_scripts' ); ?>"><?php printf( __( 'Insert scripts or code before the closing %s tag in the document source', 'beta' ), '<code>&lt;/body&gt;</code>' ); ?>:</label>
+		<label for="<?php echo exmachina_settings_field_id( 'footer_scripts' ); ?>"><?php printf( __( 'Insert scripts or code before the closing %s tag in the document source', 'beta' ), '<code>&lt;/body&gt;</code>' ); ?>:</label>
 	</p>
 
-	<textarea name="<?php echo hybrid_settings_field_name( 'footer_scripts' ); ?>" id="<?php echo hybrid_settings_field_id( 'footer_scripts' ); ?>" cols="78" rows="8"><?php echo hybrid_get_setting( 'footer_scripts' ) ; ?></textarea>
+	<textarea name="<?php echo exmachina_settings_field_name( 'footer_scripts' ); ?>" id="<?php echo exmachina_settings_field_id( 'footer_scripts' ); ?>" cols="78" rows="8"><?php echo exmachina_get_setting( 'footer_scripts' ) ; ?></textarea>
 
 
 <?php }

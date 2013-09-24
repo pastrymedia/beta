@@ -1,8 +1,8 @@
 <?php
 /**
- * Hybrid Media Grabber - A script for grabbing media related to a post.
+ * ExMachina Media Grabber - A script for grabbing media related to a post.
  *
- * Hybrid Media Grabber is a script for pulling media either from the post content or attached to the 
+ * ExMachina Media Grabber is a script for pulling media either from the post content or attached to the 
  * post.  It's an attempt to consolidate the various methods that users have used over the years to 
  * embed media into their posts.  This script was written so that theme developers could grab that 
  * media and use it in interesting ways within their themes.  For example, a theme could get a video 
@@ -16,25 +16,25 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @package   HybridMediaGrabber
+ * @package   ExMachinaMediaGrabber
  * @version   0.1.0
  * @author    Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2013, Justin Tadlock
- * @link      http://themehybrid.com
+ * @link      http://themeexmachina.com
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /**
- * Wrapper function for the Hybrid_Media_Grabber class.  Returns the HTML output for the found media.
+ * Wrapper function for the ExMachina_Media_Grabber class.  Returns the HTML output for the found media.
  *
  * @since  0.1.0
  * @access public
  * @param  array
  * @return string
  */
-function hybrid_media_grabber( $args = array() ) {
+function exmachina_media_grabber( $args = array() ) {
 
-	$media = new Hybrid_Media_Grabber( $args );
+	$media = new ExMachina_Media_Grabber( $args );
 
 	return $media->get_media();
 }
@@ -46,7 +46,7 @@ function hybrid_media_grabber( $args = array() ) {
  * @access public
  * @return void
  */
-class Hybrid_Media_Grabber {
+class ExMachina_Media_Grabber {
 
 	/**
 	 * The HTML version of the media to return.
@@ -106,8 +106,8 @@ class Hybrid_Media_Grabber {
 		global $wp_embed, $content_width;
 
 		/* Use WP's embed functionality to handle the [embed] shortcode and autoembeds. */
-		add_filter( 'hybrid_media_grabber_embed_shortcode_media', array( $wp_embed, 'run_shortcode' ) );
-		add_filter( 'hybrid_media_grabber_autoembed_media',       array( $wp_embed, 'autoembed' ) );
+		add_filter( 'exmachina_media_grabber_embed_shortcode_media', array( $wp_embed, 'run_shortcode' ) );
+		add_filter( 'exmachina_media_grabber_autoembed_media',       array( $wp_embed, 'autoembed' ) );
 
 		/* Don't return a link if embeds don't work. Need media or nothing at all. */
 		add_filter( 'embed_maybe_make_link', '__return_false' );
@@ -123,7 +123,7 @@ class Hybrid_Media_Grabber {
 		);
 
 		/* Set the object properties. */
-		$this->args    = apply_filters( 'hybrid_media_grabber_args', wp_parse_args( $args, $defaults ) );
+		$this->args    = apply_filters( 'exmachina_media_grabber_args', wp_parse_args( $args, $defaults ) );
 		$this->content = get_post_field( 'post_content', $this->args['post_id'] );
 		$this->type    = isset( $this->args['type'] ) && in_array( $this->args['type'], array( 'audio', 'video' ) ) ? $this->args['type'] : 'video';
 
@@ -150,7 +150,7 @@ class Hybrid_Media_Grabber {
 	 * @return string
 	 */
 	public function get_media() {
-		return apply_filters( 'hybrid_media_grabber_media', $this->media, $this );
+		return apply_filters( 'exmachina_media_grabber_media', $this->media, $this );
 	}
 
 	/**
@@ -238,7 +238,7 @@ class Hybrid_Media_Grabber {
 		$this->original_media = array_shift( $shortcode );
 
 		$this->media = apply_filters(
-			'hybrid_media_grabber_embed_shortcode_media',
+			'exmachina_media_grabber_embed_shortcode_media',
 			$this->original_media
 		);
 	}
@@ -291,7 +291,7 @@ class Hybrid_Media_Grabber {
 			foreach ( $matches as $value ) {
 
 				/* Let WP work its magic with the 'autoembed' method. */
-				$embed = trim( apply_filters( 'hybrid_media_grabber_autoembed_media', $value[0] ) );
+				$embed = trim( apply_filters( 'exmachina_media_grabber_autoembed_media', $value[0] ) );
 
 				if ( !empty( $embed ) ) {
 					$this->original_media = $value[0];
@@ -403,7 +403,7 @@ class Hybrid_Media_Grabber {
 
 		/* Allow devs to filter the final width and height of the media. */
 		list( $width, $height ) = apply_filters( 
-			'hybrid_media_grabber_dimensions', 
+			'exmachina_media_grabber_dimensions', 
 			$dimensions,                       // width/height array
 			$media_atts,                       // media HTML attributes
 			$this                              // media grabber object

@@ -4,11 +4,11 @@
  * using all the available options given in the get_calendar() function. It replaces the default WordPress
  * calendar widget.
  *
- * @package    Hybrid
+ * @package    ExMachina
  * @subpackage Classes
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -17,7 +17,7 @@
  *
  * @since 0.6.0
  */
-class Hybrid_Widget_Calendar extends WP_Widget {
+class ExMachina_Widget_Calendar extends WP_Widget {
 
 	/**
 	 * Set up the widget's unique name, ID, class, description, and other options.
@@ -29,7 +29,7 @@ class Hybrid_Widget_Calendar extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname'   => 'calendar',
-			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your calendar.', 'hybrid-core' )
+			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your calendar.', 'exmachina-core' )
 		);
 
 		/* Set up the widget control options. */
@@ -40,8 +40,8 @@ class Hybrid_Widget_Calendar extends WP_Widget {
 
 		/* Create the widget. */
 		$this->WP_Widget(
-			'hybrid-calendar',               // $this->id_base
-			__( 'Calendar', 'hybrid-core' ), // $this->name
+			'exmachina-calendar',               // $this->id_base
+			__( 'Calendar', 'exmachina-core' ), // $this->name
 			$widget_options,                 // $this->widget_options
 			$control_options                 // $this->control_options
 		);
@@ -96,21 +96,21 @@ class Hybrid_Widget_Calendar extends WP_Widget {
 
 		/* Set up the default form values. */
 		$defaults = array(
-			'title'   => esc_attr__( 'Calendar', 'hybrid-core' ),
+			'title'   => esc_attr__( 'Calendar', 'exmachina-core' ),
 			'initial' => false
 		);
 
 		/* Merge the user-selected arguments with the defaults. */
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
-		<div class="hybrid-widget-controls columns-1">
+		<div class="exmachina-widget-controls columns-1">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hybrid-core' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'exmachina-core' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
 			<input class="checkbox" type="checkbox" <?php checked( $instance['initial'], true ); ?> id="<?php echo $this->get_field_id( 'initial' ); ?>" name="<?php echo $this->get_field_name( 'initial' ); ?>" /> 
-			<label for="<?php echo $this->get_field_id( 'initial' ); ?>"><?php _e( 'One-letter abbreviation?', 'hybrid-core' ); ?> <code>initial</code></label>
+			<label for="<?php echo $this->get_field_id( 'initial' ); ?>"><?php _e( 'One-letter abbreviation?', 'exmachina-core' ); ?> <code>initial</code></label>
 		</p>
 		</div>
 	<?php

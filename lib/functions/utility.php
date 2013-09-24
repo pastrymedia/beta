@@ -3,22 +3,22 @@
  * Additional helper functions that the framework or themes may use.  The functions in this file are functions
  * that don't really have a home within any other parts of the framework.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Add extra support for post types. */
-add_action( 'init', 'hybrid_add_post_type_support' );
+add_action( 'init', 'exmachina_add_post_type_support' );
 
 /* Add extra file headers for themes. */
-add_filter( 'extra_theme_headers', 'hybrid_extra_theme_headers' );
+add_filter( 'extra_theme_headers', 'exmachina_extra_theme_headers' );
 
 /* Filters the title for untitled posts. */
-add_filter( 'the_title', 'hybrid_untitled_post' );
+add_filter( 'the_title', 'exmachina_untitled_post' );
 
 /**
  * This function is for adding extra support for features not default to the core post types.
@@ -30,7 +30,7 @@ add_filter( 'the_title', 'hybrid_untitled_post' );
  * @access public
  * @return void
  */
-function hybrid_add_post_type_support() {
+function exmachina_add_post_type_support() {
 
 	/* Add support for excerpts to the 'page' post type. */
 	add_post_type_support( 'page', array( 'excerpt' ) );
@@ -51,7 +51,7 @@ function hybrid_add_post_type_support() {
  * @param array $headers Array of extra headers added by plugins/themes.
  * @return array $headers
  */
-function hybrid_extra_theme_headers( $headers ) {
+function exmachina_extra_theme_headers( $headers ) {
 
 	/* Add support for 'Template Version'. This is for use in child themes to note the version of the parent theme. */
 	if ( !in_array( 'Template Version', $headers ) )
@@ -79,14 +79,14 @@ function hybrid_extra_theme_headers( $headers ) {
 
 /**
  * Generates the relevant template info.  Adds template meta with theme version.  Uses the theme 
- * name and version from style.css.  In 0.6, added the hybrid_meta_template 
+ * name and version from style.css.  In 0.6, added the exmachina_meta_template 
  * filter hook.
  *
  * @since 0.4.0
  * @access public
  * @return void
  */
-function hybrid_meta_template() {
+function exmachina_meta_template() {
 	$theme = wp_get_theme( get_template() );
 	$template = '<meta name="template" content="' . esc_attr( $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ) ) . '" />' . "\n";
 	echo apply_atomic( 'meta_template', $template );
@@ -100,7 +100,7 @@ function hybrid_meta_template() {
  * @access public
  * @return void
  */
-function hybrid_site_title() {
+function exmachina_site_title() {
 
 	/* If viewing the front page of the site, use an <h1> tag.  Otherwise, use a <div> tag. */
 	$tag = ( is_front_page() ) ? 'h1' : 'div';
@@ -121,7 +121,7 @@ function hybrid_site_title() {
  * @access public
  * @return void
  */
-function hybrid_site_description() {
+function exmachina_site_description() {
 
 	/* If viewing the front page of the site, use an <h2> tag.  Otherwise, use a <div> tag. */
 	$tag = ( is_front_page() ) ? 'h2' : 'div';
@@ -141,11 +141,11 @@ function hybrid_site_description() {
  * @access public
  * @return void
  */
-function hybrid_footer_content() {
+function exmachina_footer_content() {
 
-	/* Only run the code if the theme supports the Hybrid Core theme settings. */
-	if ( current_theme_supports( 'hybrid-core-theme-settings' ) )
-		echo apply_atomic_shortcode( 'footer_content', hybrid_get_setting( 'footer_insert' ) );
+	/* Only run the code if the theme supports the ExMachina Core theme settings. */
+	if ( current_theme_supports( 'exmachina-core-theme-settings' ) )
+		echo apply_atomic_shortcode( 'footer_content', exmachina_get_setting( 'footer_insert' ) );
 }
 
 /**
@@ -157,7 +157,7 @@ function hybrid_footer_content() {
  * @param string $template The name of the template to check for.
  * @return bool Whether the post has a template.
  */
-function hybrid_has_post_template( $template = '' ) {
+function exmachina_has_post_template( $template = '' ) {
 
 	/* Assume we're viewing a singular post. */
 	if ( is_singular() ) {
@@ -191,10 +191,10 @@ function hybrid_has_post_template( $template = '' ) {
  * @param  string  $title
  * @return string
  */
-function hybrid_untitled_post( $title ) {
+function exmachina_untitled_post( $title ) {
 
 	if ( empty( $title ) && !is_singular() && in_the_loop() && !is_admin() )
-		$title = __( '(Untitled)', 'hybrid-core' );
+		$title = __( '(Untitled)', 'exmachina-core' );
 
 	return $title;
 }

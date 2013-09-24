@@ -3,11 +3,11 @@
  * Functions for loading template parts.  These functions are helper functions or more flexible functions 
  * than what core WordPress currently offers with template part loading.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -24,7 +24,7 @@
  * @access public
  * @return string
  */
-function hybrid_get_content_template() {
+function exmachina_get_content_template() {
 
 	/* Set up an empty array and get the post type. */
 	$templates = array();

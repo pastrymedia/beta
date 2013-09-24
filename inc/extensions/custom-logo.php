@@ -30,8 +30,8 @@ function beta_customize_logo_register( $wp_customize ) {
 			'default'              => '',
 			'type'                 => 'theme_mod',
 			'capability'           => 'edit_theme_options',
-			'sanitize_callback'    => 'hybrid_customize_sanitize',
-			'sanitize_js_callback' => 'hybrid_customize_sanitize',
+			'sanitize_callback'    => 'exmachina_customize_sanitize',
+			'sanitize_js_callback' => 'exmachina_customize_sanitize',
 			//'transport'            => 'postMessage',
 		)
 	);

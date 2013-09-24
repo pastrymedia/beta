@@ -5,16 +5,16 @@
  * The functions also integrate with WordPress' implementations of body_class, post_class, and 
  * comment_class, so your theme won't have any trouble with plugin integration.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /**
- * Hybrid's main contextual function.  This allows code to be used more than once without running 
+ * ExMachina's main contextual function.  This allows code to be used more than once without running 
  * hundreds of conditional checks within the theme.  It returns an array of contexts based on what 
  * page a visitor is currently viewing on the site.  This function is useful for making dynamic/contextual
  * classes, action and filter hooks, and handling the templating system.
@@ -26,103 +26,103 @@
  * @since 0.7.0
  * @access public
  * @global $wp_query The current page's query object.
- * @global $hybrid The global Hybrid object.
- * @return array $hybrid->context Several contexts based on the current page.
+ * @global $exmachina The global ExMachina object.
+ * @return array $exmachina->context Several contexts based on the current page.
  */
-function hybrid_get_context() {
-	global $hybrid;
+function exmachina_get_context() {
+	global $exmachina;
 
-	/* If $hybrid->context has been set, don't run through the conditionals again. Just return the variable. */
-	if ( isset( $hybrid->context ) )
-		return apply_filters( 'hybrid_context', $hybrid->context );
+	/* If $exmachina->context has been set, don't run through the conditionals again. Just return the variable. */
+	if ( isset( $exmachina->context ) )
+		return apply_filters( 'exmachina_context', $exmachina->context );
 
 	/* Set some variables for use within the function. */
-	$hybrid->context = array();
+	$exmachina->context = array();
 	$object = get_queried_object();
 	$object_id = get_queried_object_id();
 
 	/* Front page of the site. */
 	if ( is_front_page() )
-		$hybrid->context[] = 'home';
+		$exmachina->context[] = 'home';
 
 	/* Blog page. */
 	if ( is_home() ) {
-		$hybrid->context[] = 'blog';
+		$exmachina->context[] = 'blog';
 	}
 
 	/* Singular views. */
 	elseif ( is_singular() ) {
-		$hybrid->context[] = 'singular';
-		$hybrid->context[] = "singular-{$object->post_type}";
-		$hybrid->context[] = "singular-{$object->post_type}-{$object_id}";
+		$exmachina->context[] = 'singular';
+		$exmachina->context[] = "singular-{$object->post_type}";
+		$exmachina->context[] = "singular-{$object->post_type}-{$object_id}";
 	}
 
 	/* Archive views. */
 	elseif ( is_archive() ) {
-		$hybrid->context[] = 'archive';
+		$exmachina->context[] = 'archive';
 
 		/* Post type archives. */
 		if ( is_post_type_archive() ) {
 			$post_type = get_post_type_object( get_query_var( 'post_type' ) );
-			$hybrid->context[] = "archive-{$post_type->name}";
+			$exmachina->context[] = "archive-{$post_type->name}";
 		}
 
 		/* Taxonomy archives. */
 		if ( is_tax() || is_category() || is_tag() ) {
-			$hybrid->context[] = 'taxonomy';
-			$hybrid->context[] = "taxonomy-{$object->taxonomy}";
+			$exmachina->context[] = 'taxonomy';
+			$exmachina->context[] = "taxonomy-{$object->taxonomy}";
 
 			$slug = ( ( 'post_format' == $object->taxonomy ) ? str_replace( 'post-format-', '', $object->slug ) : $object->slug );
-			$hybrid->context[] = "taxonomy-{$object->taxonomy}-" . sanitize_html_class( $slug, $object->term_id );
+			$exmachina->context[] = "taxonomy-{$object->taxonomy}-" . sanitize_html_class( $slug, $object->term_id );
 		}
 
 		/* User/author archives. */
 		if ( is_author() ) {
 			$user_id = get_query_var( 'author' );
-			$hybrid->context[] = 'user';
-			$hybrid->context[] = 'user-' . sanitize_html_class( get_the_author_meta( 'user_nicename', $user_id ), $user_id );
+			$exmachina->context[] = 'user';
+			$exmachina->context[] = 'user-' . sanitize_html_class( get_the_author_meta( 'user_nicename', $user_id ), $user_id );
 		}
 
 		/* Date archives. */
 		if ( is_date() ) {
-			$hybrid->context[] = 'date';
+			$exmachina->context[] = 'date';
 
 			if ( is_year() )
-				$hybrid->context[] = 'year';
+				$exmachina->context[] = 'year';
 
 			if ( is_month() )
-				$hybrid->context[] = 'month';
+				$exmachina->context[] = 'month';
 
 			if ( get_query_var( 'w' ) )
-				$hybrid->context[] = 'week';
+				$exmachina->context[] = 'week';
 
 			if ( is_day() )
-				$hybrid->context[] = 'day';
+				$exmachina->context[] = 'day';
 		}
 
 		/* Time archives. */
 		if ( is_time() ) {
-			$hybrid->context[] = 'time';
+			$exmachina->context[] = 'time';
 
 			if ( get_query_var( 'hour' ) )
-				$hybrid->context[] = 'hour';
+				$exmachina->context[] = 'hour';
 
 			if ( get_query_var( 'minute' ) )
-				$hybrid->context[] = 'minute';
+				$exmachina->context[] = 'minute';
 		}
 	}
 
 	/* Search results. */
 	elseif ( is_search() ) {
-		$hybrid->context[] = 'search';
+		$exmachina->context[] = 'search';
 	}
 
 	/* Error 404 pages. */
 	elseif ( is_404() ) {
-		$hybrid->context[] = 'error-404';
+		$exmachina->context[] = 'error-404';
 	}
 
-	return array_map( 'esc_attr', apply_filters( 'hybrid_context', array_unique( $hybrid->context ) ) );
+	return array_map( 'esc_attr', apply_filters( 'exmachina_context', array_unique( $exmachina->context ) ) );
 }
 
 /**
@@ -133,12 +133,12 @@ function hybrid_get_context() {
  * @access public
  * @return void
  */
-function hybrid_body_attributes() {
+function exmachina_body_attributes() {
 
 	$attributes = array();
 	$output     = '';
 
-	$attributes['class'] = join( ' ', hybrid_get_body_class() );
+	$attributes['class'] = join( ' ', exmachina_get_body_class() );
 
 	$attributes = apply_atomic( 'body_attributes', $attributes );
 
@@ -156,10 +156,10 @@ function hybrid_body_attributes() {
  * @param string|array $class Additional classes for more control.
  * @return void
  */
-function hybrid_body_class( $class = '' ) {
+function exmachina_body_class( $class = '' ) {
 
 	/* Get the body class. */
-	$classes = hybrid_get_body_class( $class );
+	$classes = exmachina_get_body_class( $class );
 
 	/* Print the body class. */
 	echo apply_atomic( 'body_class', join( ' ', $classes ) );
@@ -173,7 +173,7 @@ function hybrid_body_class( $class = '' ) {
  * @param  string|array $class Additional classes for more control.
  * @return array
  */
-function hybrid_get_body_class( $class = '' ) {
+function exmachina_get_body_class( $class = '' ) {
 	global $wp_query;
 
 	/* Text direction (which direction does the text flow). */
@@ -208,7 +208,7 @@ function hybrid_get_body_class( $class = '' ) {
 		$classes[] = 'custom-header';
 
 	/* Merge base contextual classes with $classes. */
-	$classes = array_merge( $classes, hybrid_get_context() );
+	$classes = array_merge( $classes, exmachina_get_context() );
 
 	/* Singular post (post_type) classes. */
 	if ( is_singular() ) {
@@ -257,13 +257,13 @@ function hybrid_get_body_class( $class = '' ) {
  * @access public
  * @return void
  */
-function hybrid_post_attributes() {
+function exmachina_post_attributes() {
 
 	$attributes = array();
 	$output     = '';
 
 	$attributes['id']    = 'post-' . get_the_ID();
-	$attributes['class'] = join( ' ', hybrid_get_post_class() );
+	$attributes['class'] = join( ' ', exmachina_get_post_class() );
 
 	$attributes = apply_atomic( 'post_attributes', $attributes );
 
@@ -282,17 +282,17 @@ function hybrid_post_attributes() {
  * @param  int          $post_id  ID of a specific post to get the class for.
  * @return void
  */
-function hybrid_post_class( $class = '', $post_id = null ) {
+function exmachina_post_class( $class = '', $post_id = null ) {
 
 	/* Get the post class. */
-	$classes = hybrid_get_post_class( $class, $post_id );
+	$classes = exmachina_get_post_class( $class, $post_id );
 
 	/* Print the body class. */
 	echo apply_atomic( 'post_class', join( ' ', $classes ) );
 }
 
 /**
- * Outputs the class for the post wrapper.  Use hybrid_post_class() instead.
+ * Outputs the class for the post wrapper.  Use exmachina_post_class() instead.
  *
  * @since      0.5.0
  * @deprecated 1.6.0
@@ -301,10 +301,10 @@ function hybrid_post_class( $class = '', $post_id = null ) {
  * @param      int          $post_id  ID of a specific post to get the class for.
  * @return     void
  */
-function hybrid_entry_class( $class = '', $post_id = null ) {
+function exmachina_entry_class( $class = '', $post_id = null ) {
 
 	/* Get the post class. */
-	$classes = hybrid_get_post_class( $class );
+	$classes = exmachina_get_post_class( $class );
 
 	/* Print the entry class. */
 	echo apply_atomic( 'entry_class', join( ' ', $classes ) );
@@ -321,7 +321,7 @@ function hybrid_entry_class( $class = '', $post_id = null ) {
  * @param  int          $post_id  ID of a specific post to get the class for.
  * @return array
  */
-function hybrid_get_post_class( $class = '', $post_id = null ) {
+function exmachina_get_post_class( $class = '', $post_id = null ) {
 	static $post_alt;
 
 	$post = get_post( $post_id );
@@ -400,13 +400,13 @@ function hybrid_get_post_class( $class = '', $post_id = null ) {
  * @access public
  * @return void
  */
-function hybrid_comment_attributes() {
+function exmachina_comment_attributes() {
 
 	$attributes = array();
 	$output     = '';
 
 	$attributes['id']    = 'comment-' . get_comment_ID();
-	$attributes['class'] = join( ' ', hybrid_get_comment_class() );
+	$attributes['class'] = join( ' ', exmachina_get_comment_class() );
 
 	$attributes = apply_atomic( 'comment_attributes', $attributes );
 
@@ -424,13 +424,13 @@ function hybrid_comment_attributes() {
  * @global $comment The current comment's DB object.
  * @return void
  */
-function hybrid_comment_class( $class = '' ) {
-	global $hybrid;
+function exmachina_comment_class( $class = '' ) {
+	global $exmachina;
 
 	/* Join all the classes into one string and echo them. */
-	$class = join( ' ', hybrid_get_comment_class( $class ) );
+	$class = join( ' ', exmachina_get_comment_class( $class ) );
 
-	echo apply_filters( "{$hybrid->prefix}_comment_class", $class );
+	echo apply_filters( "{$exmachina->prefix}_comment_class", $class );
 }
 
 /**
@@ -443,7 +443,7 @@ function hybrid_comment_class( $class = '' ) {
  * @global $comment The current comment's DB object
  * @return void
  */
-function hybrid_get_comment_class( $class = '' ) {
+function exmachina_get_comment_class( $class = '' ) {
 	global $comment;
 
 	/* Gets default WP comment classes. */
@@ -503,7 +503,7 @@ function hybrid_get_comment_class( $class = '' ) {
  * @global $wp_query
  * @return void
  */
-function hybrid_document_title() {
+function exmachina_document_title() {
 	global $wp_query;
 
 	/* Set up some default variables. */
@@ -550,44 +550,44 @@ function hybrid_document_title() {
 		/* If viewing a date-/time-based archive. */
 		elseif ( is_date () ) {
 			if ( get_query_var( 'minute' ) && get_query_var( 'hour' ) )
-				$doctitle = sprintf( __( 'Archive for %s', 'hybrid-core' ), get_the_time( __( 'g:i a', 'hybrid-core' ) ) );
+				$doctitle = sprintf( __( 'Archive for %s', 'exmachina-core' ), get_the_time( __( 'g:i a', 'exmachina-core' ) ) );
 
 			elseif ( get_query_var( 'minute' ) )
-				$doctitle = sprintf( __( 'Archive for minute %s', 'hybrid-core' ), get_the_time( __( 'i', 'hybrid-core' ) ) );
+				$doctitle = sprintf( __( 'Archive for minute %s', 'exmachina-core' ), get_the_time( __( 'i', 'exmachina-core' ) ) );
 
 			elseif ( get_query_var( 'hour' ) )
-				$doctitle = sprintf( __( 'Archive for %s', 'hybrid-core' ), get_the_time( __( 'g a', 'hybrid-core' ) ) );
+				$doctitle = sprintf( __( 'Archive for %s', 'exmachina-core' ), get_the_time( __( 'g a', 'exmachina-core' ) ) );
 
 			elseif ( is_day() )
-				$doctitle = sprintf( __( 'Archive for %s', 'hybrid-core' ), get_the_time( __( 'F jS, Y', 'hybrid-core' ) ) );
+				$doctitle = sprintf( __( 'Archive for %s', 'exmachina-core' ), get_the_time( __( 'F jS, Y', 'exmachina-core' ) ) );
 
 			elseif ( get_query_var( 'w' ) )
-				$doctitle = sprintf( __( 'Archive for week %s of %s', 'hybrid-core' ), get_the_time( __( 'W', 'hybrid-core' ) ), get_the_time( __( 'Y', 'hybrid-core' ) ) );
+				$doctitle = sprintf( __( 'Archive for week %s of %s', 'exmachina-core' ), get_the_time( __( 'W', 'exmachina-core' ) ), get_the_time( __( 'Y', 'exmachina-core' ) ) );
 
 			elseif ( is_month() )
-				$doctitle = sprintf( __( 'Archive for %s', 'hybrid-core' ), single_month_title( ' ', false) );
+				$doctitle = sprintf( __( 'Archive for %s', 'exmachina-core' ), single_month_title( ' ', false) );
 
 			elseif ( is_year() )
-				$doctitle = sprintf( __( 'Archive for %s', 'hybrid-core' ), get_the_time( __( 'Y', 'hybrid-core' ) ) );
+				$doctitle = sprintf( __( 'Archive for %s', 'exmachina-core' ), get_the_time( __( 'Y', 'exmachina-core' ) ) );
 		}
 
 		/* For any other archives. */
 		else {
-			$doctitle = __( 'Archives', 'hybrid-core' );
+			$doctitle = __( 'Archives', 'exmachina-core' );
 		}
 	}
 
 	/* If viewing a search results page. */
 	elseif ( is_search() )
-		$doctitle = sprintf( __( 'Search results for "%s"', 'hybrid-core' ), esc_attr( get_search_query() ) );
+		$doctitle = sprintf( __( 'Search results for "%s"', 'exmachina-core' ), esc_attr( get_search_query() ) );
 
 	/* If viewing a 404 not found page. */
 	elseif ( is_404() )
-		$doctitle = __( '404 Not Found', 'hybrid-core' );
+		$doctitle = __( '404 Not Found', 'exmachina-core' );
 
 	/* If the current page is a paged page. */
 	if ( ( ( $page = $wp_query->get( 'paged' ) ) || ( $page = $wp_query->get( 'page' ) ) ) && $page > 1 )
-		$doctitle = sprintf( __( '%1$s Page %2$s', 'hybrid-core' ), $doctitle . $separator, number_format_i18n( $page ) );
+		$doctitle = sprintf( __( '%1$s Page %2$s', 'exmachina-core' ), $doctitle . $separator, number_format_i18n( $page ) );
 
 	/* Apply the wp_title filters so we're compatible with plugins. */
 	$doctitle = apply_filters( 'wp_title', strip_tags( $doctitle ), $separator, '' );

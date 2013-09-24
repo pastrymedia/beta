@@ -1,8 +1,8 @@
 <?php
 
 function beta_shortcodes() {
-	remove_shortcode( 'entry-published',     'hybrid_entry_published_shortcode' );
-	remove_shortcode( 'entry-author',        'hybrid_entry_author_shortcode' );
+	remove_shortcode( 'entry-published',     'exmachina_entry_published_shortcode' );
+	remove_shortcode( 'entry-author',        'exmachina_entry_author_shortcode' );
 
 	add_shortcode( 'entry-published',     'beta_entry_published_shortcode' );
 	add_shortcode( 'entry-author',        'beta_entry_author_shortcode' );
@@ -16,7 +16,7 @@ add_action( 'init', 'beta_shortcodes' );
 function beta_entry_published_shortcode( $attr ) {
 	$attr = shortcode_atts( array( 'before' => '', 'after' => '', 'format' => get_option( 'date_format' ) ), $attr );
 
-	$published = '<time class="published" datetime="'. get_the_time( 'c' ) .'" title="' . get_the_time( esc_attr__( 'l, F jS, Y, g:i a', 'hybrid-core' ) ) . '" itemprop="datePublished">' . get_the_time( $attr['format'] ) . '</time>';
+	$published = '<time class="published" datetime="'. get_the_time( 'c' ) .'" title="' . get_the_time( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '" itemprop="datePublished">' . get_the_time( $attr['format'] ) . '</time>';
 	
 	if (get_the_title()=='' && !is_singular()) {
 		$published = '<a href="'. get_permalink() . '">' . $published . '</a>';

@@ -32,7 +32,7 @@ function beta_content_nav( $nav_id ) {
 	?>
 	<nav role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="navigation row  <?php echo $nav_class; ?>">
 
-	<?php if ( is_single() && !hybrid_get_setting( 'single_nav' ) ) : // navigation links for single posts ?>
+	<?php if ( is_single() && !exmachina_get_setting( 'single_nav' ) ) : // navigation links for single posts ?>
 
 		<?php previous_post_link( '<div class="nav-previous alignleft">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'beta' ) . '</span> %title' ); ?>
 		<?php next_post_link( '<div class="nav-next alignright">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'beta' ) . '</span>' ); ?>
@@ -40,7 +40,7 @@ function beta_content_nav( $nav_id ) {
 	<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
 
 		<?php
-		if (current_theme_supports( 'loop-pagination' ) && ( 'numeric' == hybrid_get_setting( 'posts_nav' ) ) ) {
+		if (current_theme_supports( 'loop-pagination' ) && ( 'numeric' == exmachina_get_setting( 'posts_nav' ) ) ) {
 			loop_pagination();	
 		} else {
 			if ( get_next_posts_link() ) : ?>

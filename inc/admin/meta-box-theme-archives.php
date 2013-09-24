@@ -12,7 +12,7 @@ function beta_theme_admin_archives() {
 	global $theme_settings_page;
 	
 	/* Get the theme prefix. */
-	$prefix = hybrid_get_prefix();
+	$prefix = exmachina_get_prefix();
 
 	/* Create a settings meta box only on the theme settings page. */
 	add_action( 'load-appearance_page_theme-settings', 'beta_theme_settings_archives' );
@@ -46,8 +46,8 @@ function beta_theme_settings_archives() {
 function beta_meta_box_theme_display_archives() {
 ?>
 	<p class="collapsed">
-		<label for="<?php echo hybrid_settings_field_id( 'content_archive' ); ?>"><?php _e( 'Select one of the following:', 'beta' ); ?></label>
-		<select name="<?php echo hybrid_settings_field_name( 'content_archive' ); ?>" id="<?php echo hybrid_settings_field_id( 'content_archive' ); ?>">
+		<label for="<?php echo exmachina_settings_field_id( 'content_archive' ); ?>"><?php _e( 'Select one of the following:', 'beta' ); ?></label>
+		<select name="<?php echo exmachina_settings_field_name( 'content_archive' ); ?>" id="<?php echo exmachina_settings_field_id( 'content_archive' ); ?>">
 		<?php
 		$archive_display = apply_filters(
 			'beta_archive_display_options',
@@ -57,15 +57,15 @@ function beta_meta_box_theme_display_archives() {
 			)
 		);
 		foreach ( (array) $archive_display as $value => $name ) 
-			echo '<option value="' . esc_attr( $value ) . '"' . selected( hybrid_get_setting( 'content_archive' ), esc_attr( $value ), false ) . '>' . esc_html( $name ) . '</option>' . "\n";
+			echo '<option value="' . esc_attr( $value ) . '"' . selected( exmachina_get_setting( 'content_archive' ), esc_attr( $value ), false ) . '>' . esc_html( $name ) . '</option>' . "\n";
 		?>
 		</select>
 	</p>
 
-	<div id="beta_content_limit_setting" <?php if ( 'full' == hybrid_get_setting( 'content_archive' )) echo 'class="hidden"';?>>
+	<div id="beta_content_limit_setting" <?php if ( 'full' == exmachina_get_setting( 'content_archive' )) echo 'class="hidden"';?>>
 		<p>
-			<label for="<?php echo hybrid_settings_field_id( 'content_archive_limit' ); ?>"><?php _e( 'Limit content to', 'beta' ); ?>
-			<input type="text" name="<?php echo hybrid_settings_field_name( 'content_archive_limit' ); ?>" id="<?php echo hybrid_settings_field_id( 'content_archive_limit' ); ?>" value="<?php echo esc_attr( hybrid_get_setting( 'content_archive_limit' ) ); ?>" size="3" />
+			<label for="<?php echo exmachina_settings_field_id( 'content_archive_limit' ); ?>"><?php _e( 'Limit content to', 'beta' ); ?>
+			<input type="text" name="<?php echo exmachina_settings_field_name( 'content_archive_limit' ); ?>" id="<?php echo exmachina_settings_field_id( 'content_archive_limit' ); ?>" value="<?php echo esc_attr( exmachina_get_setting( 'content_archive_limit' ) ); ?>" size="3" />
 			<?php _e( 'characters', 'beta' ); ?></label>
 		</p>
 
@@ -73,34 +73,34 @@ function beta_meta_box_theme_display_archives() {
 	</div>
 
 	<p>
-		<?php _e( 'More Text (if applicable):', 'beta' ); ?> <input type="text" name="<?php echo hybrid_settings_field_name( 'content_archive_more' ); ?>" id="<?php echo hybrid_settings_field_id( 'content_archive_more' ); ?>" value="<?php echo esc_attr( hybrid_get_setting( 'content_archive_more' ) ); ?>" size="25" />			
+		<?php _e( 'More Text (if applicable):', 'beta' ); ?> <input type="text" name="<?php echo exmachina_settings_field_name( 'content_archive_more' ); ?>" id="<?php echo exmachina_settings_field_id( 'content_archive_more' ); ?>" value="<?php echo esc_attr( exmachina_get_setting( 'content_archive_more' ) ); ?>" size="25" />			
 	</p>
 
 	<p class="collapsed">
-		<label for="<?php echo hybrid_settings_field_id( 'content_archive_thumbnail' ); ?>"><input type="checkbox" name="<?php echo hybrid_settings_field_name( 'content_archive_thumbnail' ); ?>" id="<?php echo hybrid_settings_field_id( 'content_archive_thumbnail' ); ?>" value="1" <?php checked( hybrid_get_setting( 'content_archive_thumbnail' ) ); ?> />
+		<label for="<?php echo exmachina_settings_field_id( 'content_archive_thumbnail' ); ?>"><input type="checkbox" name="<?php echo exmachina_settings_field_name( 'content_archive_thumbnail' ); ?>" id="<?php echo exmachina_settings_field_id( 'content_archive_thumbnail' ); ?>" value="1" <?php checked( exmachina_get_setting( 'content_archive_thumbnail' ) ); ?> />
 		<?php _e( 'Include the Featured Image?', 'beta' ); ?></label>
 	</p>
 
-	<p id="beta_image_size" <?php if (!hybrid_get_setting( 'content_archive_thumbnail' )) echo 'class="hidden"';?>>
-		<label for="<?php echo hybrid_settings_field_id( 'image_size' ); ?>"><?php _e( 'Image Size:', 'beta' ); ?></label>
-		<select name="<?php echo hybrid_settings_field_name( 'image_size' ); ?>" id="<?php echo hybrid_settings_field_id( 'image_size' ); ?>">
+	<p id="beta_image_size" <?php if (!exmachina_get_setting( 'content_archive_thumbnail' )) echo 'class="hidden"';?>>
+		<label for="<?php echo exmachina_settings_field_id( 'image_size' ); ?>"><?php _e( 'Image Size:', 'beta' ); ?></label>
+		<select name="<?php echo exmachina_settings_field_name( 'image_size' ); ?>" id="<?php echo exmachina_settings_field_id( 'image_size' ); ?>">
 		<?php
 		$sizes = beta_get_image_sizes();
 		foreach ( (array) $sizes as $name => $size )
-			echo '<option value="' . esc_attr( $name ) . '"' . selected( hybrid_get_setting( 'image_size' ), $name, FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')</option>' . "\n";
+			echo '<option value="' . esc_attr( $name ) . '"' . selected( exmachina_get_setting( 'image_size' ), $name, FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')</option>' . "\n";
 		?>
 		</select>
 	</p>
 	<p>
-		<label for="<?php echo hybrid_settings_field_id( 'posts_nav' ); ?>"><?php _e( 'Select Post Navigation Format:', 'beta' ); ?></label>
-		<select name="<?php echo hybrid_settings_field_name( 'posts_nav' ); ?>" id="<?php echo hybrid_settings_field_id( 'posts_nav' ); ?>">
-			<option value="prev-next"<?php selected( 'prev-next', hybrid_get_setting( 'posts_nav' ) ); ?>><?php _e( 'Previous / Next', 'beta' ); ?></option>
-			<option value="numeric"<?php selected( 'numeric', hybrid_get_setting( 'posts_nav' ) ); ?>><?php _e( 'Numeric', 'beta' ); ?></option>
+		<label for="<?php echo exmachina_settings_field_id( 'posts_nav' ); ?>"><?php _e( 'Select Post Navigation Format:', 'beta' ); ?></label>
+		<select name="<?php echo exmachina_settings_field_name( 'posts_nav' ); ?>" id="<?php echo exmachina_settings_field_id( 'posts_nav' ); ?>">
+			<option value="prev-next"<?php selected( 'prev-next', exmachina_get_setting( 'posts_nav' ) ); ?>><?php _e( 'Previous / Next', 'beta' ); ?></option>
+			<option value="numeric"<?php selected( 'numeric', exmachina_get_setting( 'posts_nav' ) ); ?>><?php _e( 'Numeric', 'beta' ); ?></option>
 		</select>
 	</p>
 	<p><span class="description"><?php _e( 'These options will affect any blog listings page, including archive, author, blog, category, search, and tag pages.', 'beta' ); ?></span></p>	
 	<p>
-		<label for="<?php echo hybrid_settings_field_id( 'single_nav' ); ?>"><input type="checkbox" name="<?php echo hybrid_settings_field_name( 'single_nav' ); ?>" id="<?php echo hybrid_settings_field_id( 'single_nav' ); ?>" value="1" <?php checked( hybrid_get_setting( 'single_nav' ) ); ?> />
+		<label for="<?php echo exmachina_settings_field_id( 'single_nav' ); ?>"><input type="checkbox" name="<?php echo exmachina_settings_field_name( 'single_nav' ); ?>" id="<?php echo exmachina_settings_field_id( 'single_nav' ); ?>" value="1" <?php checked( exmachina_get_setting( 'single_nav' ) ); ?> />
 		<?php _e( 'Disable single post navigation link?', 'beta' ); ?></label>
 	</p>
 

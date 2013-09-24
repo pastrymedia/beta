@@ -4,11 +4,11 @@
  * control over the output to the user by allowing the input of all the arguments typically seen
  * in the wp_tag_cloud() function.
  *
- * @package    Hybrid
+ * @package    ExMachina
  * @subpackage Classes
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
@@ -17,7 +17,7 @@
  *
  * @since 0.6.0
  */
-class Hybrid_Widget_Tags extends WP_Widget {
+class ExMachina_Widget_Tags extends WP_Widget {
 
 	/**
 	 * Set up the widget's unique name, ID, class, description, and other options.
@@ -29,7 +29,7 @@ class Hybrid_Widget_Tags extends WP_Widget {
 		/* Set up the widget options. */
 		$widget_options = array(
 			'classname'   => 'tags',
-			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your tags.', 'hybrid-core' )
+			'description' => esc_html__( 'An advanced widget that gives you total control over the output of your tags.', 'exmachina-core' )
 		);
 
 		/* Set up the widget control options. */
@@ -40,8 +40,8 @@ class Hybrid_Widget_Tags extends WP_Widget {
 
 		/* Create the widget. */
 		$this->WP_Widget(
-			'hybrid-tags',               // $this->id_base
-			__( 'Tags', 'hybrid-core' ), // $this->name
+			'exmachina-tags',               // $this->id_base
+			__( 'Tags', 'exmachina-core' ), // $this->name
 			$widget_options,             // $this->widget_options
 			$control_options             // $this->control_options
 		);
@@ -143,7 +143,7 @@ class Hybrid_Widget_Tags extends WP_Widget {
 
 		/* Set up the default form values. */
 		$defaults = array(
-			'title'                      => esc_attr__( 'Tags', 'hybrid-core' ),
+			'title'                      => esc_attr__( 'Tags', 'exmachina-core' ),
 			'order'                      => 'ASC',
 			'orderby'                    => 'name',
 			'format'                     => 'flat',
@@ -173,24 +173,24 @@ class Hybrid_Widget_Tags extends WP_Widget {
 		$taxonomies = get_taxonomies( array( 'show_tagcloud' => true ), 'objects' );
 
 		$link = array( 
-			'view' => esc_attr__( 'View', 'hybrid-core' ), 
-			'edit' => esc_attr__( 'Edit', 'hybrid-core' ) 
+			'view' => esc_attr__( 'View', 'exmachina-core' ), 
+			'edit' => esc_attr__( 'Edit', 'exmachina-core' ) 
 		);
 
 		$format = array( 
-			'flat' => esc_attr__( 'Flat', 'hybrid-core' ), 
-			'list' => esc_attr__( 'List', 'hybrid-core' ) 
+			'flat' => esc_attr__( 'Flat', 'exmachina-core' ), 
+			'list' => esc_attr__( 'List', 'exmachina-core' ) 
 		);
 
 		$order = array( 
-			'ASC'  => esc_attr__( 'Ascending', 'hybrid-core' ), 
-			'DESC' => esc_attr__( 'Descending', 'hybrid-core' ), 
-			'RAND' => esc_attr__( 'Random', 'hybrid-core' ) 
+			'ASC'  => esc_attr__( 'Ascending', 'exmachina-core' ), 
+			'DESC' => esc_attr__( 'Descending', 'exmachina-core' ), 
+			'RAND' => esc_attr__( 'Random', 'exmachina-core' ) 
 		);
 
 		$orderby = array( 
-			'count' => esc_attr__( 'Count', 'hybrid-core' ), 
-			'name'  => esc_attr__( 'Name', 'hybrid-core' ) 
+			'count' => esc_attr__( 'Count', 'exmachina-core' ), 
+			'name'  => esc_attr__( 'Name', 'exmachina-core' ) 
 		);
 
 		$unit = array( 
@@ -202,9 +202,9 @@ class Hybrid_Widget_Tags extends WP_Widget {
 
 		?>
 
-		<div class="hybrid-widget-controls columns-3">
+		<div class="exmachina-widget-controls columns-3">
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'hybrid-core' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'exmachina-core' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 		</p>
 		<p>
@@ -241,7 +241,7 @@ class Hybrid_Widget_Tags extends WP_Widget {
 		</p>
 		</div>
 
-		<div class="hybrid-widget-controls columns-3">
+		<div class="exmachina-widget-controls columns-3">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'include' ); ?>"><code>include</code></label>
 			<input type="text" class="smallfat code" id="<?php echo $this->get_field_id( 'include' ); ?>" name="<?php echo $this->get_field_name( 'include' ); ?>" value="<?php echo esc_attr( $instance['include'] ); ?>" />
@@ -292,7 +292,7 @@ class Hybrid_Widget_Tags extends WP_Widget {
 		</p>
 		</div>
 
-		<div class="hybrid-widget-controls columns-3 column-last">
+		<div class="exmachina-widget-controls columns-3 column-last">
 		<p>
 			<label for="<?php echo $this->get_field_id( 'search' ); ?>"><code>search</code></label>
 			<input type="text" class="widefat code" id="<?php echo $this->get_field_id( 'search' ); ?>" name="<?php echo $this->get_field_name( 'search' ); ?>" value="<?php echo esc_attr( $instance['search'] ); ?>" />
@@ -311,11 +311,11 @@ class Hybrid_Widget_Tags extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'pad_counts' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['pad_counts'], true ); ?> id="<?php echo $this->get_field_id( 'pad_counts' ); ?>" name="<?php echo $this->get_field_name( 'pad_counts' ); ?>" /> <?php _e( 'Pad counts?', 'hybrid-core' ); ?> <code>pad_counts</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['pad_counts'], true ); ?> id="<?php echo $this->get_field_id( 'pad_counts' ); ?>" name="<?php echo $this->get_field_name( 'pad_counts' ); ?>" /> <?php _e( 'Pad counts?', 'exmachina-core' ); ?> <code>pad_counts</code></label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'hide_empty' ); ?>">
-			<input class="checkbox" type="checkbox" <?php checked( $instance['hide_empty'], true ); ?> id="<?php echo $this->get_field_id( 'hide_empty' ); ?>" name="<?php echo $this->get_field_name( 'hide_empty' ); ?>" /> <?php _e( 'Hide empty?', 'hybrid-core' ); ?> <code>hide_empty</code></label>
+			<input class="checkbox" type="checkbox" <?php checked( $instance['hide_empty'], true ); ?> id="<?php echo $this->get_field_id( 'hide_empty' ); ?>" name="<?php echo $this->get_field_name( 'hide_empty' ); ?>" /> <?php _e( 'Hide empty?', 'exmachina-core' ); ?> <code>hide_empty</code></label>
 		</p>
 		</div>
 		<div style="clear:both;">&nbsp;</div>

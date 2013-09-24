@@ -12,7 +12,7 @@ function beta_theme_admin_comments() {
 	global $theme_settings_page;
 
 	/* Get the theme prefix. */
-	$prefix = hybrid_get_prefix();
+	$prefix = exmachina_get_prefix();
 
 	/* Create a settings meta box only on the theme settings page. */
 	add_action( 'load-appearance_page_theme-settings', 'beta_theme_settings_comments' );
@@ -48,19 +48,19 @@ function beta_meta_box_theme_display_comments() {
 ?>
 	<p>
 		<?php _e( 'Enable Comments', 'beta' ); ?>
-		<label for="<?php echo hybrid_settings_field_id( 'comments_posts' ); ?>" title="Enable comments on posts"><input type="checkbox" name="<?php echo hybrid_settings_field_name( 'comments_posts' ); ?>" id="<?php echo hybrid_settings_field_id( 'comments_posts' ); ?>" value="1"<?php checked( hybrid_get_setting( 'comments_posts' ) ); ?> />
+		<label for="<?php echo exmachina_settings_field_id( 'comments_posts' ); ?>" title="Enable comments on posts"><input type="checkbox" name="<?php echo exmachina_settings_field_name( 'comments_posts' ); ?>" id="<?php echo exmachina_settings_field_id( 'comments_posts' ); ?>" value="1"<?php checked( exmachina_get_setting( 'comments_posts' ) ); ?> />
 		<?php _e( 'on posts?', 'beta' ); ?></label>
 
-		<label for="<?php echo hybrid_settings_field_id( 'comments_pages' ); ?>" title="Enable comments on pages"><input type="checkbox" name="<?php echo hybrid_settings_field_name( 'comments_pages' ); ?>" id="<?php echo hybrid_settings_field_id( 'comments_pages' ); ?>" value="1"<?php checked( hybrid_get_setting( 'comments_pages' ) ); ?> />
+		<label for="<?php echo exmachina_settings_field_id( 'comments_pages' ); ?>" title="Enable comments on pages"><input type="checkbox" name="<?php echo exmachina_settings_field_name( 'comments_pages' ); ?>" id="<?php echo exmachina_settings_field_id( 'comments_pages' ); ?>" value="1"<?php checked( exmachina_get_setting( 'comments_pages' ) ); ?> />
 		<?php _e( 'on pages?', 'beta' ); ?></label>
 	</p>
 
 	<p>
 		<?php _e( 'Enable Trackbacks', 'beta' ); ?>
-		<label for="<?php echo hybrid_settings_field_id( 'trackbacks_posts' ); ?>" title="Enable trackbacks on posts"><input type="checkbox" name="<?php echo hybrid_settings_field_name( 'trackbacks_posts' ); ?>" id="<?php echo hybrid_settings_field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( hybrid_get_setting( 'trackbacks_posts' ) ); ?> />
+		<label for="<?php echo exmachina_settings_field_id( 'trackbacks_posts' ); ?>" title="Enable trackbacks on posts"><input type="checkbox" name="<?php echo exmachina_settings_field_name( 'trackbacks_posts' ); ?>" id="<?php echo exmachina_settings_field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( exmachina_get_setting( 'trackbacks_posts' ) ); ?> />
 		<?php _e( 'on posts?', 'beta' ); ?></label>
 
-		<label for="<?php echo hybrid_settings_field_id( 'trackbacks_pages' ); ?>" title="Enable trackbacks on pages"><input type="checkbox" name="<?php echo hybrid_settings_field_name( 'trackbacks_pages' ); ?>" id="<?php echo hybrid_settings_field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( hybrid_get_setting( 'trackbacks_pages' ) ); ?> />
+		<label for="<?php echo exmachina_settings_field_id( 'trackbacks_pages' ); ?>" title="Enable trackbacks on pages"><input type="checkbox" name="<?php echo exmachina_settings_field_name( 'trackbacks_pages' ); ?>" id="<?php echo exmachina_settings_field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( exmachina_get_setting( 'trackbacks_pages' ) ); ?> />
 		<?php _e( 'on pages?', 'beta' ); ?></label>
 	</p>
 

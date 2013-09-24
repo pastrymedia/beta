@@ -15,7 +15,7 @@ function beta_theme_admin_options() {
 	$theme_settings_page = 'appearance_page_theme-settings';
 
 	/* Get the theme prefix. */
-	$prefix = hybrid_get_prefix();
+	$prefix = exmachina_get_prefix();
 
 	/* Sanitize the scripts settings before adding them to the database. */
 	add_filter( "sanitize_option_{$prefix}_theme_settings", 'beta_theme_validate_settings' );
@@ -37,7 +37,7 @@ function beta_theme_admin_options() {
 function beta_theme_validate_settings( $settings ) {
 
 	if ( isset( $_POST['reset'] ) ) {
-		$settings = hybrid_get_default_theme_settings();
+		$settings = exmachina_get_default_theme_settings();
 		add_settings_error( 'beta-framework', 'restore_defaults', __( 'Default setting restored.', 'beta' ), 'updated fade' );
 	} 
 

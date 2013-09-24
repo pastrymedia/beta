@@ -3,16 +3,16 @@
  * Metadata functions used in the core framework.  This file registers meta keys for use in WordPress 
  * in a safe manner by setting up a custom sanitize callback.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Register meta on the 'init' hook. */
-add_action( 'init', 'hybrid_register_meta' );
+add_action( 'init', 'exmachina_register_meta' );
 
 /**
  * Registers the framework's custom metadata keys and sets up the sanitize callback function.
@@ -20,30 +20,30 @@ add_action( 'init', 'hybrid_register_meta' );
  * @since 1.3.0
  * @return void
  */
-function hybrid_register_meta() {
+function exmachina_register_meta() {
 
-	/* Register meta if the theme supports the 'hybrid-core-seo' feature. */
-	if ( current_theme_supports( 'hybrid-core-seo' ) ) {
+	/* Register meta if the theme supports the 'exmachina-core-seo' feature. */
+	if ( current_theme_supports( 'exmachina-core-seo' ) ) {
 
 		/* Register 'Title', 'Description', and 'Keywords' meta for posts. */
-		register_meta( 'post', 'Title', 'hybrid_sanitize_meta' );
-		register_meta( 'post', 'Description', 'hybrid_sanitize_meta' );
-		register_meta( 'post', 'Keywords', 'hybrid_sanitize_meta' );
+		register_meta( 'post', 'Title', 'exmachina_sanitize_meta' );
+		register_meta( 'post', 'Description', 'exmachina_sanitize_meta' );
+		register_meta( 'post', 'Keywords', 'exmachina_sanitize_meta' );
 
 		/* Register 'Title', 'Description', and 'Keywords' meta for users. */
-		register_meta( 'user', 'Title', 'hybrid_sanitize_meta' );
-		register_meta( 'user', 'Description', 'hybrid_sanitize_meta' );
-		register_meta( 'user', 'Keywords', 'hybrid_sanitize_meta' );
+		register_meta( 'user', 'Title', 'exmachina_sanitize_meta' );
+		register_meta( 'user', 'Description', 'exmachina_sanitize_meta' );
+		register_meta( 'user', 'Keywords', 'exmachina_sanitize_meta' );
 	}
 
-	/* Register meta if the theme supports the 'hybrid-core-template-hierarchy' feature. */
-	if ( current_theme_supports( 'hybrid-core-template-hierarchy' ) ) {
+	/* Register meta if the theme supports the 'exmachina-core-template-hierarchy' feature. */
+	if ( current_theme_supports( 'exmachina-core-template-hierarchy' ) ) {
 
 		$post_types = get_post_types( array( 'public' => true ) );
 
 		foreach ( $post_types as $post_type ) {
 			if ( 'page' !== $post_type )
-				register_meta( 'post', "_wp_{$post_type}_template", 'hybrid_sanitize_meta' );
+				register_meta( 'post', "_wp_{$post_type}_template", 'exmachina_sanitize_meta' );
 		}
 	}
 }
@@ -59,7 +59,7 @@ function hybrid_register_meta() {
  * @param string $meta_type The type of metadata (post, comment, user, etc.)
  * @return mixed $meta_value
  */
-function hybrid_sanitize_meta( $meta_value, $meta_key, $meta_type ) {
+function exmachina_sanitize_meta( $meta_value, $meta_key, $meta_type ) {
 	return strip_tags( $meta_value );
 }
 

@@ -20,7 +20,7 @@ Beta WordPress theme is licensed under the GPL.
 Resources - This theme makes use of
 ------------------------------------
 
-Hybrid Core - ​http://themehybrid.com/hybrid-core
+ExMachina Core - ​http://themeexmachina.com/exmachina-core
 License: Distributed under the GNU General Public License, version 2 or later (GPL).
 Copyright: Justin Tadlock, justintadlock.com
 
@@ -72,7 +72,7 @@ Changelog
 - update default setting
 - add help tab
 - add child theme page
-- upgrade Hybrid Core to 1.6
+- upgrade ExMachina Core to 1.6
 - add more link option
 - add Post Navigation Option
 - move beta child theme to wordpress.org/themes/beta-child
@@ -92,7 +92,7 @@ Changelog
 - fixed theme layout customizer
 
 0.3.2	2013-08-10
-- disabled hybrid_meta_template
+- disabled exmachina_meta_template
 - add archive theme setting
 
 0.3.1	2013-08-08

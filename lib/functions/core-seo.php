@@ -8,31 +8,31 @@
  * officially supported as a theme feature.  Please recommend to your users that they should install an SEO 
  * plugin, such as WP SEO, for this.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Add <meta> elements to the <head> area. */
-add_action( 'wp_head', 'hybrid_meta_robots', 1 );
-add_action( 'wp_head', 'hybrid_meta_author', 1 );
-add_action( 'wp_head', 'hybrid_meta_copyright', 1 );
-add_action( 'wp_head', 'hybrid_meta_revised', 1 );
-add_action( 'wp_head', 'hybrid_meta_description', 1 );
-add_action( 'wp_head', 'hybrid_meta_keywords', 1 );
+add_action( 'wp_head', 'exmachina_meta_robots', 1 );
+add_action( 'wp_head', 'exmachina_meta_author', 1 );
+add_action( 'wp_head', 'exmachina_meta_copyright', 1 );
+add_action( 'wp_head', 'exmachina_meta_revised', 1 );
+add_action( 'wp_head', 'exmachina_meta_description', 1 );
+add_action( 'wp_head', 'exmachina_meta_keywords', 1 );
 
 /**
  * Sets the default meta robots setting.  If private, don't send meta info to the header.  Runs the 
- * hybrid_meta_robots filter hook at the end.
+ * exmachina_meta_robots filter hook at the end.
  *
  * @since 0.2.3
  * @access public
  * @return void
  */
-function hybrid_meta_robots() {
+function exmachina_meta_robots() {
 
 	/* If the blog is set to private, don't show anything. */
 	if ( !get_option( 'blog_public' ) )
@@ -52,7 +52,7 @@ function hybrid_meta_robots() {
  * @access public
  * @return void
  */
-function hybrid_meta_author() {
+function exmachina_meta_author() {
 
 	/* Set an empty $author variable. */
 	$author = '';
@@ -83,18 +83,18 @@ function hybrid_meta_author() {
  * @access public
  * @return void
  */
-function hybrid_meta_copyright() {
+function exmachina_meta_copyright() {
 
 	/* If viewing a singular post, get the post month and year. */
 	if ( is_singular() )
-		$date = get_the_time( esc_attr__( 'F Y', 'hybrid-core' ) );
+		$date = get_the_time( esc_attr__( 'F Y', 'exmachina-core' ) );
 
 	/* For all other views, get the current year. */
 	else
-		$date = date( esc_attr__( 'Y', 'hybrid-core' ) );
+		$date = date( esc_attr__( 'Y', 'exmachina-core' ) );
 
 	/* Create the HTML for the copyright meta tag. */
-	$copyright = '<meta name="copyright" content="' . sprintf( esc_attr__( 'Copyright (c) %1$s', 'hybrid-core' ), $date ) . '" />' . "\n";
+	$copyright = '<meta name="copyright" content="' . sprintf( esc_attr__( 'Copyright (c) %1$s', 'exmachina-core' ), $date ) . '" />' . "\n";
 
 	echo apply_atomic( 'meta_copyright', $copyright );
 }
@@ -106,14 +106,14 @@ function hybrid_meta_copyright() {
  * @access public
  * @return void
  */
-function hybrid_meta_revised() {
+function exmachina_meta_revised() {
 
 	/* Create an empty $revised variable. */
 	$revised = '';
 
 	/* If viewing a singular post, get the last modified date/time to use in the revised meta tag. */
 	if ( is_singular() )
-		$revised = '<meta name="revised" content="' . get_the_modified_time( esc_attr__( 'l, F jS, Y, g:i a', 'hybrid-core' ) ) . '" />' . "\n";
+		$revised = '<meta name="revised" content="' . get_the_modified_time( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '" />' . "\n";
 
 	echo apply_atomic( 'meta_revised', $revised );
 }
@@ -125,7 +125,7 @@ function hybrid_meta_revised() {
  * @access public
  * @return void
  */
-function hybrid_meta_description() {
+function exmachina_meta_description() {
 
 	/* Set an empty $description variable. */
 	$description = '';
@@ -194,7 +194,7 @@ function hybrid_meta_description() {
  * @access public
  * @return void
  */
-function hybrid_meta_keywords() {
+function exmachina_meta_keywords() {
 
 	/* Set an empty $keywords variable. */
 	$keywords = '';

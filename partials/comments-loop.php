@@ -27,8 +27,8 @@
 				'format'            => 'xhtml', //or html5 @since 3.6
 				'short_ping'        => false // @since 3.6
 			);
-			// hybrid_list_comments_args()
-			wp_list_comments( hybrid_list_comments_args() );
+			// exmachina_list_comments_args()
+			wp_list_comments( exmachina_list_comments_args() );
 		?>
 	</ol><!-- .comment-list -->
 

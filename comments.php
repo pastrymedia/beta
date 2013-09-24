@@ -20,9 +20,9 @@
 if ( post_password_required() || ( !have_comments() && !comments_open() && !pings_open() ) )
 	return;
 
-if ( is_singular( 'post' ) && ( !hybrid_get_setting( 'trackbacks_posts' ) && !hybrid_get_setting( 'comments_posts' ) ) )
+if ( is_singular( 'post' ) && ( !exmachina_get_setting( 'trackbacks_posts' ) && !exmachina_get_setting( 'comments_posts' ) ) )
 	return;
-elseif ( is_singular( 'page' ) && ( !hybrid_get_setting( 'trackbacks_pages' ) && !hybrid_get_setting( 'comments_pages' ) ) )
+elseif ( is_singular( 'page' ) && ( !exmachina_get_setting( 'trackbacks_pages' ) && !exmachina_get_setting( 'comments_pages' ) ) )
 	return;
 
 ?>

@@ -3,16 +3,16 @@
  * Theme administration functions used with other components of the framework admin.  This file is for 
  * setting up any basic features and holding additional admin helper functions.
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Admin
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Add the admin setup function to the 'admin_menu' hook. */
-add_action( 'admin_menu', 'hybrid_admin_setup' );
+add_action( 'admin_menu', 'exmachina_admin_setup' );
 
 /**
  * Sets up the adminstration functionality for the framework and themes.
@@ -20,17 +20,17 @@ add_action( 'admin_menu', 'hybrid_admin_setup' );
  * @since 1.3.0
  * @return void
  */
-function hybrid_admin_setup() {
+function exmachina_admin_setup() {
 
 	/* Load the post meta boxes on the new post and edit post screens. */
-	add_action( 'load-post.php', 'hybrid_admin_load_post_meta_boxes' );
-	add_action( 'load-post-new.php', 'hybrid_admin_load_post_meta_boxes' );
+	add_action( 'load-post.php', 'exmachina_admin_load_post_meta_boxes' );
+	add_action( 'load-post-new.php', 'exmachina_admin_load_post_meta_boxes' );
 
 	/* Registers admin stylesheets for the framework. */
-	add_action( 'admin_enqueue_scripts', 'hybrid_admin_register_styles', 1 );
+	add_action( 'admin_enqueue_scripts', 'exmachina_admin_register_styles', 1 );
 
 	/* Loads admin stylesheets for the framework. */
-	add_action( 'admin_enqueue_scripts', 'hybrid_admin_enqueue_styles' );
+	add_action( 'admin_enqueue_scripts', 'exmachina_admin_enqueue_styles' );
 }
 
 /**
@@ -40,13 +40,13 @@ function hybrid_admin_setup() {
  * @since 1.2.0
  * @return void
  */
-function hybrid_admin_load_post_meta_boxes() {
+function exmachina_admin_load_post_meta_boxes() {
 
 	/* Load the SEO post meta box. */
-	require_if_theme_supports( 'hybrid-core-seo', trailingslashit( HYBRID_ADMIN ) . 'meta-box-post-seo.php' );
+	require_if_theme_supports( 'exmachina-core-seo', trailingslashit( EXMACHINA_ADMIN ) . 'meta-box-post-seo.php' );
 
 	/* Load the post template meta box. */
-	require_if_theme_supports( 'hybrid-core-template-hierarchy', trailingslashit( HYBRID_ADMIN ) . 'meta-box-post-template.php' );
+	require_if_theme_supports( 'exmachina-core-template-hierarchy', trailingslashit( EXMACHINA_ADMIN ) . 'meta-box-post-template.php' );
 }
 
 /**
@@ -56,12 +56,12 @@ function hybrid_admin_load_post_meta_boxes() {
  * @since 1.2.0
  * @return void
  */
-function hybrid_admin_register_styles() {
+function exmachina_admin_register_styles() {
 
 	/* Use the .min stylesheet if SCRIPT_DEBUG is turned off. */
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-	wp_register_style( 'hybrid-core-admin', trailingslashit( HYBRID_CSS ) . "admin{$suffix}.css", false, '20130515', 'screen' );
+	wp_register_style( 'exmachina-core-admin', trailingslashit( EXMACHINA_CSS ) . "admin{$suffix}.css", false, '20130515', 'screen' );
 }
 
 /**
@@ -70,11 +70,11 @@ function hybrid_admin_register_styles() {
  * @since 1.2.0
  * @return void
  */
-function hybrid_admin_enqueue_styles( $hook_suffix ) {
+function exmachina_admin_enqueue_styles( $hook_suffix ) {
 
-	/* Load admin styles if on the widgets screen and the current theme supports 'hybrid-core-widgets'. */
-	if ( current_theme_supports( 'hybrid-core-widgets' ) && 'widgets.php' == $hook_suffix )
-		wp_enqueue_style( 'hybrid-core-admin' );
+	/* Load admin styles if on the widgets screen and the current theme supports 'exmachina-core-widgets'. */
+	if ( current_theme_supports( 'exmachina-core-widgets' ) && 'widgets.php' == $hook_suffix )
+		wp_enqueue_style( 'exmachina-core-admin' );
 }
 
 /**
@@ -86,16 +86,16 @@ function hybrid_admin_enqueue_styles( $hook_suffix ) {
  * @param string $post_type The name of the post type to get templates for.
  * @return array $post_templates The array of templates.
  */
-function hybrid_get_post_templates( $post_type = 'post' ) {
-	global $hybrid;
+function exmachina_get_post_templates( $post_type = 'post' ) {
+	global $exmachina;
 
 	/* If templates have already been called, just return them. */
-	if ( !empty( $hybrid->post_templates ) && isset( $hybrid->post_templates[ $post_type ] ) )
-		return $hybrid->post_templates[ $post_type ];
+	if ( !empty( $exmachina->post_templates ) && isset( $exmachina->post_templates[ $post_type ] ) )
+		return $exmachina->post_templates[ $post_type ];
 
 	/* Else, set up an empty array to house the templates. */
 	else
-		$hybrid->post_templates = array();
+		$exmachina->post_templates = array();
 
 	/* Set up an empty post templates array. */
 	$post_templates = array();
@@ -135,11 +135,11 @@ function hybrid_get_post_templates( $post_type = 'post' ) {
 		$post_templates[ $file ] = $headers["{$post_type_object->name} Template"];
 	}
 
-	/* Add the templates to the global $hybrid object. */
-	$hybrid->post_templates[ $post_type ] = array_flip( $post_templates );
+	/* Add the templates to the global $exmachina object. */
+	$exmachina->post_templates[ $post_type ] = array_flip( $post_templates );
 
 	/* Return array of post templates. */
-	return $hybrid->post_templates[ $post_type ];
+	return $exmachina->post_templates[ $post_type ];
 }
 
 ?>

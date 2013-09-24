@@ -2,19 +2,19 @@
 /**
  * Sets up the default framework sidebars if the theme supports them.  By default, the framework registers 
  * seven sidebars.  Themes may choose to use one or more of these sidebars.  A theme must register support 
- * for 'hybrid-core-sidebars' to use them and register each sidebar ID within an array for the second 
+ * for 'exmachina-core-sidebars' to use them and register each sidebar ID within an array for the second 
  * parameter of add_theme_support().
  *
- * @package    HybridCore
+ * @package    ExMachinaCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
  * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themehybrid.com/hybrid-core
+ * @link       http://themeexmachina.com/exmachina-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /* Register widget areas. */
-add_action( 'widgets_init', 'hybrid_register_sidebars' );
+add_action( 'widgets_init', 'exmachina_register_sidebars' );
 
 /**
  * Registers the default framework dynamic sidebars based on the sidebars the theme has added support 
@@ -26,17 +26,17 @@ add_action( 'widgets_init', 'hybrid_register_sidebars' );
  * @link http://codex.wordpress.org/Function_Reference/register_sidebar
  * @return void
  */
-function hybrid_register_sidebars() {
+function exmachina_register_sidebars() {
 
 	/* Get the theme-supported sidebars. */
-	$supported_sidebars = get_theme_support( 'hybrid-core-sidebars' );
+	$supported_sidebars = get_theme_support( 'exmachina-core-sidebars' );
 
 	/* If the theme doesn't add support for any sidebars, return. */
 	if ( !is_array( $supported_sidebars[0] ) )
 		return;
 
 	/* Get the available core framework sidebars. */
-	$core_sidebars = hybrid_get_sidebars();
+	$core_sidebars = exmachina_get_sidebars();
 
 	/* Loop through the supported sidebars. */
 	foreach ( $supported_sidebars[0] as $sidebar ) {
@@ -53,7 +53,7 @@ function hybrid_register_sidebars() {
 			);
 
 			/* Allow developers to filter the default sidebar arguments. */
-			$defaults = apply_filters( hybrid_get_prefix() . '_sidebar_defaults', $defaults, $sidebar );
+			$defaults = apply_filters( exmachina_get_prefix() . '_sidebar_defaults', $defaults, $sidebar );
 
 			/* Parse the sidebar arguments and defaults. */
 			$args = wp_parse_args( $core_sidebars[ $sidebar ], $defaults );
@@ -62,7 +62,7 @@ function hybrid_register_sidebars() {
 			$args['id'] = ( isset( $args['id'] ) ? sanitize_key( $args['id'] ) : sanitize_key( $sidebar ) );
 
 			/* Allow developers to filter the sidebar arguments. */
-			$args = apply_filters( hybrid_get_prefix() . '_sidebar_args', $args, $sidebar );
+			$args = apply_filters( exmachina_get_prefix() . '_sidebar_args', $args, $sidebar );
 
 			/* Register the sidebar. */
 			register_sidebar( $args );
@@ -79,37 +79,37 @@ function hybrid_register_sidebars() {
  * @access public
  * @return array $sidebars All the available framework sidebars.
  */
-function hybrid_get_sidebars() {
+function exmachina_get_sidebars() {
 
 	/* Set up an array of sidebars. */
 	$sidebars = array(
 		'primary' => array(
-			'name'        => _x( 'Primary', 'sidebar', 'hybrid-core' ),
-			'description' => __( 'The main (primary) widget area, most often used as a sidebar.', 'hybrid-core' )
+			'name'        => _x( 'Primary', 'sidebar', 'exmachina-core' ),
+			'description' => __( 'The main (primary) widget area, most often used as a sidebar.', 'exmachina-core' )
 		),
 		'secondary' => array(
-			'name'        => _x( 'Secondary', 'sidebar', 'hybrid-core' ),
-			'description' => __( 'The second most important widget area, most often used as a secondary sidebar.', 'hybrid-core' ),
+			'name'        => _x( 'Secondary', 'sidebar', 'exmachina-core' ),
+			'description' => __( 'The second most important widget area, most often used as a secondary sidebar.', 'exmachina-core' ),
 		),
 		'subsidiary' => array(
-			'name'        => _x( 'Subsidiary', 'sidebar', 'hybrid-core' ),
-			'description' => __( 'A widget area loaded in the footer of the site.', 'hybrid-core' ),
+			'name'        => _x( 'Subsidiary', 'sidebar', 'exmachina-core' ),
+			'description' => __( 'A widget area loaded in the footer of the site.', 'exmachina-core' ),
 		),
 		'header' => array(
-			'name'        => _x( 'Header', 'sidebar', 'hybrid-core' ),
-			'description' => __( "Displayed within the site's header area.", 'hybrid-core' ),
+			'name'        => _x( 'Header', 'sidebar', 'exmachina-core' ),
+			'description' => __( "Displayed within the site's header area.", 'exmachina-core' ),
 		),
 		'before-content' => array(
-			'name'        => _x( 'Before Content', 'sidebar', 'hybrid-core' ),
-			'description' => __( "Loaded before the page's main content area.", 'hybrid-core' ),
+			'name'        => _x( 'Before Content', 'sidebar', 'exmachina-core' ),
+			'description' => __( "Loaded before the page's main content area.", 'exmachina-core' ),
 		),
 		'after-content' => array(
-			'name'        => _x( 'After Content', 'sidebar', 'hybrid-core' ),
-			'description' => __( "Loaded after the page's main content area.", 'hybrid-core' ),
+			'name'        => _x( 'After Content', 'sidebar', 'exmachina-core' ),
+			'description' => __( "Loaded after the page's main content area.", 'exmachina-core' ),
 		),
 		'after-singular' => array(
-			'name'        => _x( 'After Singular', 'sidebar', 'hybrid-core' ),
-			'description' => __( 'Loaded on singular post (page, attachment, etc.) views before the comments area.', 'hybrid-core' ),
+			'name'        => _x( 'After Singular', 'sidebar', 'exmachina-core' ),
+			'description' => __( 'Loaded on singular post (page, attachment, etc.) views before the comments area.', 'exmachina-core' ),
 		)
 	);
 

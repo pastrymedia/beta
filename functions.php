@@ -34,8 +34,8 @@ if ( !defined('ABSPATH')) exit;
 ###############################################################################
 
 /* Load the core theme framework. */
-require ( trailingslashit( get_template_directory() ) . 'lib/hybrid.php' );
-new Hybrid();
+require ( trailingslashit( get_template_directory() ) . 'lib/engine.php' );
+new ExMachina();
 
 /* Load beta functions */
 require get_template_directory() . '/inc/beta.php';
@@ -51,36 +51,36 @@ if ( ! function_exists( 'beta_theme_setup' ) ) :
 function beta_theme_setup() {
 
   /* Get the theme prefix. */
-  $prefix = hybrid_get_prefix();
+  $prefix = exmachina_get_prefix();
 
   /* The best thumbnail/image script ever. */
   add_theme_support( 'get-the-image' );
 
   /* Register menus. */
   add_theme_support(
-    'hybrid-core-menus',
+    'exmachina-core-menus',
     array( 'primary')
   );
 
   /* Register sidebars. */
   add_theme_support(
-    'hybrid-core-sidebars',
+    'exmachina-core-sidebars',
     array( 'primary' )
   );
 
   /* Load scripts. */
   add_theme_support(
-    'hybrid-core-scripts',
+    'exmachina-core-scripts',
     array( 'comment-reply' )
   );
 
   /* Load shortcodes. */
-  add_theme_support( 'hybrid-core-shortcodes' );
+  add_theme_support( 'exmachina-core-shortcodes' );
 
-  add_theme_support( 'hybrid-core-theme-settings', array( 'about' ) );
+  add_theme_support( 'exmachina-core-theme-settings', array( 'about' ) );
 
   /* Enable custom template hierarchy. */
-  add_theme_support( 'hybrid-core-template-hierarchy' );
+  add_theme_support( 'exmachina-core-template-hierarchy' );
 
 
   /* Enable theme layouts (need to add stylesheet support). */
@@ -124,7 +124,7 @@ function beta_theme_setup() {
   add_theme_support( 'beta-responsive' );
 
   /* Handle content width for embeds and images. */
-  hybrid_set_content_width( 640 );
+  exmachina_set_content_width( 640 );
 
   add_action( 'wp_enqueue_scripts', 'beta_scripts' );
   add_action( 'wp_head', 'beta_styles' );
@@ -316,19 +316,19 @@ function beta_entry_header() {
 function beta_entry() {
 
   if ( is_home() || is_archive() || is_search() ) {
-    if(hybrid_get_setting( 'content_archive_thumbnail' )) {
-      get_the_image( array( 'meta_key' => 'Thumbnail', 'default_size' => hybrid_get_setting( 'image_size' ) ) );
+    if(exmachina_get_setting( 'content_archive_thumbnail' )) {
+      get_the_image( array( 'meta_key' => 'Thumbnail', 'default_size' => exmachina_get_setting( 'image_size' ) ) );
     }
 
 
-    if ( 'excerpts' === hybrid_get_setting( 'content_archive' ) ) {
-      if ( hybrid_get_setting( 'content_archive_limit' ) )
-        the_content_limit( (int) hybrid_get_setting( 'content_archive_limit' ), hybrid_get_setting( 'content_archive_more' ) );
+    if ( 'excerpts' === exmachina_get_setting( 'content_archive' ) ) {
+      if ( exmachina_get_setting( 'content_archive_limit' ) )
+        the_content_limit( (int) exmachina_get_setting( 'content_archive_limit' ), exmachina_get_setting( 'content_archive_more' ) );
       else
         the_excerpt();
     }
     else {
-      the_content( hybrid_get_setting( 'content_archive_more' ) );
+      the_content( exmachina_get_setting( 'content_archive_more' ) );
     }
   }
 
@@ -336,7 +336,7 @@ function beta_entry() {
 
 
 function beta_excerpt_more( $more ) {
-  return ' ... <a class="more-link" href="'. get_permalink( get_the_ID() ) . '">' . hybrid_get_setting( 'content_archive_more' ) . '</a>';
+  return ' ... <a class="more-link" href="'. get_permalink( get_the_ID() ) . '">' . exmachina_get_setting( 'content_archive_more' ) . '</a>';
 }
 add_filter('excerpt_more', 'beta_excerpt_more');
 
@@ -388,7 +388,7 @@ function beta_styles() {
  */
 function beta_header_scripts() {
 
-  echo hybrid_get_setting( 'header_scripts' );
+  echo exmachina_get_setting( 'header_scripts' );
 
 }
 
@@ -397,7 +397,7 @@ function beta_header_scripts() {
  */
 function beta_footer_scripts() {
 
-  echo hybrid_get_setting( 'footer_scripts' );
+  echo exmachina_get_setting( 'footer_scripts' );
 
 }
 

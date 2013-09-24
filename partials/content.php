@@ -4,7 +4,7 @@
  */
 ?>
 
-<article id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">	
+<article id="post-<?php the_ID(); ?>" class="<?php exmachina_entry_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">	
 
 	<div class="entry-wrap">
 		
