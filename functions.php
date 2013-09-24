@@ -105,6 +105,9 @@ function beta_theme_setup() {
   /* Add default posts and comments RSS feed links to <head>.  */
   add_theme_support( 'automatic-feed-links' );
 
+  /* Enable footer widgets. */
+  add_theme_support( 'footer-widgets', 3 );
+
   /* Enable wraps */
   add_theme_support( 'beta-wraps' );
 

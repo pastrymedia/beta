@@ -43,9 +43,6 @@ function beta_theme_inc() {
 	/* Load reponsive support. */
 	require_if_theme_supports( 'beta-responsive', $beta_inc . '/inc/extensions/responsive.php' );
 
-	/* Load  footer widgets extension if supported. */
-	require_if_theme_supports( 'beta-footer-widgets', $beta_inc . '/inc/extensions/footer-widgets.php' );
-
 	remove_action( 'wp_head', 'exmachina_meta_template', 4 );
 
 }

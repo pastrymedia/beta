@@ -339,6 +339,9 @@ class ExMachina {
 
 		/* Load the Theme Fonts extension if supported. */
 		require_if_theme_supports( 'theme-fonts', trailingslashit( EXMACHINA_EXTENSIONS ) . 'theme-fonts.php' );
+
+		/* Load the Footer Widgets extension if supported. */
+		require_if_theme_supports( 'footer-widgets', trailingslashit( EXMACHINA_EXTENSIONS ) . 'footer-widgets.php' );
 	}
 
 	/**
