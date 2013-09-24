@@ -37,9 +37,6 @@ function beta_theme_inc() {
 	/* Load custom logo extension if supported. */
 	require_if_theme_supports( 'beta-custom-logo', $beta_inc . '/inc/extensions/custom-logo.php' );
 
-	/* Load reponsive support. */
-	require_if_theme_supports( 'beta-responsive', $beta_inc . '/inc/extensions/responsive.php' );
-
 	remove_action( 'wp_head', 'exmachina_meta_template', 4 );
 
 }

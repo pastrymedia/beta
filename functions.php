@@ -121,7 +121,7 @@ function beta_theme_setup() {
   add_theme_support( 'beta-custom-logo' );
 
   /* Enable responsive support */
-  add_theme_support( 'beta-responsive' );
+  add_theme_support( 'responsive' );
 
   /* Handle content width for embeds and images. */
   exmachina_set_content_width( 640 );

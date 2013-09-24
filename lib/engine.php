@@ -345,6 +345,9 @@ class ExMachina {
 
 		/* Load the Structural Wraps extension if supported. */
 		require_if_theme_supports( 'structural-wraps', trailingslashit( EXMACHINA_EXTENSIONS ) . 'wraps.php' );
+
+		/* Load the Responsive extension if supported. */
+		require_if_theme_supports( 'responsive', trailingslashit( EXMACHINA_EXTENSIONS ) . 'responsive.php' );
 	}
 
 	/**

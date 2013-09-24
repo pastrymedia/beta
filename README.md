@@ -9,7 +9,7 @@ Roadmap
 - Remove child theme page
 + Remove custom footer
 - Move footer widgets
-+ Move responsive
+- Move responsive
 - Move wraps
 + Move custom CSS
 + Move custom logo
