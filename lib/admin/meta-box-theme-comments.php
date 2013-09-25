@@ -1,7 +1,7 @@
 <?php
 /**
- * Creates a meta box for the theme settings page, which holds textareas for custom scripts within 
- * the theme. 
+ * Creates a meta box for the theme settings page, which holds textareas for custom scripts within
+ * the theme.
  *
  */
 
@@ -33,10 +33,10 @@ function beta_theme_admin_comments() {
 function beta_theme_settings_comments() {
 
 	/* Add a custom meta box. */
-	add_meta_box( 
-		'beta-theme-comments', 
-		__( 'Comments and Trackbacks', 'beta' ), 
-		'beta_meta_box_theme_display_comments', 
+	add_meta_box(
+		'beta-theme-comments',
+		__( 'Comments and Trackbacks', 'beta' ),
+		'beta_meta_box_theme_display_comments',
 		'appearance_page_theme-settings', 'normal', 'high' );
 
 }
@@ -82,7 +82,7 @@ function beta_theme_validate_comments( $settings ) {
 		$settings['comments_posts'] =  absint( $settings['comments_posts'] );
 		$settings['trackbacks_posts'] =  absint( $settings['trackbacks_posts'] );
 		$settings['comments_pages'] =  absint( $settings['comments_pages'] );
-		$settings['trackbacks_pages'] =  absint( $settings['trackbacks_pages'] );		
+		$settings['trackbacks_pages'] =  absint( $settings['trackbacks_pages'] );
 	}
 
 	/* Return the theme settings. */
@@ -101,7 +101,7 @@ function beta_theme_settings_comments_help() {
 		'<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.', 'beta' ) . '</p>' .
 		'<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.', 'beta' ) . '</p>';
 
-	
+
 	$screen->add_help_tab( array(
 		'id'      => 'beta-settings' . '-comments',
 		'title'   => __( 'Comments and Trackbacks', 'beta' ),

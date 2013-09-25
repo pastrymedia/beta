@@ -384,6 +384,8 @@ class ExMachina {
 			/* Load the theme settings feature if supported. */
 			require_if_theme_supports( 'exmachina-core-theme-settings', trailingslashit( EXMACHINA_ADMIN ) . 'theme-settings.php' );
 			require_if_theme_supports( 'exmachina-core-theme-settings', trailingslashit( EXMACHINA_ADMIN ) . 'meta-box-theme-archives.php' );
+			require_if_theme_supports( 'exmachina-core-theme-settings', trailingslashit( EXMACHINA_ADMIN ) . 'meta-box-theme-comments.php' );
+			require_if_theme_supports( 'exmachina-core-theme-settings', trailingslashit( EXMACHINA_ADMIN ) . 'meta-box-theme-general.php' );
 		}
 	}
 
