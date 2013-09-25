@@ -1,185 +1,240 @@
 <?php
-/**
- * The core functions file for the ExMachina framework. Functions defined here are generally
- * used across the entire framework to make various tasks faster. This file should be loaded
- * prior to any other files because its functions are needed to run the framework.
- *
- * @package    ExMachinaCore
- * @subpackage Functions
- * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themeexmachina.com/exmachina-core
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- */
+
+//* Exit if accessed directly
+if ( !defined('ABSPATH')) exit;
 
 /**
- * Defines the theme prefix. This allows developers to infinitely change the theme. In theory,
- * one could use the ExMachina core to create their own theme or filter 'exmachina_prefix' with a 
- * plugin to make it easier to use hooks across multiple themes without having to figure out
- * each theme's hooks (assuming other themes used the same system).
+ * ExMachina WordPress Theme Framework Engine
+ * Core Functions
  *
- * @since 0.7.0
+ * core.php
+ *
+ * WARNING: This file is part of the ExMachina Framework Engine. DO NOT edit
+ * this file under any circumstances. Bad things will happen. Please do all
+ * modifications in the form of a child theme.
+ *
+ * The core functions for the ExMachina framework. Functions located here define
+ * the global ExMachina prefix, contextual atomic functions, and the content width.
+ *
+ * @package     ExMachina
+ * @subpackage  Framework
+ * @author      Machina Themes | @machinathemes
+ * @copyright   Copyright (c) 2013, Machina Themes
+ * @license     http://opensource.org/licenses/gpl-2.0.php GPL-2.0+
+ * @link        http://www.machinathemes.com
+ */
+###############################################################################
+# Begin functions
+###############################################################################
+
+/**
+ * Get Theme Prefix
+ *
+ * Defines the theme prefix. This allows infinite changes to the theme. Based on
+ * the template directory.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/sanitize_key
+ * @link http://codex.wordpress.org/Function_Reference/get_template
+ *
+ * @since 0.1.1
  * @access public
- * @uses get_template() Defines the theme prefix based on the theme directory.
- * @global object $exmachina The global ExMachina object.
- * @return string $exmachina->prefix The prefix of the theme.
+ *
+ * @global object   $exmachina          The global ExMachina object.
+ * @return string   $exmachina->prefix  The prefix of the theme.
  */
 function exmachina_get_prefix() {
-	global $exmachina;
+  global $exmachina;
 
-	/* If the global prefix isn't set, define it. Plugin/theme authors may also define a custom prefix. */
-	if ( empty( $exmachina->prefix ) )
-		$exmachina->prefix = sanitize_key( apply_filters( 'exmachina_prefix', get_template() ) );
+  /* If the global prefix isn't set, define it. Plugin/theme authors may also define a custom prefix. */
+  if ( empty( $exmachina->prefix ) )
+    $exmachina->prefix = sanitize_key( apply_filters( 'exmachina_prefix', get_template() ) );
 
-	return $exmachina->prefix;
-}
+  return $exmachina->prefix;
+
+} // end function exmachina_get_prefix()
 
 /**
- * Adds contextual action hooks to the theme.  This allows users to easily add context-based content 
- * without having to know how to use WordPress conditional tags.  The theme handles the logic.
+ * Atomic Action Hooks
  *
- * An example of a basic hook would be 'exmachina_header'.  The do_atomic() function extends that to 
- * give extra hooks such as 'exmachina_singular_header', 'exmachina_singular-post_header', and 
- * 'exmachina_singular-post-ID_header'.
+ * Adds contextual action hooks to the theme. This allows users to easily add
+ * context-based content without having to know how to use WordPress conditional
+ * tags.
  *
- * @author Justin Tadlock <justin@justintadlock.com>
- * @author Ptah Dunbar <pt@ptahd.com>
- * @link http://ptahdunbar.com/wordpress/smarter-hooks-context-sensitive-hooks
+ * @link http://codex.wordpress.org/Function_Reference/do_action_ref_array
  *
- * @since 0.7.0
+ * @uses exmachina_get_prefix()   Gets the theme prefix.
+ * @uses exmachina_get_context()  Gets the context of the current page.
+ *
+ * @since 0.1.1
  * @access public
- * @uses exmachina_get_prefix() Gets the theme prefix.
- * @uses exmachina_get_context() Gets the context of the current page.
- * @param string $tag Usually the location of the hook but defines what the base hook is.
- * @param mixed $arg,... Optional additional arguments which are passed on to the functions hooked to the action.
+ *
+ * @param  string $tag   Defines the base hook (Usually the location).
+ * @param  mixed  $arg   Optional. Additional arguments passed to the function.
+ * @return void          Returns false if tag is empty.
  */
 function do_atomic( $tag = '', $arg = '' ) {
 
-	if ( empty( $tag ) )
-		return false;
+  if ( empty( $tag ) )
+    return false;
 
-	/* Get the theme prefix. */
-	$pre = exmachina_get_prefix();
+  /* Get the theme prefix. */
+  $pre = exmachina_get_prefix();
 
-	/* Get the args passed into the function and remove $tag. */
-	$args = func_get_args();
-	array_splice( $args, 0, 1 );
+  /* Get the args passed into the function and remove $tag. */
+  $args = func_get_args();
+  array_splice( $args, 0, 1 );
 
-	/* Do actions on the basic hook. */
-	do_action_ref_array( "{$pre}_{$tag}", $args );
+  /* Do actions on the basic hook. */
+  do_action_ref_array( "{$pre}_{$tag}", $args );
 
-	/* Loop through context array and fire actions on a contextual scale. */
-	foreach ( (array) exmachina_get_context() as $context )
-		do_action_ref_array( "{$pre}_{$context}_{$tag}", $args );
-}
+  /* Loop through context array and fire actions on a contextual scale. */
+  foreach ( (array) exmachina_get_context() as $context )
+    do_action_ref_array( "{$pre}_{$context}_{$tag}", $args );
+
+} // end function do_atomic()
 
 /**
- * Adds contextual filter hooks to the theme.  This allows users to easily filter context-based content 
- * without having to know how to use WordPress conditional tags.  The theme handles the logic.
+ * Atomic Filter Hooks
  *
- * An example of a basic hook would be 'exmachina_entry_meta'.  The apply_atomic() function extends 
- * that to give extra hooks such as 'exmachina_singular_entry_meta', 'exmachina_singular-post_entry_meta', 
- * and 'exmachina_singular-post-ID_entry_meta'.
+ * Adds contextual filter hooks to the theme. This allows users to easily filter
+ * context-based content without having to know how to use WordPress conditional
+ * tags.
  *
- * @since 0.7.0
+ * @link http://codex.wordpress.org/Function_Reference/apply_filters_ref_array
+ *
+ * @uses exmachina_get_prefix()   Gets the theme prefix.
+ * @uses exmachina_get_context()  Gets the context of the current page.
+ *
+ * @since 0.1.1
  * @access public
- * @uses exmachina_get_prefix() Gets the theme prefix.
- * @uses exmachina_get_context() Gets the context of the current page.
- * @param string $tag Usually the location of the hook but defines what the base hook is.
- * @param mixed $value The value on which the filters hooked to $tag are applied on.
- * @param mixed $var,... Additional variables passed to the functions hooked to $tag.
- * @return mixed $value The value after it has been filtered.
+ *
+ * @param  string $tag   Defines the base hook (Usually the location).
+ * @param  mixed  $value The value to filter.
+ * @return mixed         The value after it has been filtered.
  */
 function apply_atomic( $tag = '', $value = '' ) {
 
-	if ( empty( $tag ) )
-		return false;
+  if ( empty( $tag ) )
+    return false;
 
-	/* Get theme prefix. */
-	$pre = exmachina_get_prefix();
+  /* Get theme prefix. */
+  $pre = exmachina_get_prefix();
 
-	/* Get the args passed into the function and remove $tag. */
-	$args = func_get_args();
-	array_splice( $args, 0, 1 );
+  /* Get the args passed into the function and remove $tag. */
+  $args = func_get_args();
+  array_splice( $args, 0, 1 );
 
-	/* Apply filters on the basic hook. */
-	$value = $args[0] = apply_filters_ref_array( "{$pre}_{$tag}", $args );
+  /* Apply filters on the basic hook. */
+  $value = $args[0] = apply_filters_ref_array( "{$pre}_{$tag}", $args );
 
-	/* Loop through context array and apply filters on a contextual scale. */
-	foreach ( (array) exmachina_get_context() as $context )
-		$value = $args[0] = apply_filters_ref_array( "{$pre}_{$context}_{$tag}", $args );
+  /* Loop through context array and apply filters on a contextual scale. */
+  foreach ( (array) exmachina_get_context() as $context )
+    $value = $args[0] = apply_filters_ref_array( "{$pre}_{$context}_{$tag}", $args );
 
-	/* Return the final value once all filters have been applied. */
-	return $value;
-}
+  /* Return the final value once all filters have been applied. */
+  return $value;
+
+} // end function apply_atomic()
 
 /**
- * Wraps the output of apply_atomic() in a call to do_shortcode(). This allows developers to use 
- * context-aware functionality alongside shortcodes. Rather than adding a lot of code to the 
- * function itself, developers can create individual functions to handle shortcodes.
+ * Atomic Shortcodes
  *
- * @since 0.7.0
+ * Wraps the output of apply_atomic() in a callback to do_shortcode(). This allows
+ * for context-aware functionality alongside shortcodes.
+ *
+ * @link  http://codex.wordpress.org/Function_Reference/do_shortcode
+ *
+ * @uses apply_atomic() Applies the contextual filter.
+ *
+ * @since 0.1.1
  * @access public
- * @param string $tag Usually the location of the hook but defines what the base hook is.
- * @param mixed $value The value to be filtered.
- * @return mixed $value The value after it has been filtered.
+ *
+ * @param  string $tag   Defines the base hook (Usually the location).
+ * @param  mixed  $value The value to filter.
+ * @return mixed         The value after it has been filtered.
  */
 function apply_atomic_shortcode( $tag = '', $value = '' ) {
-	return do_shortcode( apply_atomic( $tag, $value ) );
-}
+  return do_shortcode( apply_atomic( $tag, $value ) );
+
+} // end function apply_atomic_shortcode()
 
 /**
- * The theme can save multiple things in a transient to help speed up page load times. We're
- * setting a default of 12 hours or 43,200 seconds (60 * 60 * 12).
+ * Get Transient Expiration
  *
- * @since 0.8.0
+ * The theme can save multiple things in a transient to help speed up page load
+ * times. The default transient is set to 12 hours or 43,000 seconds.
+ *
+ * @link  http://codex.wordpress.org/Transients_API
+ *
+ * @uses exmachina_get_prefix()  Gets the theme prefix.
+ *
+ * @since 0.1.1
  * @access public
- * @return int Transient expiration time in seconds.
+ *
+ * @return int The transient expiration time in seconds (60 * 60 * 12).
  */
 function exmachina_get_transient_expiration() {
-	return apply_filters( exmachina_get_prefix() . '_transient_expiration', 43200 );
-}
+  return apply_filters( exmachina_get_prefix() . '_transient_expiration', 43200 );
+
+} // end function exmachina_get_transient_expiration()
 
 /**
- * Function for formatting a hook name if needed. It automatically adds the theme's prefix to 
- * the hook, and it will add a context (or any variable) if it's given.
+ * Format Hook Name
  *
- * @since 0.7.0
+ * Function for formatting a hook name if needed. This function automatically
+ * adds the theme's prefix to the hook, and it will add the context (or any
+ * variable) if it's given.
+ *
+ * @uses exmachina_get_prefix() Gets the theme prefix.
+ *
+ * @since 0.1.1
  * @access public
- * @param string $tag The basic name of the hook (e.g., 'before_header').
- * @param string $context A specific context/value to be added to the hook.
+ *
+ * @param  string $tag     The base hook (Usually the location).
+ * @param  string $context A specific context/value to be added to the hook.
+ * @return string          Returns the properly formatted hook.
  */
 function exmachina_format_hook( $tag, $context = '' ) {
-	return exmachina_get_prefix() . ( ( !empty( $context ) ) ? "_{$context}" : "" ). "_{$tag}";
-}
+  return exmachina_get_prefix() . ( ( !empty( $context ) ) ? "_{$context}" : "" ). "_{$tag}";
+
+} // end function exmachina_format_hook()
 
 /**
- * Function for setting the content width of a theme.  This does not check if a content width has been set; it 
- * simply overwrites whatever the content width is.
+ * Set Content Width
  *
- * @since 1.2.0
+ * Function for setting the content width of a theme. This does not check if a
+ * content width has been set, it simply overwrites with any value set.
+ *
+ * @link  http://codex.wordpress.org/Content_Width
+ *
+ * @since 0.1.1
  * @access public
+ *
  * @global int $content_width The width for the theme's content area.
- * @param int $width Numeric value of the width to set.
+ * @param  int $width         Numeric value of the theme width.
+ * @return void
  */
 function exmachina_set_content_width( $width = '' ) {
-	global $content_width;
+  global $content_width;
 
-	$content_width = absint( $width );
-}
+  $content_width = absint( $width );
+} // end function exmachina_set_content_width()
 
 /**
+ * Get Content Width
+ *
  * Function for getting the theme's content width.
  *
- * @since 1.2.0
+ * @link  http://codex.wordpress.org/Content_Width
+ *
+ * @since 0.1.1
  * @access public
+ *
  * @global int $content_width The width for the theme's content area.
- * @return int $content_width
+ * @return int $content_width Numeric value of the theme's width.
  */
 function exmachina_get_content_width() {
-	global $content_width;
+  global $content_width;
 
-	return $content_width;
-}
-
-?>
+  return $content_width;
+} // end function exmachina_get_content_width()
