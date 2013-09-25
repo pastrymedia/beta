@@ -128,15 +128,9 @@ function beta_theme_setup() {
 
 
 
-  /* Load the primary menu. */
-  add_action( "{$prefix}_before_header", 'beta_get_primary_menu' );
 
-  /* Add the title, byline, and entry meta before and after the entry.*/
-  add_action( "{$prefix}_before_entry", 'beta_entry_header' );
-  add_action( "{$prefix}_entry", 'beta_entry' );
-  add_action( "{$prefix}_singular_entry", 'beta_singular_entry' );
-  add_action( "{$prefix}_after_entry", 'beta_entry_footer' );
-  add_action( "{$prefix}_singular-page_after_entry", 'beta_page_entry_meta' );
+
+
 
   /* Add the primary sidebars after the main content. */
   add_action( "{$prefix}_after_main", 'beta_after_main' );
@@ -150,11 +144,7 @@ function beta_theme_setup() {
 
 
 
-  // add disqus compatibility
-  if (function_exists('dsq_comments_template')) {
-    remove_filter( 'comments_template', 'dsq_comments_template' );
-    add_filter( 'comments_template', 'dsq_comments_template', 12 ); // You can use any priority higher than '10'
-  }
+
 }
 endif; // beta_theme_setup
 
@@ -179,21 +169,10 @@ function beta_sidebar_defaults($defaults) {
 
 
 
-/**
- * Loads the menu-primary.php template.
- */
-function beta_get_primary_menu() {
-  get_template_part( 'partials/menu', 'primary' );
-}
 
 
-/**
- * Display the default page edit link
- */
-function beta_page_entry_meta() {
 
-  echo apply_atomic_shortcode( 'entry_meta', '<div class="entry-meta">[entry-edit-link]</div>' );
-}
+
 
 /**
  * Display sidebar
@@ -203,82 +182,18 @@ function beta_after_main() {
 }
 
 
-/**
- * Display the default entry header.
- */
-function beta_entry_header() {
-
-  echo '<header class="entry-header">';
-
-  if ( is_home() || is_archive() || is_search() ) {
-  ?>
-    <h1 class="entry-title" itemprop="headline"><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
-  <?php
-  } else {
-  ?>
-    <h1 class="entry-title" itemprop="headline"><?php the_title(); ?></h1>
-  <?php
-  }
-  if ( 'post' == get_post_type() ) :
-    get_template_part( 'partials/entry', 'byline' );
-  endif;
-  echo '</header><!-- .entry-header -->';
-
-}
-
-/**
- * Display the default entry metadata.
- */
-function beta_entry() {
-
-  if ( is_home() || is_archive() || is_search() ) {
-    if(exmachina_get_setting( 'content_archive_thumbnail' )) {
-      get_the_image( array( 'meta_key' => 'Thumbnail', 'default_size' => exmachina_get_setting( 'image_size' ) ) );
-    }
 
 
-    if ( 'excerpts' === exmachina_get_setting( 'content_archive' ) ) {
-      if ( exmachina_get_setting( 'content_archive_limit' ) )
-        the_content_limit( (int) exmachina_get_setting( 'content_archive_limit' ), exmachina_get_setting( 'content_archive_more' ) );
-      else
-        the_excerpt();
-    }
-    else {
-      the_content( exmachina_get_setting( 'content_archive_more' ) );
-    }
-  }
-
-}
 
 
-function beta_excerpt_more( $more ) {
-  return ' ... <a class="more-link" href="'. get_permalink( get_the_ID() ) . '">' . exmachina_get_setting( 'content_archive_more' ) . '</a>';
-}
-add_filter('excerpt_more', 'beta_excerpt_more');
 
 
-/**
- * Display the default singular entry metadata.
- */
-function beta_singular_entry() {
-
-  the_content();
-
-  wp_link_pages( array( 'before' => '<p class="page-links">' . '<span class="before">' . __( 'Pages:', 'beta' ) . '</span>', 'after' => '</p>' ) );
-
-}
 
 
-/**
- * Display the default entry footer.
- */
-function beta_entry_footer() {
 
-  if ( 'post' == get_post_type() ) {
-    get_template_part( 'partials/entry', 'footer' );
-  }
 
-}
+
+
 
 /**
  * Enqueue scripts and styles

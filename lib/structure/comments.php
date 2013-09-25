@@ -12,3 +12,8 @@
  */
 
 
+// add disqus compatibility
+  if (function_exists('dsq_comments_template')) {
+    remove_filter( 'comments_template', 'dsq_comments_template' );
+    add_filter( 'comments_template', 'dsq_comments_template', 12 ); // You can use any priority higher than '10'
+  }
