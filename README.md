@@ -14,7 +14,7 @@ Roadmap
 - post-formats.php - Migrate to new file template
 - post-formats.php - Add any additional post format functions
 - template-hierarchy.php - Migrate to new file template
-+ template.php - Migrate to new file template
+- template.php - Migrate to new file template
 + media.php - Migrate to new file template
 + media.php - Merge with image.php
 + media.php - Add any additional media functions
