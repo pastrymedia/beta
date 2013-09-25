@@ -60,6 +60,7 @@ function post_format_tools_clean_post_format_slug() {
  * Message to display to the user for removed functions.
  *
  * @since 1.0.1
+ * @access public
  *
  * @param  string $func The deprecated function name.
  * @return string       The error message.

@@ -1,20 +1,31 @@
 <?php
+
+//* Exit if accessed directly
+if ( !defined('ABSPATH')) exit;
+
 /**
- * Functions and filters for handling the output of post formats.  Most of this file is for continuing the 
- * use of previous ExMachina Core functionality related to post formats as well as fixing the backwards-
- * compatibility issues that WordPress 3.6 created with its new post format functionality.
+ * ExMachina WordPress Theme Framework Engine
+ * Post Format Functions
  *
- * This file is only loaded if themes declare support for 'post-formats'.  If a theme declares support for 
- * 'post-formats', the content filters will not run for the individual formats that the theme 
- * supports.
+ * post-formats.php
  *
- * @package    ExMachinaCore
- * @subpackage Functions
- * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
- * @link       http://themeexmachina.com/exmachina-core
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * WARNING: This file is part of the ExMachina Framework Engine. DO NOT edit
+ * this file under any circumstances. Bad things will happen. Please do all
+ * modifications in the form of a child theme.
+ *
+ * Functions and filters for handling the output of post formats. This file is
+ * only loaded if themes declare support for 'post-formats'.
+ *
+ * @package     ExMachina
+ * @subpackage  Functions
+ * @author      Machina Themes | @machinathemes
+ * @copyright   Copyright (c) 2013, Machina Themes
+ * @license     http://opensource.org/licenses/gpl-2.0.php GPL-2.0+
+ * @link        http://www.machinathemes.com
  */
+###############################################################################
+# Begin functions
+###############################################################################
 
 /* Add support for structured post formats. */
 add_action( 'wp_loaded', 'exmachina_structured_post_formats', 1 );
@@ -23,490 +34,615 @@ add_action( 'wp_loaded', 'exmachina_structured_post_formats', 1 );
 add_filter( 'single_term_title', 'exmachina_single_post_format_title' );
 
 /**
- * Theme compatibility for post formats.  This function adds appropriate filters to 'the_content' for 
- * the various post formats that a theme supports.
+ * Structure Post Formats
  *
- * @note   This function may change drastically in the future depending on the direction of the WP post format UI.
- * @since  1.6.0
+ * Theme compatibility for post formats. This function adds appropiate filters
+ * to 'the_content' for the various post formats that a theme supports.
+ *
+ * @uses exmachina_aside_infinity() Filters 'aside' post format.
+ * @uses exmachina_image_content()  Filters 'image' post format.
+ * @uses exmachina_link_content()   Filters 'link' post format.
+ * @uses exmachina_quote_content()  Filters 'quote' post format.
+ * @uses exmachina_chat_content()   Filters 'chat' post format.
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @return void
  */
 function exmachina_structured_post_formats() {
 
-	/* Add infinity symbol to aside posts. */
-	if ( current_theme_supports( 'post-formats', 'aside' ) )
-		add_filter( 'the_content', 'exmachina_aside_infinity', 9 ); // run before wpautop
+  /* Add infinity symbol to aside posts. */
+  if ( current_theme_supports( 'post-formats', 'aside' ) )
+    add_filter( 'the_content', 'exmachina_aside_infinity', 9 ); // run before wpautop
 
-	/* Add image to content if the user didn't add it. */
-	if ( current_theme_supports( 'post-formats', 'image' ) )
-		add_filter( 'the_content', 'exmachina_image_content' );
+  /* Add image to content if the user didn't add it. */
+  if ( current_theme_supports( 'post-formats', 'image' ) )
+    add_filter( 'the_content', 'exmachina_image_content' );
 
-	/* Adds the link to the content if it's not in the post. */
-	if ( current_theme_supports( 'post-formats', 'link' ) )
-		add_filter( 'the_content', 'exmachina_link_content', 9 ); // run before wpautop
+  /* Adds the link to the content if it's not in the post. */
+  if ( current_theme_supports( 'post-formats', 'link' ) )
+    add_filter( 'the_content', 'exmachina_link_content', 9 ); // run before wpautop
 
-	/* Wraps <blockquote> around quote posts. */
-	if ( current_theme_supports( 'post-formats', 'quote' ) )
-		add_filter( 'the_content', 'exmachina_quote_content' );
+  /* Wraps <blockquote> around quote posts. */
+  if ( current_theme_supports( 'post-formats', 'quote' ) )
+    add_filter( 'the_content', 'exmachina_quote_content' );
 
-	/* Filter the content of chat posts. */
-	if ( current_theme_supports( 'post-formats', 'chat' ) ) {
-		add_filter( 'the_content', 'exmachina_chat_content' );
+  /* Filter the content of chat posts. */
+  if ( current_theme_supports( 'post-formats', 'chat' ) ) {
+    add_filter( 'the_content', 'exmachina_chat_content' );
 
-		/* Auto-add paragraphs to the chat text. */
-		add_filter( 'exmachina_post_format_chat_text', 'wpautop' );
-	}
-}
+    /* Auto-add paragraphs to the chat text. */
+    add_filter( 'exmachina_post_format_chat_text', 'wpautop' );
+  }
+
+} // end function exmachina_structured_post_formats()
 
 /**
- * Filters the single post format title, which is used on the term archive page. The purpose of this 
- * function is to replace the singular name with a plural version.
+ * Single Post Format Title
  *
- * @since  1.6.0
+ * Filters the single post format title, which is used on the term archive page.
+ * The purpose of this function is to replace the singular name with a plural
+ * version.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/get_queried_object
+ *
+ * @uses exmachina_get_plural_post_format_string() Gets plural version of post format.
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @param  string $title The term name.
  * @return string
  */
 function exmachina_single_post_format_title( $title ) {
 
-	if ( is_tax( 'post_format' ) ) {
-		$term   = get_queried_object();
-		$plural = exmachina_get_plural_post_format_string( $term->slug );
-		$title  = !empty( $plural ) ? $plural : $title;
-	}
+  if ( is_tax( 'post_format' ) ) {
+    $term   = get_queried_object();
+    $plural = exmachina_get_plural_post_format_string( $term->slug );
+    $title  = !empty( $plural ) ? $plural : $title;
+  }
 
-	return $title;
-}
+  return $title;
+
+} // end function exmachina_single_post_format_title()
 
 /**
+ * Get Plural Post Format String
+ *
  * Gets the plural version of a post format name.
  *
- * @since  1.6.0
+ * @uses exmachina_get_plural_post_format_strings() Defines plural strings.
+ * @uses exmachina_clean_post_format_slug()         Cleans the post format slug.
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @param  string $slug The term slug.
- * @return string
+ * @return string       The plural string.
  */
 function exmachina_get_plural_post_format_string( $slug ) {
 
-	$strings = exmachina_get_plural_post_format_strings();
+  $strings = exmachina_get_plural_post_format_strings();
 
-	$slug = exmachina_clean_post_format_slug( $slug );
+  $slug = exmachina_clean_post_format_slug( $slug );
 
-	return isset( $strings[ $slug ] ) ? $strings[ $slug ] : '';
-}
+  return isset( $strings[ $slug ] ) ? $strings[ $slug ] : '';
+
+} // end function exmachina_get_plural_post_format_string()
 
 /**
- * Defines plural versions of the post format names since WordPress only provides a singular version 
- * of each format. Basically, I hate having archive pages labeled with the singular name, so this is 
- * what I created to take care of that problem.
+ * Get Plural Post Format Strings
  *
- * @since  1.6.0
+ * Defines plural versions of the post format names since WordPress only
+ * provides a singular version of each format.
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @return array
  */
 function exmachina_get_plural_post_format_strings() {
 
-	$strings = array(
-	//	'standard' => __( 'Articles',       'exmachina-core' ), // Would this ever be used?
-		'aside'    => __( 'Asides',         'exmachina-core' ),
-		'audio'    => __( 'Audio',          'exmachina-core' ), // Leave as "Audio"?
-		'chat'     => __( 'Chats',          'exmachina-core' ),
-		'image'    => __( 'Images',         'exmachina-core' ),
-		'gallery'  => __( 'Galleries',      'exmachina-core' ),
-		'link'     => __( 'Links',          'exmachina-core' ),
-		'quote'    => __( 'Quotes',         'exmachina-core' ), // Use "Quotations"?
-		'status'   => __( 'Status Updates', 'exmachina-core' ),
-		'video'    => __( 'Videos',         'exmachina-core' ),
-	);
+  $strings = array(
+  //  'standard' => __( 'Articles',       'exmachina-core' ), // Would this ever be used?
+    'aside'    => __( 'Asides',         'exmachina-core' ),
+    'audio'    => __( 'Audio',          'exmachina-core' ), // Leave as "Audio"?
+    'chat'     => __( 'Chats',          'exmachina-core' ),
+    'image'    => __( 'Images',         'exmachina-core' ),
+    'gallery'  => __( 'Galleries',      'exmachina-core' ),
+    'link'     => __( 'Links',          'exmachina-core' ),
+    'quote'    => __( 'Quotes',         'exmachina-core' ), // Use "Quotations"?
+    'status'   => __( 'Status Updates', 'exmachina-core' ),
+    'video'    => __( 'Videos',         'exmachina-core' ),
+  );
 
-	return apply_filters( 'exmachina_plural_post_format_strings', $strings );
-}
+  return apply_filters( 'exmachina_plural_post_format_strings', $strings );
+
+} // end function exmachina_get_plural_post_format_strings()
 
 /**
+ * Clean Post Format Slug
+ *
  * Strips the 'post-format-' prefix from a post format (term) slug.
  *
- * @since  1.6.0
+ * @since 1.0.3
  * @access public
+ *
  * @param  string $slug The slug of the post format.
- * @return string
+ * @return string       The cleaned string.
  */
 function exmachina_clean_post_format_slug( $slug ) {
-	return str_replace( 'post-format-', '', $slug );
-}
+
+  return str_replace( 'post-format-', '', $slug );
+
+} // end function exmachina_clean_post_format_slug()
 
 /* === Asides === */
 
 /**
- * Adds an infinity character "&#8734;" to the end of the post content on 'aside' posts.
+ * Aside Infinity
  *
- * @since  1.6.0
+ * Adds an infinity character "&#8734;" to the end of the post content on
+ * aside posts.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/has_post_format
+ * @link http://codex.wordpress.org/Function_Reference/is_singular
+ * @link http://codex.wordpress.org/Function_Reference/get_permalink
+ * @link http://codex.wordpress.org/Function_Reference/the_title_attribute
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @param  string $content The post content.
- * @return string $content
+ * @return string          The aside post content.
  */
 function exmachina_aside_infinity( $content ) {
 
-	if ( has_post_format( 'aside' ) && !is_singular() )
-		$content .= ' <a class="permalink" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'echo' => false ) ) . '">&#8734;</a>';
+  if ( has_post_format( 'aside' ) && !is_singular() )
+    $content .= ' <a class="permalink" href="' . get_permalink() . '" title="' . the_title_attribute( array( 'echo' => false ) ) . '">&#8734;</a>';
 
-	return $content;
-}
+  return $content;
+} // end function exmachina_aside_infinity()
 
-/* === Galleries === */
+/* == Galleries == */
 
 /**
- * Gets the gallery *item* count.  This is different from getting the gallery *image* count.  By default, 
- * WordPress only allows attachments with the 'image' mime type in galleries.  However, some scripts such 
- * as Cleaner Gallery allow for other mime types.  This is a more accurate count than the 
- * exmachina_get_gallery_image_count() function since it will count all gallery items regardless of mime type.
+ * Get Gallery Item Count
+ *
+ * Gets the gallery *item* count. This is different from getting the gallery
+ * *image* count. By default, WordPress only allows attachments with the 'image'
+ * mime type in galleries. However, some scripts such as Cleaner Gallery allow
+ * for other mime types.
+ *
+ * This is a more accurate count than the exmachina_get_gallery_image_count()
+ * function since it will count all gallery items regardless of mime type.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/get_post_galleries
+ * @link http://codex.wordpress.org/Function_Reference/get_the_ID
+ * @link http://codex.wordpress.org/Function_Reference/get_posts
  *
  * @todo Check for the [gallery] shortcode with the 'mime_type' parameter and use that in get_posts().
  *
- * @since  1.6.0
+ * @since 1.0.3
  * @access public
+ *
  * @return int
  */
 function exmachina_get_gallery_item_count() {
 
-	/* Check the post content for galleries. */
-	$galleries = get_post_galleries( get_the_ID(), true );
+  /* Check the post content for galleries. */
+  $galleries = get_post_galleries( get_the_ID(), true );
 
-	/* If galleries were found in the content, get the gallery item count. */
-	if ( !empty( $galleries ) ) {
-		$items = '';
+  /* If galleries were found in the content, get the gallery item count. */
+  if ( !empty( $galleries ) ) {
+    $items = '';
 
-		foreach ( $galleries as $gallery => $gallery_items )
-			$items .= $gallery_items;
+    foreach ( $galleries as $gallery => $gallery_items )
+      $items .= $gallery_items;
 
-		preg_match_all( '#src=([\'"])(.+?)\1#is', $items, $sources, PREG_SET_ORDER );
+    preg_match_all( '#src=([\'"])(.+?)\1#is', $items, $sources, PREG_SET_ORDER );
 
-		if ( !empty( $sources ) )
-			return count( $sources );
-	}
+    if ( !empty( $sources ) )
+      return count( $sources );
+  }
 
-	/* If an item count wasn't returned, get the post attachments. */
-	$attachments = get_posts( 
-		array( 
-			'fields'         => 'ids',
-			'post_parent'    => get_the_ID(), 
-			'post_type'      => 'attachment', 
-			'numberposts'    => -1 
-		) 
-	);
+  /* If an item count wasn't returned, get the post attachments. */
+  $attachments = get_posts(
+    array(
+      'fields'         => 'ids',
+      'post_parent'    => get_the_ID(),
+      'post_type'      => 'attachment',
+      'numberposts'    => -1
+    )
+  );
 
-	/* Return the attachment count if items were found. */
-	if ( !empty( $attachments ) )
-		return count( $attachments );
+  /* Return the attachment count if items were found. */
+  if ( !empty( $attachments ) )
+    return count( $attachments );
 
-	/* Return 0 for everything else. */
-	return 0;
-}
+  /* Return 0 for everything else. */
+  return 0;
+
+} // end function exmachina_get_gallery_item_count()
 
 /**
+ * Get Gallery Image Count
+ *
  * Returns the number of images displayed by the gallery or galleries in a post.
  *
- * @since  1.6.0
+ * @link http://codex.wordpress.org/Function_Reference/get_post_galleries_images
+ * @link http://codex.wordpress.org/Function_Reference/get_posts
+ * @link http://codex.wordpress.org/Function_Reference/get_the_ID
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @return int
  */
 function exmachina_get_gallery_image_count() {
 
-	/* Set up an empty array for images. */
-	$images = array();
+  /* Set up an empty array for images. */
+  $images = array();
 
-	/* Get the images from all post galleries. */
-	$galleries = get_post_galleries_images();
+  /* Get the images from all post galleries. */
+  $galleries = get_post_galleries_images();
 
-	/* Merge each gallery image into a single array. */
-	foreach ( $galleries as $gallery_images )
-		$images = array_merge( $images, $gallery_images );
+  /* Merge each gallery image into a single array. */
+  foreach ( $galleries as $gallery_images )
+    $images = array_merge( $images, $gallery_images );
 
-	/* If there are no images in the array, just grab the attached images. */
-	if ( empty( $images ) ) {
-		$images = get_posts( 
-			array( 
-				'fields'         => 'ids',
-				'post_parent'    => get_the_ID(), 
-				'post_type'      => 'attachment', 
-				'post_mime_type' => 'image', 
-				'numberposts'    => -1 
-			) 
-		);
-	}
+  /* If there are no images in the array, just grab the attached images. */
+  if ( empty( $images ) ) {
+    $images = get_posts(
+      array(
+        'fields'         => 'ids',
+        'post_parent'    => get_the_ID(),
+        'post_type'      => 'attachment',
+        'post_mime_type' => 'image',
+        'numberposts'    => -1
+      )
+    );
+  }
 
-	/* Return the count of the images. */
-	return count( $images );
-}
+  /* Return the count of the images. */
+  return count( $images );
+
+} // end function exmachina_get_gallery_image_count()
 
 /* === Images === */
 
 /**
- * Adds the post format image to the content if no image is found in the post content.
+ * Image Post Format Content
  *
- * @since  1.6.0
+ * Adds the post format image to the content if no image is found in the post
+ * content.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/has_post_format
+ * @link http://codex.wordpress.org/Function_Reference/current_theme_supports
+ * @link http://codex.wordpress.org/Function_Reference/get_the_post_thumbnail
+ * @link http://codex.wordpress.org/Function_Reference/get_the_ID
+ *
+ * @uses get_the_image() Triggers the image-getting script.
+ *
+ * @since 1.0.3
  * @access public
- * @param  string  $content
- * @return string
+ *
+ * @param  string $content The post content.
+ * @return string          The image post content.
  */
 function exmachina_image_content( $content ) {
 
-	if ( has_post_format( 'image' ) ) {
-		preg_match( '/<img.*?>/', $content, $matches );
+  if ( has_post_format( 'image' ) ) {
+    preg_match( '/<img.*?>/', $content, $matches );
 
-		if ( empty( $matches ) && current_theme_supports( 'get-the-image' ) )
-			$content = get_the_image( array( 'meta_key' => false, 'size' => 'large', 'link_to_post' => false, 'echo' => false ) ) . $content;
+    if ( empty( $matches ) && current_theme_supports( 'get-the-image' ) )
+      $content = get_the_image( array( 'meta_key' => false, 'size' => 'large', 'link_to_post' => false, 'echo' => false ) ) . $content;
 
-		elseif ( empty( $matches ) )
-			$content = get_the_post_thumbnail( get_the_ID(), 'large' ) . $content;
-	}
+    elseif ( empty( $matches ) )
+      $content = get_the_post_thumbnail( get_the_ID(), 'large' ) . $content;
+  }
 
-	return $content;
-}
+  return $content;
+
+} // end function exmachina_image_content()
 
 /* === Links === */
 
 /**
+ * Get Content URL
+ *
  * Gets a URL from the content, even if it's not wrapped in an <a> tag.
  *
- * @since  1.6.0
+ * @link http://codex.wordpress.org/Function_Reference/make_clickable
+ * @link http://codex.wordpress.org/Function_Reference/esc_url_raw
+ *
+ * @since 1.0.3
  * @access public
- * @param  string  $content
- * @return string
+ *
+ * @param  string $content The link post content.
+ * @return string          The link post content.
  */
 function exmachina_get_content_url( $content ) {
 
-	/* Catch links that are not wrapped in an '<a>' tag. */
-	preg_match( '/<a\s[^>]*?href=[\'"](.+?)[\'"]/is', make_clickable( $content ), $matches );
+  /* Catch links that are not wrapped in an '<a>' tag. */
+  preg_match( '/<a\s[^>]*?href=[\'"](.+?)[\'"]/is', make_clickable( $content ), $matches );
 
-	return !empty( $matches[1] ) ? esc_url_raw( $matches[1] ) : '';
-}
+  return !empty( $matches[1] ) ? esc_url_raw( $matches[1] ) : '';
+
+} // end function exmachina_get_content_url()
 
 /**
- * Filters 'get_the_post_format_url' to make for a more robust and back-compatible function.  If WP did 
- * not find a URL, check the post content for one.  If nothing is found, return the post permalink.
+ * Get Post Format URL
  *
- * @since  1.6.0
+ * Filters 'get_the_post_format_url' to make for a more robust and backwards-
+ * compatible function. If WordPress did not find a URL, check the post content
+ * for one. If nothing is found, return the post permalink.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/get_post
+ * @link http://codex.wordpress.org/Function_Reference/get_permalink
+ *
+ * @uses exmachina_get_content_url() Gets the URL from the content.
+ *
+ * @since 1.0.3
  * @access public
- * @param  string  $url
- * @param  object  $post
- * @note   Setting defaults for the parameters so that this function can become a filter in future WP versions.
- * @return string
+ *
+ * @param  string $url  The url string.
+ * @param  object $post The post object.
+ * @return string       The url.
  */
 function exmachina_get_the_post_format_url( $url = '', $post = null ) {
 
-	if ( empty( $url ) ) {
+  if ( empty( $url ) ) {
 
-		$post = is_null( $post ) ? get_post() : $post;
+    $post = is_null( $post ) ? get_post() : $post;
 
-		$content_url = exmachina_get_content_url( $post->post_content );
+    $content_url = exmachina_get_content_url( $post->post_content );
 
-		$url = !empty( $content_url ) ? $content_url : get_permalink( $post->ID );
-	}
+    $url = !empty( $content_url ) ? $content_url : get_permalink( $post->ID );
+  }
 
-	return $url;
-}
+  return $url;
+
+} // end function function exmachina_get_the_post_format_url()
 
 /**
- * Filters the content of the link format posts.  Wraps the content in the make_clickable() function 
- * so that users can enter just a URL into the post content editor.
+ * Link Post Format Content
  *
- * @since  1.6.0
+ * Filters the content of the link format posts. Wraps the content in the
+ * make_clickable() function so that users can enter just a URL into the post
+ * content editor.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/has_post_format
+ * @link http://codex.wordpress.org/Function_Reference/make_clickable
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @param  string $content The post content.
- * @return string $content
+ * @return string          The post content.
  */
 function exmachina_link_content( $content ) {
 
-	if ( has_post_format( 'link' ) && !preg_match( '/<a\s[^>]*?href=[\'"](.+?)[\'"]/is', $content ) )
-		$content = make_clickable( $content );
+  if ( has_post_format( 'link' ) && !preg_match( '/<a\s[^>]*?href=[\'"](.+?)[\'"]/is', $content ) )
+    $content = make_clickable( $content );
 
-	return $content;
-}
+  return $content;
+
+} // end function exmachina_link_content()
 
 /* === Quotes === */
 
 /**
- * Checks if the quote post has a <blockquote> tag within the content.  If not, wraps the entire post 
- * content with one.
+ * Quote Post Format Content
  *
- * @since  1.6.0
+ * Checks if the quote post has a <blockquote> tag within the content. If not,
+ * wraps the entire post content with one.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/has_post_format
+ *
+ * @since 1.0.3
  * @access public
+ *
  * @param  string $content The post content.
- * @return string $content
+ * @return string          The post content.
  */
 function exmachina_quote_content( $content ) {
 
-	if ( has_post_format( 'quote' ) ) {
-		preg_match( '/<blockquote.*?>/', $content, $matches );
+  if ( has_post_format( 'quote' ) ) {
+    preg_match( '/<blockquote.*?>/', $content, $matches );
 
-		if ( empty( $matches ) )
-			$content = "<blockquote>{$content}</blockquote>";
-	}
+    if ( empty( $matches ) )
+      $content = "<blockquote>{$content}</blockquote>";
+  }
 
-	return $content;
-}
+  return $content;
+
+} // end function exmachina_quote_content()
 
 /* === Chats === */
 
 /**
- * Separates the post content into an array of arrays for further formatting of the chat content.
+ * Get Post Format Chat
  *
- * @since  1.6.0
+ * Separates the post content into an array of arrays for further formatting
+ * of the chat content.
+ *
+ * @since 1.0.3
  * @access public
- * @param  string $content
- * @return array
+ *
+ * @param  string $content The post content.
+ * @return array           The formatted array.
  */
 function exmachina_get_the_post_format_chat( $content ) {
 
-	/* Allow the separator (separator for speaker/text) to be filtered. */
-	$separator = apply_filters( 'exmachina_post_format_chat_separator', ':' );
+  /* Allow the separator (separator for speaker/text) to be filtered. */
+  $separator = apply_filters( 'exmachina_post_format_chat_separator', ':' );
 
-	/* Split the content to get individual chat rows. */
-	$chat_rows = preg_split( "/(\r?\n)+|(<br\s*\/?>\s*)+/", $content );
+  /* Split the content to get individual chat rows. */
+  $chat_rows = preg_split( "/(\r?\n)+|(<br\s*\/?>\s*)+/", $content );
 
-	/* Loop through each row and format the output. */
-	foreach ( $chat_rows as $chat_row ) {
+  /* Loop through each row and format the output. */
+  foreach ( $chat_rows as $chat_row ) {
 
-		/* Set up a new, empty array of this stanza. */
-		$stanza = array();
+    /* Set up a new, empty array of this stanza. */
+    $stanza = array();
 
-		/* If a speaker is found, create a new chat row with speaker and text. */
-		if ( preg_match( '/(?<!http|https)' . $separator . '/', $chat_row ) ) {
+    /* If a speaker is found, create a new chat row with speaker and text. */
+    if ( preg_match( '/(?<!http|https)' . $separator . '/', $chat_row ) ) {
 
-			/* Set up a new, empty array for this row. */
-			$row = array();
+      /* Set up a new, empty array for this row. */
+      $row = array();
 
-			/* Split the chat row into author/text. */
-			$chat_row_split = explode( $separator, trim( $chat_row ), 2 );
+      /* Split the chat row into author/text. */
+      $chat_row_split = explode( $separator, trim( $chat_row ), 2 );
 
-			/* Get the chat author and strip tags. */
-			$row['author'] = strip_tags( trim( $chat_row_split[0] ) );
+      /* Get the chat author and strip tags. */
+      $row['author'] = strip_tags( trim( $chat_row_split[0] ) );
 
-			/* Get the chat text. */
-			$row['message'] = trim( $chat_row_split[1] );
+      /* Get the chat text. */
+      $row['message'] = trim( $chat_row_split[1] );
 
-			/* Add the row to the stanza. */
-			$stanza[] = $row;
-		}
+      /* Add the row to the stanza. */
+      $stanza[] = $row;
+    }
 
-		/* If no speaker is found. */
-		else {
+    /* If no speaker is found. */
+    else {
 
-			/* Make sure we have text. */
-			if ( !empty( $chat_row ) ) {
-				$stanza[] = array( 'message' => $chat_row );
-			}
-		}
+      /* Make sure we have text. */
+      if ( !empty( $chat_row ) ) {
+        $stanza[] = array( 'message' => $chat_row );
+      }
+    }
 
-		$stanzas[] = $stanza;
-	}
+    $stanzas[] = $stanza;
+  }
 
-	return $stanzas;
-}
+  return $stanzas;
+
+} // end function exmachina_get_the_post_format_chat()
 
 /**
- * This function filters the post content when viewing a post with the "chat" post format.  It formats 
- * the content with structured HTML markup to make it easy for theme developers to style chat posts. 
- * The advantage of this solution is that it allows for more than two speakers (like most solutions). 
- * You can have 100s of speakers in your chat post, each with their own, unique classes for styling.
+ * Chat Post Format Content
  *
- * @author    David Chandra <david.warna@gmail.com>
- * @author    Justin Tadlock <justin@justintadlock.com>
- * @copyright Copyright (c) 2012
- * @link      http://justintadlock.com/archives/2012/08/21/post-formats-chat
+ * This function filters the post content when viewing a post with the "chat"
+ * post format. It formats the content with structured HTML markup to make it
+ * easy for theme developers to style chat posts. The advantage of this solution
+ * is that it allows for more than two speakers (like most solutions). You can
+ * have 100s of speakers in your chat post, each with their own, unique classes
+ * for styling.
  *
- * @since  1.6.0
+ * @link http://codex.wordpress.org/Function_Reference/has_post_format
+ * @link http://codex.wordpress.org/Function_Reference/esc_attr
+ * @link http://codex.wordpress.org/Function_Reference/get_the_ID
+ * @link http://codex.wordpress.org/Function_Reference/esc_html
+ * @link http://codex.wordpress.org/Function_Reference/sanitize_html_class
+ *
+ * @uses exmachina_get_the_post_format_chat() Gets chat format array.
+ * @uses exmachina_chat_row_id()              Get chat row ID.
+ *
+ * @since 1.0.3
  * @access public
- * @global array   $_exmachina_post_chat_ids  An array of IDs for the chat rows based on the author.
- * @param  string  $content                The content of the post.
- * @return string  $chat_output            The formatted content of the post.
+ *
+ * @global array  $_exmachina_post_chat_ids  An array of IDs for the chat rows based on the author.
+ * @param  string $content      The content of the post.
+ * @return string $chat_output  The formatted content of the post.
  */
 function exmachina_chat_content( $content ) {
 
-	/* If this isn't a chat, return. */
-	if ( !has_post_format( 'chat' ) )
-		return $content;
+  /* If this isn't a chat, return. */
+  if ( !has_post_format( 'chat' ) )
+    return $content;
 
-	/* Open the chat transcript div and give it a unique ID based on the post ID. */
-	$chat_output = "\n\t\t\t" . '<div id="chat-transcript-' . esc_attr( get_the_ID() ) . '" class="chat-transcript">';
+  /* Open the chat transcript div and give it a unique ID based on the post ID. */
+  $chat_output = "\n\t\t\t" . '<div id="chat-transcript-' . esc_attr( get_the_ID() ) . '" class="chat-transcript">';
 
-	/* Allow the separator (separator for speaker/text) to be filtered. */
-	$separator = apply_filters( 'exmachina_post_format_chat_separator', ':' );
+  /* Allow the separator (separator for speaker/text) to be filtered. */
+  $separator = apply_filters( 'exmachina_post_format_chat_separator', ':' );
 
-	/* Get the stanzas from the post content. */
-	$stanzas = exmachina_get_the_post_format_chat( $content );
+  /* Get the stanzas from the post content. */
+  $stanzas = exmachina_get_the_post_format_chat( $content );
 
-	/* Loop through the stanzas that were returned. */
-	foreach ( $stanzas as $stanza ) {
+  /* Loop through the stanzas that were returned. */
+  foreach ( $stanzas as $stanza ) {
 
-		/* Loop through each row of the stanza and format. */
-		foreach ( $stanza as $row ) {
+    /* Loop through each row of the stanza and format. */
+    foreach ( $stanza as $row ) {
 
-			/* Get the chat author and message. */
-			$chat_author = !empty( $row['author'] ) ? $row['author'] : '';
-			$chat_text   = $row['message'];
+      /* Get the chat author and message. */
+      $chat_author = !empty( $row['author'] ) ? $row['author'] : '';
+      $chat_text   = $row['message'];
 
-			/* Get the speaker/row ID. */
-			$speaker_id = exmachina_chat_row_id( $chat_author );
+      /* Get the speaker/row ID. */
+      $speaker_id = exmachina_chat_row_id( $chat_author );
 
-			/* Format the time if there was one given. */
-			$time = empty( $row['time'] ) ? '' : '<time class="chat-timestamp">' . esc_html( $row['time'] ) . '</time> ';
+      /* Format the time if there was one given. */
+      $time = empty( $row['time'] ) ? '' : '<time class="chat-timestamp">' . esc_html( $row['time'] ) . '</time> ';
 
-			/* Open the chat row. */
-			$chat_output .= "\n\t\t\t\t" . '<div class="chat-row ' . sanitize_html_class( "chat-speaker-{$speaker_id}" ) . '">';
+      /* Open the chat row. */
+      $chat_output .= "\n\t\t\t\t" . '<div class="chat-row ' . sanitize_html_class( "chat-speaker-{$speaker_id}" ) . '">';
 
-			/* Add the chat row author. */
-			if ( !empty( $chat_author ) )
-				$chat_output .= "\n\t\t\t\t\t" . '<div class="chat-author ' . sanitize_html_class( strtolower( "chat-author-{$chat_author}" ) ) . ' vcard">' . $time . '<cite class="fn">' . apply_filters( 'exmachina_post_format_chat_author', $chat_author, $speaker_id ) . '</cite>:</div>';
+      /* Add the chat row author. */
+      if ( !empty( $chat_author ) )
+        $chat_output .= "\n\t\t\t\t\t" . '<div class="chat-author ' . sanitize_html_class( strtolower( "chat-author-{$chat_author}" ) ) . ' vcard">' . $time . '<cite class="fn">' . apply_filters( 'exmachina_post_format_chat_author', $chat_author, $speaker_id ) . '</cite>:</div>';
 
-			/* Add the chat row text. */
-			$chat_output .= "\n\t\t\t\t\t" . '<div class="chat-text">' . str_replace( array( "\r", "\n", "\t" ), '', apply_filters( 'exmachina_post_format_chat_text', $chat_text, $chat_author, $speaker_id ) ) . '</div>';
+      /* Add the chat row text. */
+      $chat_output .= "\n\t\t\t\t\t" . '<div class="chat-text">' . str_replace( array( "\r", "\n", "\t" ), '', apply_filters( 'exmachina_post_format_chat_text', $chat_text, $chat_author, $speaker_id ) ) . '</div>';
 
-			/* Close the chat row. */
-			$chat_output .= "\n\t\t\t\t" . '</div><!-- .chat-row -->';
-		}
-	}
+      /* Close the chat row. */
+      $chat_output .= "\n\t\t\t\t" . '</div><!-- .chat-row -->';
+    }
+  }
 
-	/* Close the chat transcript div. */
-	$chat_output .= "\n\t\t\t</div><!-- .chat-transcript -->\n";
+  /* Close the chat transcript div. */
+  $chat_output .= "\n\t\t\t</div><!-- .chat-transcript -->\n";
 
-	/* Return the chat content. */
-	return $chat_output;
-}
+  /* Return the chat content. */
+  return $chat_output;
 
+} // end function exmachina_chat_content()
 
 /**
- * This function returns an ID based on the provided chat author name.  It keeps these IDs in a global 
- * array and makes sure we have a unique set of IDs.  The purpose of this function is to provide an "ID"
- * that will be used in an HTML class for individual chat rows so they can be styled.  So, speaker "John" 
- * will always have the same class each time he speaks.  And, speaker "Mary" will have a different class 
- * from "John" but will have the same class each time she speaks.
+ * Chat Row ID
  *
- * @author    David Chandra <david.warna@gmail.com>
- * @author    Justin Tadlock <justin@justintadlock.com>
- * @copyright Copyright (c) 2012
- * @link      http://justintadlock.com/archives/2012/08/21/post-formats-chat
+ * This function returns an ID based on the provided chat author name. It keeps
+ * these IDs in a global array and makes sure we have a unique set of IDs. The
+ * purpose of this function is to provide an "ID" that will be used in an HTML
+ * class for individual chat rows so they can be styled.
  *
- * @since  1.6.0
+ * So, speaker "John" will always have the same class each time he speaks. And,
+ * speaker "Mary" will have a different class from "John" but will have the same
+ * class each time she speaks.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/absint
+ *
+ * @since 1.0.3
  * @access public
- * @global array   $_exmachina_post_chat_ids  An array of IDs for the chat rows based on the author.
- * @param  string  $chat_author            Author of the current chat row.
- * @return int                             The ID for the chat row based on the author.
+ *
+ * @global array  $_exmachina_post_chat_ids  An array of IDs for the chat rows based on the author.
+ * @param  string $chat_author Author of the current chat row.
+ * @return int                 The ID for the chat row based on the author.
  */
 function exmachina_chat_row_id( $chat_author ) {
-	global $_exmachina_post_chat_ids;
+  global $_exmachina_post_chat_ids;
 
-	/* Let's sanitize the chat author to avoid craziness and differences like "John" and "john". */
-	$chat_author = strtolower( strip_tags( $chat_author ) );
+  /* Let's sanitize the chat author to avoid craziness and differences like "John" and "john". */
+  $chat_author = strtolower( strip_tags( $chat_author ) );
 
-	/* Add the chat author to the array. */
-	$_exmachina_post_chat_ids[] = $chat_author;
+  /* Add the chat author to the array. */
+  $_exmachina_post_chat_ids[] = $chat_author;
 
-	/* Make sure the array only holds unique values. */
-	$_exmachina_post_chat_ids = array_unique( $_exmachina_post_chat_ids );
+  /* Make sure the array only holds unique values. */
+  $_exmachina_post_chat_ids = array_unique( $_exmachina_post_chat_ids );
 
-	/* Return the array key for the chat author and add "1" to avoid an ID of "0". */
-	return absint( array_search( $chat_author, $_exmachina_post_chat_ids ) ) + 1;
-}
+  /* Return the array key for the chat author and add "1" to avoid an ID of "0". */
+  return absint( array_search( $chat_author, $_exmachina_post_chat_ids ) ) + 1;
+} // end function exmachina_chat_row_id()
 
-?>
+
+
+
+
+
+

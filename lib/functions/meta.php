@@ -40,6 +40,7 @@ add_action( 'init', 'exmachina_register_meta' );
  * @uses exmachina_sanitize_meta() Sanitization callback function.
  *
  * @since 1.0.2
+ * @access public
  *
  * @return void
  */
@@ -80,6 +81,7 @@ function exmachina_register_meta() {
  * the "sanitize_{$meta_type}_meta_{$meta_key}" filter hook to do so.
  *
  * @since 1.0.2
+ * @access public
  *
  * @param  mixed  $meta_value The value of the data.
  * @param  string $meta_key   The meta key name.
