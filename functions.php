@@ -122,12 +122,11 @@ function beta_theme_setup() {
 
   add_action( 'wp_enqueue_scripts', 'beta_scripts' );
 
-  add_action( 'wp_footer', 'beta_footer_scripts' );
 
 
 
-  /* footer insert to the footer. */
-  add_action( "{$prefix}_footer", 'beta_footer_insert' );
+
+
 
   /* Load the primary menu. */
   add_action( "{$prefix}_before_header", 'beta_get_primary_menu' );
@@ -149,7 +148,7 @@ function beta_theme_setup() {
   /* Allow developers to filter the default sidebar arguments. */
   add_filter( "{$prefix}_sidebar_defaults", 'beta_sidebar_defaults' );
 
-  add_filter( 'beta_footer_insert', 'beta_default_footer_insert' );
+
 
   // add disqus compatibility
   if (function_exists('dsq_comments_template')) {
@@ -179,26 +178,6 @@ function beta_sidebar_defaults($defaults) {
 
 
 
-function beta_default_footer_insert( $settings ) {
-
-  $settings = '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link].', 'beta' ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link] and [theme-link].', 'beta' ) . '</p>';
-
-  return $settings;
-
-}
-
-function beta_footer_insert() {
-
-  echo '<div class="footer-content footer-insert">';
-
-  if ( $footer_insert = get_theme_mod( 'custom_footer' ) ) {
-    echo apply_atomic_shortcode( 'footer_content', $footer_insert );
-  } else {
-    echo apply_atomic_shortcode( 'footer_content', apply_filters( 'beta_footer_insert','') );
-  }
-
-  echo '</div>';
-}
 
 /**
  * Loads the menu-primary.php template.
@@ -310,14 +289,7 @@ function beta_scripts() {
 
 
 
-/**
- * Echo the footer scripts, defined in Theme Settings.
- */
-function beta_footer_scripts() {
 
-  echo exmachina_get_setting( 'footer_scripts' );
-
-}
 
 /**
  * Function for deciding which pages should have a one-column layout.

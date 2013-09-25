@@ -12,8 +12,8 @@
  */
 
 
-add_action( 'wp_head', 'beta_styles' );
-add_action( 'wp_head', 'beta_header_scripts' );
+add_action( 'wp_head', 'exmachina_conditional_styles' );
+add_action( 'wp_head', 'exmachina_custom_header_scripts' );
 
 /* Header actions. */
 add_action( exmachina_get_prefix() . '_header', 'exmachina_header_branding' );
@@ -22,7 +22,7 @@ add_action( exmachina_get_prefix() . '_header', 'exmachina_header_branding' );
 /**
  * Insert conditional script / style for the theme used sitewide.
  */
-function beta_styles() {
+function exmachina_conditional_styles() {
 ?>
   <!--[if lt IE 9]>
   <script src="<?php echo trailingslashit( EXMACHINA_JS ); ?>html5.js" type="text/javascript"></script>
@@ -34,7 +34,7 @@ function beta_styles() {
 /**
  * Echo header scripts in to wp_head().
  */
-function beta_header_scripts() {
+function exmachina_custom_header_scripts() {
 
   echo exmachina_get_setting( 'header_scripts' );
 

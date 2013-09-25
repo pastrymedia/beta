@@ -11,3 +11,40 @@
  * @link    http://machinathemes.com
  */
 
+add_action( 'wp_footer', 'exmachina_custom_footer_scripts' );
+
+ /* footer insert to the footer. */
+add_action( exmachina_get_prefix() . '_footer', 'exmachina_custom_footer_insert' );
+
+add_filter( exmachina_get_prefix() . '_footer_insert', 'exmachina_default_footer_insert' );
+
+/**
+ * Echo the footer scripts, defined in Theme Settings.
+ */
+function exmachina_custom_footer_scripts() {
+
+  echo exmachina_get_setting( 'footer_scripts' );
+
+}
+
+
+function exmachina_default_footer_insert( $settings ) {
+
+  $settings = '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link].', 'exmachina-core' ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link] and [theme-link].', 'exmachina-core' ) . '</p>';
+
+  return $settings;
+
+}
+
+function exmachina_custom_footer_insert() {
+
+  echo '<div class="footer-content footer-insert">';
+
+  if ( $footer_insert = get_theme_mod( 'custom_footer' ) ) {
+    echo apply_atomic_shortcode( 'footer_content', $footer_insert );
+  } else {
+    echo apply_atomic_shortcode( 'footer_content', apply_filters( exmachina_get_prefix() . '_footer_insert','') );
+  }
+
+  echo '</div>';
+}
