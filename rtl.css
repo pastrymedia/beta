@@ -1,17 +1,22 @@
 /*
 Theme Name: Beta
+Theme URI: http://machinathemes.com/beta
+Description: Adding support for language written in a Right To Left (RTL) direction.
 
-Adding support for language written in a Right To Left (RTL) direction is easy -
-it's just a matter of overwriting all the horizontal positioning attributes
-of your CSS stylesheet in a separate stylesheet file named rtl.css.
+Version: 0.7.0
+Author: Machina Themes
+Author URI: http://machinathemes.com
 
-http://codex.wordpress.org/Right_to_Left_Language_Support
+Copyright (C) 2013 Machina Themes
+License: GNU General Public License
+License URI: license.txt
 
+See: http://codex.wordpress.org/Right_to_Left_Language_Support
 */
 
-/*
+/* =Base
+-------------------------------------------------------------- */
 body {
 	direction: rtl;
 	unicode-bidi: embed;
 }
-*/

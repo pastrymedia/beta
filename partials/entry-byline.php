@@ -1,16 +1,16 @@
 <div class="entry-meta">
-	<?php 
+	<?php
 	if (is_multi_author()) {
-		echo apply_atomic_shortcode( 'entry_author', __( 'Posted by [entry-author] ', 'beta' ) ); 
+		echo apply_atomic_shortcode( 'entry_author', __( 'Posted by [entry-author] ', 'beta' ) );
 	} else {
-		echo apply_atomic_shortcode( 'entry_author', __( 'Posted ', 'beta' ) ); 
+		echo apply_atomic_shortcode( 'entry_author', __( 'Posted ', 'beta' ) );
 	}?>
 	<?php
 	if (  exmachina_get_setting( 'trackbacks_posts' ) || exmachina_get_setting( 'comments_posts' ) ) {
-		echo apply_atomic_shortcode( 'entry_byline', __( 'on [entry-published] [entry-comments-link before=" | "] [entry-edit-link before=" | "]', 'beta' ) ); 
+		echo apply_atomic_shortcode( 'entry_byline', __( 'on [entry-published] [entry-comments-link before=" | "] [entry-edit-link before=" | "]', 'beta' ) );
 	} else {
-		echo apply_atomic_shortcode( 'entry_byline', __( 'on [entry-published] [entry-edit-link before=" | "]', 'beta' ) ); 				
-	}	
-	
+		echo apply_atomic_shortcode( 'entry_byline', __( 'on [entry-published] [entry-edit-link before=" | "]', 'beta' ) );
+	}
+
 	?>
 </div><!-- .entry-meta -->
