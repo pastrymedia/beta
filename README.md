@@ -7,11 +7,11 @@ Roadmap
 -------
 #### Version 0.8.0 - Engine Organization
 - Organize engine.php
-+ Move widgets to 'widgets' folder
-+ Move CSS, JS, and Images to 'assets' folder
-+ Setup admin folders
-+ Setup connect folder
-+ Setup plugins folder
+- Move widgets to 'widgets' folder
+- Move CSS, JS, and Images to 'assets' folder
+- Setup admin folders
+- Setup connect folder
+- Setup plugins folder
 
 #### Version 0.9.0 - Widget Organization
 + Cleanup widget class files

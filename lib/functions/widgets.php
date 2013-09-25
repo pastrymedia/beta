@@ -1,8 +1,8 @@
 <?php
 /**
- * Sets up the core framework's widgets and unregisters some of the default WordPress widgets if the 
+ * Sets up the core framework's widgets and unregisters some of the default WordPress widgets if the
  * theme supports this feature.  The framework's widgets are meant to extend the default WordPress
- * widgets by giving users highly-customizable widget settings.  A theme must register support for the 
+ * widgets by giving users highly-customizable widget settings.  A theme must register support for the
  * 'exmachina-core-widgets' feature to use the framework widgets.
  *
  * @package    ExMachinaCore
@@ -32,32 +32,32 @@ add_action( 'widgets_init', 'exmachina_register_widgets' );
 function exmachina_register_widgets() {
 
 	/* Load the archives widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-archives.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-archives.php' );
 
 	/* Load the authors widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-authors.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-authors.php' );
 
 	/* Load the bookmarks widget class. */
 	if ( get_option( 'link_manager_enabled' ) )
-		require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-bookmarks.php' );
+		require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-bookmarks.php' );
 
 	/* Load the calendar widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-calendar.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-calendar.php' );
 
 	/* Load the categories widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-categories.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-categories.php' );
 
 	/* Load the nav menu widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-nav-menu.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-nav-menu.php' );
 
 	/* Load the pages widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-pages.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-pages.php' );
 
 	/* Load the search widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-search.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-search.php' );
 
 	/* Load the tags widget class. */
-	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'widget-tags.php' );
+	require_once( trailingslashit( EXMACHINA_WIDGETS ) . 'widget-tags.php' );
 
 	/* Register the archives widget. */
 	register_widget( 'ExMachina_Widget_Archives' );
