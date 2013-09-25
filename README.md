@@ -12,7 +12,7 @@ Roadmap
 - Move responsive
 - Move wraps
 - Move custom CSS
-+ Move custom logo
+- Move custom logo
 
 #### Version 0.4.0 - Core Function Cleanup
 

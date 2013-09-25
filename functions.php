@@ -118,7 +118,7 @@ function beta_theme_setup() {
   add_theme_support( 'beta-custom-footer' );
 
   /* Enable custom logo */
-  add_theme_support( 'beta-custom-logo' );
+  add_theme_support( 'custom-logo' );
 
   /* Enable responsive support */
   add_theme_support( 'responsive' );

@@ -351,6 +351,9 @@ class ExMachina {
 
 		/* Load the Custom CSS extension if supported. */
 		require_if_theme_supports( 'custom-css', trailingslashit( EXMACHINA_EXTENSIONS ) . 'custom-css.php' );
+
+		/* Load the Custom Logo extension if supported. */
+		require_if_theme_supports( 'custom-logo', trailingslashit( EXMACHINA_EXTENSIONS ) . 'custom-logo.php' );
 	}
 
 	/**

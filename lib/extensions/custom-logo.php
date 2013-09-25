@@ -1,7 +1,7 @@
 <?php
 
 /* Register custom sections, settings, and controls. */
-add_action( 'customize_register', 'beta_customize_logo_register' );
+add_action( 'customize_register', 'exmachina_customize_logo_register' );
 
 
 /**
@@ -11,13 +11,13 @@ add_action( 'customize_register', 'beta_customize_logo_register' );
  * @access private
  * @param object $wp_customize
  */
-function beta_customize_logo_register( $wp_customize ) {
+function exmachina_customize_logo_register( $wp_customize ) {
 
 	/* Add the footer section. */
 	$wp_customize->add_section(
 		'title_tagline',
 		array(
-			'title'      => esc_html__( 'Branding', 'beta' ),
+			'title'      => esc_html__( 'Branding', 'exmachina-core' ),
 			'priority'   => 1,
 			'capability' => 'edit_theme_options'
 		)
@@ -42,16 +42,16 @@ function beta_customize_logo_register( $wp_customize ) {
 			$wp_customize,
 			'custom_logo',
 			array(
-				'label'    => esc_html__( 'Logo', 'beta' ),
+				'label'    => esc_html__( 'Logo', 'exmachina-core' ),
 				'section'  => 'title_tagline',
 				'settings' => "custom_logo",
 			)
 		)
 	);
 
-	/* If viewing the customize preview screen, add a script to show a live preview. 
+	/* If viewing the customize preview screen, add a script to show a live preview.
 	if ( $wp_customize->is_preview() && !is_admin() ) {
-		add_action( 'wp_footer', 'beta_customize_preview_script', 22 );
+		add_action( 'wp_footer', 'exmachina_customize_logo_preview_script', 22 );
 	}
 	*/
 }
@@ -61,8 +61,9 @@ function beta_customize_logo_register( $wp_customize ) {
  *
  * @since 0.3.2
  * @access private
- 
-function beta_customize_preview_script() {
+ */
+
+function exmachina_customize_logo_preview_script() {
 
 	?>
 	<script type="text/javascript">
@@ -79,5 +80,5 @@ function beta_customize_preview_script() {
 	</script>
 	<?php
 }
-*/
+
 ?>
