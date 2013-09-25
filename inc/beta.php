@@ -10,7 +10,6 @@ function beta_theme_inc() {
 	if ( is_admin() ) {
 		/* Load  theme settings page */
 		//require  $beta_inc  . '/inc/admin/meta-box-theme-comments.php';
-		//require  $beta_inc  . '/inc/admin/meta-box-theme-archives.php';
 		//require  $beta_inc  . '/inc/admin/meta-box-theme-general.php';
 	}
 
