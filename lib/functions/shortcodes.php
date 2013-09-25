@@ -1,9 +1,9 @@
 <?php
 /**
- * Shortcodes bundled for use with themes.  These shortcodes are not meant to be used with the post content 
+ * Shortcodes bundled for use with themes.  These shortcodes are not meant to be used with the post content
  * editor.  Their purpose is to make it easier for users to filter hooks without having to know too much PHP code
- * and to provide access to specific functionality in other (non-post content) shortcode-aware areas.  Note that 
- * some shortcodes are specific to posts and comments and would be useless outside of the post and comment 
+ * and to provide access to specific functionality in other (non-post content) shortcode-aware areas.  Note that
+ * some shortcodes are specific to posts and comments and would be useless outside of the post and comment
  * loops.  To use the shortcodes, a theme must register support for 'exmachina-core-shortcodes'.
  *
  * @package    ExMachinaCore
@@ -18,7 +18,7 @@
 add_action( 'init', 'exmachina_add_shortcodes' );
 
 /**
- * Creates new shortcodes for use in any shortcode-ready area.  This function uses the add_shortcode() 
+ * Creates new shortcodes for use in any shortcode-ready area.  This function uses the add_shortcode()
  * function to register new shortcodes with WordPress.
  *
  * @since 0.8.0
@@ -177,7 +177,7 @@ function exmachina_nav_menu_shortcode( $attr ) {
 			'fallback_cb'     => 'wp_page_menu',
 			'walker'          => ''
 		),
-		$attr, 
+		$attr,
 		'nav-menu'
 	);
 	$attr['echo'] = false;
@@ -215,14 +215,14 @@ function exmachina_entry_edit_link_shortcode( $attr ) {
  */
 function exmachina_entry_published_shortcode( $attr ) {
 
-	$attr = shortcode_atts( 
-		array( 
-			'before' => '', 
-			'after' => '', 
-			'format' => get_option( 'date_format' ), 
-			'human_time' => '' 
-		), 
-		$attr, 
+	$attr = shortcode_atts(
+		array(
+			'before' => '',
+			'after' => '',
+			'format' => get_option( 'date_format' ),
+			'human_time' => ''
+		),
+		$attr,
 		'entry-published'
 	);
 
@@ -234,7 +234,11 @@ function exmachina_entry_published_shortcode( $attr ) {
 	else
 		$time = get_the_time( $attr['format'] );
 
-	$published = '<time class="published" datetime="' . get_the_time( 'Y-m-d\TH:i:sP' ) . '" title="' . get_the_time( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '">' . $time . '</time>';
+	$published = '<time class="published" datetime="'. get_the_time( 'c' ) .'" title="' . get_the_time( esc_attr__( 'l, F jS, Y, g:i a', 'exmachina-core' ) ) . '" itemprop="datePublished">' . get_the_time( $attr['format'] ) . '</time>';
+
+	if (get_the_title()=='' && !is_singular()) {
+		$published = '<a href="'. get_permalink() . '">' . $published . '</a>';
+	}
 
 	return $attr['before'] . $published . $attr['after'];
 }
@@ -252,16 +256,16 @@ function exmachina_entry_comments_link_shortcode( $attr ) {
 	$comments_link = '';
 	$number = doubleval( get_comments_number() );
 
-	$attr = shortcode_atts( 
-		array( 
-			'zero'      => __( 'Leave a response', 'exmachina-core' ), 
-			'one'       => __( '%1$s Response', 'exmachina-core' ), 
-			'more'      => __( '%1$s Responses', 'exmachina-core' ), 
-			'css_class' => 'comments-link', 
-			'none'      => '', 
-			'before'    => '', 
-			'after'     => '' 
-		), 
+	$attr = shortcode_atts(
+		array(
+			'zero'      => __( 'Leave a response', 'exmachina-core' ),
+			'one'       => __( '%1$s Response', 'exmachina-core' ),
+			'more'      => __( '%1$s Responses', 'exmachina-core' ),
+			'css_class' => 'comments-link',
+			'none'      => '',
+			'before'    => '',
+			'after'     => ''
+		),
 		$attr,
 		'entry-comments-link'
 	);
@@ -298,15 +302,15 @@ function exmachina_entry_author_shortcode( $attr ) {
 	if ( post_type_supports( $post_type, 'author' ) ) {
 
 		$attr = shortcode_atts(
-			array( 
-				'before' => '', 
-				'after'  => '' 
-			), 
+			array(
+				'before' => '',
+				'after'  => ''
+			),
 			$attr,
 			'entry-author'
 		);
 
-		$author = '<span class="author vcard"><a class="url fn n" rel="author" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '" title="' . esc_attr( get_the_author_meta( 'display_name' ) ) . '">' . get_the_author_meta( 'display_name' ) . '</a></span>';
+		$author = '<span class="entry-author" itemtype="http://schema.org/Person" itemscope="itemscope" itemprop="author"><a class="entry-author-link" rel="author" itemprop="url" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '" title="' . esc_attr( get_the_author_meta( 'display_name' ) ) . '"><span itemprop="name" class="entry-author-name">' . get_the_author_meta( 'display_name' ) . '</span></a></span>';
 
 		return $attr['before'] . $author . $attr['after'];
 	}
@@ -324,15 +328,15 @@ function exmachina_entry_author_shortcode( $attr ) {
  */
 function exmachina_entry_terms_shortcode( $attr ) {
 
-	$attr = shortcode_atts( 
-		array( 
-			'id'        => get_the_ID(), 
-			'taxonomy'  => 'post_tag', 
-			'separator' => ', ', 
-			'before'    => '', 
-			'after'     => '' 
-		), 
-		$attr, 
+	$attr = shortcode_atts(
+		array(
+			'id'        => get_the_ID(),
+			'taxonomy'  => 'post_tag',
+			'separator' => ', ',
+			'before'    => '',
+			'after'     => ''
+		),
+		$attr,
 		'entry-terms'
 	);
 
@@ -352,10 +356,10 @@ function exmachina_entry_terms_shortcode( $attr ) {
 function exmachina_entry_title_shortcode( $attr ) {
 
 	$attr = shortcode_atts(
-		array( 
-			'permalink' => true, 
-			'tag'       => is_singular() ? 'h1' : 'h2' 
-		), 
+		array(
+			'permalink' => true,
+			'tag'       => is_singular() ? 'h1' : 'h2'
+		),
 		$attr,
 		'entry-title'
 	);
@@ -411,7 +415,7 @@ function exmachina_entry_permalink_shortcode( $attr ) {
 }
 
 /**
- * Returns the output of the [post-format-link] shortcode.  This shortcode is for use when a theme uses the 
+ * Returns the output of the [post-format-link] shortcode.  This shortcode is for use when a theme uses the
  * post formats feature.
  *
  * @since 1.3.0.

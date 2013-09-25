@@ -16,7 +16,7 @@ Roadmap
 
 #### Version 0.4.0 - Core Function Cleanup
 - Move image functions
-+ Add overrides to shortcodes function
+- Add overrides to shortcodes function
 + Move customizer functions
 - Move extras functions
 - Move template tags functions

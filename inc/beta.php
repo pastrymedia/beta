@@ -11,8 +11,6 @@ function beta_theme_inc() {
 	/* Customizer additions. */
 	require $beta_inc . '/inc/functions/customizer.php';
 
-	/* override exmachina code. */
-	require $beta_inc . '/inc/functions/override.php';
 
 
 	if ( is_admin() ) {
