@@ -1,57 +1,78 @@
+<?php
+
+//* Exit if accessed directly
+if ( !defined('ABSPATH')) exit;
+
+/**
+ * Attachment Image display
+ * attachment-image.php
+ *
+ * Template file used to render a single attachment image (attachment post-type) page.
+ * @link http://codex.wordpress.org/Using_Image_and_File_Attachments#Usage_in_Themes
+ *
+ * @package     Beta
+ * @subpackage  Templates
+ * @author      Machina Themes | @machinathemes
+ * @copyright   Copyright (c) 2013, Machina Themes
+ * @license     http://opensource.org/licenses/gpl-2.0.php GPL-2.0+
+ * @link        http://www.machinathemes.com/themes/beta
+ */
+?>
+
 <?php get_header(); // Loads the header.php template. ?>
 
-	<main class="content" role="main" itemprop="mainContentOfPage">
+  <main class="content" role="main" itemprop="mainContentOfPage">
 
-		<?php if ( have_posts() ) { ?>
+    <?php if ( have_posts() ) { ?>
 
-			<?php while ( have_posts() ) { ?>
+      <?php while ( have_posts() ) { ?>
 
-				<?php the_post(); // Loads the post data. ?>
+        <?php the_post(); // Loads the post data. ?>
 
-				<article id="post-<?php the_ID(); ?>" class="<?php exmachina_entry_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+        <article id="post-<?php the_ID(); ?>" class="<?php exmachina_entry_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 
-					<header class="entry-header">
-						<h1 class="entry-title"><?php single_post_title(); ?></h1>
-					</header><!-- .entry-header -->
+          <header class="entry-header">
+            <h1 class="entry-title"><?php single_post_title(); ?></h1>
+          </header><!-- .entry-header -->
 
-					<div class="entry-content">
+          <div class="entry-content">
 
-						<?php if ( has_excerpt() ) {
-							$src = wp_get_attachment_image_src( get_the_ID(), 'full' );
-							echo do_shortcode( sprintf( '[caption align="aligncenter" width="%1$s"]%3$s %2$s[/caption]', esc_attr( $src[1] ), get_the_excerpt(), wp_get_attachment_image( get_the_ID(), 'full', false ) ) );
-						} else {
-							echo wp_get_attachment_image( get_the_ID(), 'full', false, array( 'class' => 'aligncenter' ) );
-						} ?>
+            <?php if ( has_excerpt() ) {
+              $src = wp_get_attachment_image_src( get_the_ID(), 'full' );
+              echo do_shortcode( sprintf( '[caption align="aligncenter" width="%1$s"]%3$s %2$s[/caption]', esc_attr( $src[1] ), get_the_excerpt(), wp_get_attachment_image( get_the_ID(), 'full', false ) ) );
+            } else {
+              echo wp_get_attachment_image( get_the_ID(), 'full', false, array( 'class' => 'aligncenter' ) );
+            } ?>
 
-						<?php the_content(); ?>
-						<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', 'beta' ), 'after' => '</p>' ) ); ?>
+            <?php the_content(); ?>
+            <?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', 'beta' ), 'after' => '</p>' ) ); ?>
 
-					</div><!-- .entry-content -->
+          </div><!-- .entry-content -->
 
-				</article><!-- .hentry -->
+        </article><!-- .hentry -->
 
-				<div class="attachment-meta">
+        <div class="attachment-meta">
 
-					<?php $gallery = gallery_shortcode( array( 'columns' => 4, 'numberposts' => 8, 'id' => $post->post_parent, 'exclude' => get_the_ID() ) ); ?>
+          <?php $gallery = gallery_shortcode( array( 'columns' => 4, 'numberposts' => 8, 'id' => $post->post_parent, 'exclude' => get_the_ID() ) ); ?>
 
-					<?php if ( !empty( $gallery ) ) { ?>
-						<div class="image-gallery">
-							<h3><?php _e( 'Gallery', 'beta' ); ?></h3>
-							<?php echo $gallery; ?>
-						</div>
-					<?php } ?>
+          <?php if ( !empty( $gallery ) ) { ?>
+            <div class="image-gallery">
+              <h3><?php _e( 'Gallery', 'beta' ); ?></h3>
+              <?php echo $gallery; ?>
+            </div>
+          <?php } ?>
 
-				</div><!-- .attachment-meta -->
+        </div><!-- .attachment-meta -->
 
-				<?php exmachina_content_nav( 'nav-below' ); ?>
+        <?php exmachina_content_nav( 'nav-below' ); ?>
 
-				<?php comments_template(); // Loads the comments.php template. ?>
+        <?php comments_template(); // Loads the comments.php template. ?>
 
-			<?php } // End while loop. ?>
+      <?php } // End while loop. ?>
 
 
-		<?php } // End if check. ?>
+    <?php } // End if check. ?>
 
-	</main><!-- .content -->
+  </main><!-- .content -->
 
 <?php get_footer(); // Loads the footer.php template. ?>
