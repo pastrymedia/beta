@@ -15,8 +15,6 @@ function beta_theme_inc() {
 	/* override exmachina code. */
 	require $beta_inc . '/inc/functions/override.php';
 
-	/* image function */
-	require $beta_inc . '/inc/functions/image.php';
 
 	if ( is_admin() ) {
 		/* Load  theme settings page */

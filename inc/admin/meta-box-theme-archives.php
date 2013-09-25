@@ -1,7 +1,7 @@
 <?php
 /**
- * Creates a meta box for the theme settings page, which holds textareas for custom scripts within 
- * the theme. 
+ * Creates a meta box for the theme settings page, which holds textareas for custom scripts within
+ * the theme.
  *
  */
 
@@ -10,7 +10,7 @@ add_action( 'admin_menu', 'beta_theme_admin_archives' );
 function beta_theme_admin_archives() {
 
 	global $theme_settings_page;
-	
+
 	/* Get the theme prefix. */
 	$prefix = exmachina_get_prefix();
 
@@ -32,10 +32,10 @@ function beta_theme_admin_archives() {
  */
 function beta_theme_settings_archives() {
 
-	add_meta_box( 
-		'beta-theme-archives', 
-		__( 'Content Archives', 'beta' ), 
-		'beta_meta_box_theme_display_archives', 
+	add_meta_box(
+		'beta-theme-archives',
+		__( 'Content Archives', 'beta' ),
+		'beta_meta_box_theme_display_archives',
 		'appearance_page_theme-settings', 'normal', 'high' );
 
 }
@@ -56,7 +56,7 @@ function beta_meta_box_theme_display_archives() {
 				'excerpts' => __( 'Display post excerpts', 'beta' ),
 			)
 		);
-		foreach ( (array) $archive_display as $value => $name ) 
+		foreach ( (array) $archive_display as $value => $name )
 			echo '<option value="' . esc_attr( $value ) . '"' . selected( exmachina_get_setting( 'content_archive' ), esc_attr( $value ), false ) . '>' . esc_html( $name ) . '</option>' . "\n";
 		?>
 		</select>
@@ -73,7 +73,7 @@ function beta_meta_box_theme_display_archives() {
 	</div>
 
 	<p>
-		<?php _e( 'More Text (if applicable):', 'beta' ); ?> <input type="text" name="<?php echo exmachina_settings_field_name( 'content_archive_more' ); ?>" id="<?php echo exmachina_settings_field_id( 'content_archive_more' ); ?>" value="<?php echo esc_attr( exmachina_get_setting( 'content_archive_more' ) ); ?>" size="25" />			
+		<?php _e( 'More Text (if applicable):', 'beta' ); ?> <input type="text" name="<?php echo exmachina_settings_field_name( 'content_archive_more' ); ?>" id="<?php echo exmachina_settings_field_id( 'content_archive_more' ); ?>" value="<?php echo esc_attr( exmachina_get_setting( 'content_archive_more' ) ); ?>" size="25" />
 	</p>
 
 	<p class="collapsed">
@@ -81,11 +81,11 @@ function beta_meta_box_theme_display_archives() {
 		<?php _e( 'Include the Featured Image?', 'beta' ); ?></label>
 	</p>
 
-	<p id="beta_image_size" <?php if (!exmachina_get_setting( 'content_archive_thumbnail' )) echo 'class="hidden"';?>>
+	<p id="exmachina_image_size" <?php if (!exmachina_get_setting( 'content_archive_thumbnail' )) echo 'class="hidden"';?>>
 		<label for="<?php echo exmachina_settings_field_id( 'image_size' ); ?>"><?php _e( 'Image Size:', 'beta' ); ?></label>
 		<select name="<?php echo exmachina_settings_field_name( 'image_size' ); ?>" id="<?php echo exmachina_settings_field_id( 'image_size' ); ?>">
 		<?php
-		$sizes = beta_get_image_sizes();
+		$sizes = exmachina_get_image_sizes();
 		foreach ( (array) $sizes as $name => $size )
 			echo '<option value="' . esc_attr( $name ) . '"' . selected( exmachina_get_setting( 'image_size' ), $name, FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')</option>' . "\n";
 		?>
@@ -98,7 +98,7 @@ function beta_meta_box_theme_display_archives() {
 			<option value="numeric"<?php selected( 'numeric', exmachina_get_setting( 'posts_nav' ) ); ?>><?php _e( 'Numeric', 'beta' ); ?></option>
 		</select>
 	</p>
-	<p><span class="description"><?php _e( 'These options will affect any blog listings page, including archive, author, blog, category, search, and tag pages.', 'beta' ); ?></span></p>	
+	<p><span class="description"><?php _e( 'These options will affect any blog listings page, including archive, author, blog, category, search, and tag pages.', 'beta' ); ?></span></p>
 	<p>
 		<label for="<?php echo exmachina_settings_field_id( 'single_nav' ); ?>"><input type="checkbox" name="<?php echo exmachina_settings_field_name( 'single_nav' ); ?>" id="<?php echo exmachina_settings_field_id( 'single_nav' ); ?>" value="1" <?php checked( exmachina_get_setting( 'single_nav' ) ); ?> />
 		<?php _e( 'Disable single post navigation link?', 'beta' ); ?></label>
