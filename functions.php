@@ -37,9 +37,6 @@ if ( !defined('ABSPATH')) exit;
 require ( trailingslashit( get_template_directory() ) . 'lib/engine.php' );
 new ExMachina();
 
-/* Load beta functions */
-require get_template_directory() . '/inc/beta.php';
-
 if ( ! function_exists( 'beta_theme_setup' ) ) :
 /**
  * Sets up theme defaults and registers support for various WordPress features.
