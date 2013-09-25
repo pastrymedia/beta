@@ -65,6 +65,7 @@ function beta_theme_setup() {
   add_theme_support( 'exmachina-core-theme-settings', array( 'about' ) );
   add_theme_support( 'exmachina-core-shortcodes' );
   add_theme_support( 'exmachina-core-template-hierarchy' );
+  add_theme_support( 'exmachina-core-deprecated' );
 
   /* Enable theme layouts (need to add stylesheet support). */
   add_theme_support(
