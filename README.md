@@ -9,8 +9,8 @@ Roadmap
 - deprecated.php - Migrate to new file template
 - deprecated.php - Remove unneeded deprecated functions
 - Add engine require for deprecated.php
-+ meta.php - Migrate to new file template
-+ meta.php - Add any additional meta functions
+- meta.php - Migrate to new file template
+- meta.php - Add any additional meta functions
 + post-formats.php - Migrate to new file template
 + post-formats.php - Add any additional post format functions
 + template-hierarchy.php - Migrate to new file template
