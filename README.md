@@ -31,7 +31,7 @@ Roadmap
 #### Version 0.6.0 - Core Structure Setup
 - Move html5.js to core JS directory
 - Create blank structure files and connect via engine
-+ Organize functions to appropiate structure file
+- Organize functions to appropiate structure file
 
 #### Version 0.7.0 - Framework Organization
 
