@@ -71,6 +71,12 @@ function beta_theme_setup() {
     array( 'comment-reply' )
   );
 
+  /* Load styles. */
+  add_theme_support(
+    'exmachina-core-styles',
+    array( '25px', 'gallery', 'parent', 'style' )
+  );
+
   /* Load shortcodes. */
   add_theme_support( 'exmachina-core-shortcodes' );
 
@@ -119,10 +125,6 @@ function beta_theme_setup() {
 
   /* Handle content width for embeds and images. */
   exmachina_set_content_width( 640 );
-
-  add_action( 'wp_enqueue_scripts', 'beta_scripts' );
-
-
 
 
 
@@ -191,16 +193,6 @@ function beta_after_main() {
 
 
 
-
-
-
-
-/**
- * Enqueue scripts and styles
- */
-function beta_scripts() {
-  wp_enqueue_style( 'beta-style', get_stylesheet_uri() );
-}
 
 
 
