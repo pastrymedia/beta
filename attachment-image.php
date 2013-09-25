@@ -43,8 +43,8 @@
 
 				</div><!-- .attachment-meta -->
 
-				<?php beta_content_nav( 'nav-below' ); ?>
-				
+				<?php exmachina_content_nav( 'nav-below' ); ?>
+
 				<?php comments_template(); // Loads the comments.php template. ?>
 
 			<?php } // End while loop. ?>

@@ -15,7 +15,7 @@ get_header(); ?>
 
 			<?php get_template_part( 'partials/content', 'single' ); ?>
 
-			<?php beta_content_nav( 'nav-below' ); ?>
+			<?php exmachina_content_nav( 'nav-below' ); ?>
 
 			<?php comments_template(); // Loads the comments.php template. ?>
 

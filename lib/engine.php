@@ -245,6 +245,9 @@ class ExMachina {
 		/* Load the template functions. */
 		require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'template.php' );
 
+		/* Load the template tags functions. */
+		require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'template-tags.php' );
+
 		/* Load the utility functions. */
 		require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'utility.php' );
 

@@ -24,7 +24,7 @@ get_header(); ?>
 
 			<?php endwhile; ?>
 
-			<?php beta_content_nav( 'nav-below' ); ?>
+			<?php exmachina_content_nav( 'nav-below' ); ?>
 
 		<?php else : ?>
 
@@ -35,5 +35,5 @@ get_header(); ?>
 		<?php do_atomic( 'after_content' ); // beta_after_content ?>
 
 	</main><!-- .content -->
-	
+
 <?php get_footer(); ?>

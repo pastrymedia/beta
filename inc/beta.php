@@ -5,8 +5,6 @@ function beta_theme_inc() {
 	// Set template directory
     $beta_inc = get_template_directory();
 
-	/* Custom template tags for this theme. */
-	require $beta_inc . '/inc/functions/template-tags.php';
 
 	/* Custom functions that act independently of the theme templates. */
 	require $beta_inc . '/inc/functions/extras.php';

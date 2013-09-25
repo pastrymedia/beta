@@ -7,11 +7,11 @@
  * @package Beta
  */
 
-if ( ! function_exists( 'beta_content_nav' ) ) :
+if ( ! function_exists( 'exmachina_content_nav' ) ) :
 /**
  * Display navigation to next/previous pages when applicable
  */
-function beta_content_nav( $nav_id ) {
+function exmachina_content_nav( $nav_id ) {
 	global $wp_query, $post;
 
 	// Don't print empty markup on single pages if there's nowhere to navigate.
@@ -34,21 +34,21 @@ function beta_content_nav( $nav_id ) {
 
 	<?php if ( is_single() && !exmachina_get_setting( 'single_nav' ) ) : // navigation links for single posts ?>
 
-		<?php previous_post_link( '<div class="nav-previous alignleft">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'beta' ) . '</span> %title' ); ?>
-		<?php next_post_link( '<div class="nav-next alignright">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'beta' ) . '</span>' ); ?>
+		<?php previous_post_link( '<div class="nav-previous alignleft">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'exmachina-core' ) . '</span> %title' ); ?>
+		<?php next_post_link( '<div class="nav-next alignright">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'exmachina-core' ) . '</span>' ); ?>
 
 	<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
 
 		<?php
 		if (current_theme_supports( 'loop-pagination' ) && ( 'numeric' == exmachina_get_setting( 'posts_nav' ) ) ) {
-			loop_pagination();	
+			loop_pagination();
 		} else {
 			if ( get_next_posts_link() ) : ?>
-			<div class="nav-previous alignleft"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Previous Page', 'beta' )); ?></div>
+			<div class="nav-previous alignleft"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Previous Page', 'exmachina-core' )); ?></div>
 			<?php endif; ?>
 
 			<?php if ( get_previous_posts_link() ) : ?>
-			<div class="nav-next alignright"><?php previous_posts_link( __( 'Next Page <span class="meta-nav">&rarr;</span>', 'beta' )); ?></div>
+			<div class="nav-next alignright"><?php previous_posts_link( __( 'Next Page <span class="meta-nav">&rarr;</span>', 'exmachina-core' )); ?></div>
 			<?php endif;
 		}
 		?>
@@ -58,13 +58,13 @@ function beta_content_nav( $nav_id ) {
 	</nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
 	<?php
 }
-endif; // beta_content_nav
+endif; // exmachina_content_nav
 
 
 /**
  * Returns true if a blog has more than 1 category
  */
-function beta_categorized_blog() {
+function exmachina_categorized_blog() {
 	if ( false === ( $all_the_cool_cats = get_transient( 'all_the_cool_cats' ) ) ) {
 		// Create an array of all the categories that are attached to posts
 		$all_the_cool_cats = get_categories( array(
@@ -78,20 +78,20 @@ function beta_categorized_blog() {
 	}
 
 	if ( '1' != $all_the_cool_cats ) {
-		// This blog has more than 1 category so beta_categorized_blog should return true
+		// This blog has more than 1 category so exmachina_categorized_blog should return true
 		return true;
 	} else {
-		// This blog has only 1 category so beta_categorized_blog should return false
+		// This blog has only 1 category so exmachina_categorized_blog should return false
 		return false;
 	}
 }
 
 /**
- * Flush out the transients used in beta_categorized_blog
+ * Flush out the transients used in exmachina_categorized_blog
  */
-function beta_category_transient_flusher() {
+function exmachina_category_transient_flush() {
 	// Like, beat it. Dig?
 	delete_transient( 'all_the_cool_cats' );
 }
-add_action( 'edit_category', 'beta_category_transient_flusher' );
-add_action( 'save_post',     'beta_category_transient_flusher' );
+add_action( 'edit_category', 'exmachina_category_transient_flush' );
+add_action( 'save_post',     'exmachina_category_transient_flush' );
