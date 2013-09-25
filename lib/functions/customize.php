@@ -1,7 +1,7 @@
 <?php
 /**
- * Functions for registering and setting theme settings that tie into the WordPress theme customizer.  
- * This file loads additional classes and adds settings to the customizer for the built-in ExMachina Core 
+ * Functions for registering and setting theme settings that tie into the WordPress theme customizer.
+ * This file loads additional classes and adds settings to the customizer for the built-in ExMachina Core
  * settings.
  *
  * @package    ExMachinaCore
@@ -17,13 +17,17 @@ add_action( 'customize_register', 'exmachina_load_customize_controls', 1 );
 
 /* Register custom sections, settings, and controls. */
 add_action( 'customize_register', 'exmachina_customize_register' );
+add_action( 'customize_register', 'exmachina_branding_customize_register' );
 
 /* Add the footer content Ajax to the correct hooks. */
 add_action( 'wp_ajax_exmachina_customize_footer_content', 'exmachina_customize_footer_content_ajax' );
 add_action( 'wp_ajax_nopriv_exmachina_customize_footer_content', 'exmachina_customize_footer_content_ajax' );
 
+/* Add customize preview script. */
+add_action( 'customize_preview_init', 'exmachina_customize_preview_js' );
+
 /**
- * Loads framework-specific customize control classes.  Customize control classes extend the WordPress 
+ * Loads framework-specific customize control classes.  Customize control classes extend the WordPress
  * WP_Customize_Control class to create unique classes that can be used within the framework.
  *
  * @since 1.4.0
@@ -33,6 +37,17 @@ function exmachina_load_customize_controls() {
 
 	/* Loads the textarea customize control class. */
 	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'customize-control-textarea.php' );
+}
+
+/**
+ * Add postMessage support for site title and description for the Theme Customizer.
+ *
+ * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+ */
+function exmachina_branding_customize_register( $wp_customize ) {
+	$wp_customize->get_setting( 'blogname' )->transport         = 'postMessage';
+	$wp_customize->get_setting( 'blogdescription' )->transport  = 'postMessage';
+	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 }
 
 /**
@@ -99,7 +114,7 @@ function exmachina_customize_register( $wp_customize ) {
 }
 
 /**
- * Sanitizes the footer content on the customize screen.  Users with the 'unfiltered_html' cap can post 
+ * Sanitizes the footer content on the customize screen.  Users with the 'unfiltered_html' cap can post
  * anything.  For other users, wp_filter_post_kses() is ran over the setting.
  *
  * @since 1.4.0
@@ -122,7 +137,7 @@ function exmachina_customize_sanitize( $setting, $object ) {
 }
 
 /**
- * Runs the footer content posted via Ajax through the do_shortcode() function.  This makes sure the 
+ * Runs the footer content posted via Ajax through the do_shortcode() function.  This makes sure the
  * shortcodes are output correctly in the live preview.
  *
  * @since 1.4.0
@@ -159,9 +174,9 @@ function exmachina_customize_preview_script() {
 		function( value ) {
 			value.bind(
 				function( to ) {
-					jQuery.post( 
-						'<?php echo admin_url( 'admin-ajax.php' ); ?>', 
-						{ 
+					jQuery.post(
+						'<?php echo admin_url( 'admin-ajax.php' ); ?>',
+						{
 							action: 'exmachina_customize_footer_content',
 							_ajax_nonce: '<?php echo $nonce; ?>',
 							footer_content: to
@@ -176,6 +191,13 @@ function exmachina_customize_preview_script() {
 	);
 	</script>
 	<?php
+}
+
+/**
+ * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
+ */
+function exmachina_customize_preview_js() {
+	wp_enqueue_script( 'exmachina-customizer', esc_url( trailingslashit( EXMACHINA_JS ) . 'customizer.js'), array( 'customize-preview' ), '20130508', true );
 }
 
 ?>

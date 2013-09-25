@@ -7,12 +7,6 @@ function beta_theme_inc() {
 
 
 
-
-	/* Customizer additions. */
-	require $beta_inc . '/inc/functions/customizer.php';
-
-
-
 	if ( is_admin() ) {
 		/* Load  theme settings page */
 		require  $beta_inc  . '/inc/admin/meta-box-theme-options.php';
