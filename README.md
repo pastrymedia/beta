@@ -29,7 +29,7 @@ Roadmap
 - Move settings defaults to core
 
 #### Version 0.6.0 - Core Structure Setup
-+ Move html5.js to core JS directory
+- Move html5.js to core JS directory
 + Create blank structure files and connect via engine
 + Organize functions to appropiate structure file
 
