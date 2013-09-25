@@ -254,6 +254,9 @@ class ExMachina {
 		/* Load the utility functions. */
 		require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'utility.php' );
 
+		/* Load the extras functions. */
+		require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'extras.php' );
+
 		/* Load the wish-list functions. */
 		require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'wish-list.php' );
 

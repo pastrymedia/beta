@@ -6,8 +6,7 @@ function beta_theme_inc() {
     $beta_inc = get_template_directory();
 
 
-	/* Custom functions that act independently of the theme templates. */
-	require $beta_inc . '/inc/functions/extras.php';
+
 
 	/* Customizer additions. */
 	require $beta_inc . '/inc/functions/customizer.php';

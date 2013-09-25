@@ -15,11 +15,11 @@ Roadmap
 - Move custom logo
 
 #### Version 0.4.0 - Core Function Cleanup
-+ Move image functions
+- Move image functions
 + Add overrides to shortcodes function
 + Move customizer functions
-+ Move extras functions
-+ Move template tags functions
+- Move extras functions
+- Move template tags functions
 
 #### Version 0.5.0 - Core Admin Cleanup
 

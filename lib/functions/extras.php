@@ -4,22 +4,22 @@
  *
  * Eventually, some of the functionality here could be replaced by core features
  *
- * @package Beta
+ * @package ExMachina
  */
 
 /**
  * Get our wp_nav_menu() fallback, wp_page_menu(), to show a home link.
  */
-function beta_page_menu_args( $args ) {
+function exmachina_custom_page_menu_args( $args ) {
 	$args['show_home'] = true;
 	return $args;
 }
-add_filter( 'wp_page_menu_args', 'beta_page_menu_args' );
+add_filter( 'wp_page_menu_args', 'exmachina_custom_page_menu_args' );
 
 /**
  * Adds custom classes to the array of body classes.
  */
-function beta_body_classes( $classes ) {
+function exmachina_custom_body_classes( $classes ) {
 	// Adds a class of group-blog to blogs with more than 1 published author
 	if ( is_multi_author() ) {
 		$classes[] = 'group-blog';
@@ -27,24 +27,24 @@ function beta_body_classes( $classes ) {
 
 	return $classes;
 }
-add_filter( 'body_class', 'beta_body_classes' );
+add_filter( 'body_class', 'exmachina_custom_body_classes' );
 
 /**
  * Add Theme Settings menu item to Admin Bar.
  */
 
-function beta_adminbar() {
+function exmachina_adminbar() {
 
 	global $wp_admin_bar;
 
 	$wp_admin_bar->add_menu( array(
 			'parent' => 'appearance',
 			'id' => 'theme-settings',
-			'title' => __( 'Theme Settings', 'beta' ),
+			'title' => __( 'Theme Settings', 'exmachina-core' ),
 			'href' => admin_url( 'themes.php?page=theme-settings' )
 		));
 }
-add_action( 'wp_before_admin_bar_render', 'beta_adminbar' );
+add_action( 'wp_before_admin_bar_render', 'exmachina_adminbar' );
 
 /**
  * Display page list when no menu is assigned (based on wp_list_pages function by wordpress team)
@@ -54,10 +54,10 @@ add_action( 'wp_before_admin_bar_render', 'beta_adminbar' );
  * @param array|string $args
  * @return string html menu
  */
-function beta_default_menu( $args = array() ) {
+function exmachina_default_menu( $args = array() ) {
 	$defaults = array('sort_column' => 'menu_order, post_title', 'menu_class' => 'menu', 'echo' => true, 'link_before' => '', 'link_after' => '');
 	$args = wp_parse_args( $args, $defaults );
-	$args = apply_filters( 'beta_default_menu_args', $args );
+	$args = apply_filters( exmachina_get_prefix() . '_default_menu_args', $args );
 
 	$menu = '';
 
@@ -66,7 +66,7 @@ function beta_default_menu( $args = array() ) {
 	// Show Home in the menu
 	if ( ! empty($args['show_home']) ) {
 		if ( true === $args['show_home'] || '1' === $args['show_home'] || 1 === $args['show_home'] )
-			$text = __('Home', 'beta');
+			$text = __('Home', 'exmachina-core');
 		else
 			$text = $args['show_home'];
 		$class = '';
@@ -91,7 +91,7 @@ function beta_default_menu( $args = array() ) {
 	if ( $menu )
 		$menu = '<ul class="' . esc_attr($args['menu_class']) . '">' . $menu . '</ul>';
 
-	$menu = apply_filters( 'beta_default_menu', $menu, $args );
+	$menu = apply_filters( exmachina_get_prefix() . '_default_menu', $menu, $args );
 	if ( $args['echo'] )
 		echo $menu;
 	else
@@ -113,7 +113,7 @@ function beta_default_menu( $args = array() ) {
  *
  * @return string Truncated string
  */
-function beta_truncate_phrase( $text, $max_characters ) {
+function exmachina_truncate_phrase( $text, $max_characters ) {
 
 	$text = trim( $text );
 
@@ -153,7 +153,7 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
 
 	//* Truncate $content to $max_char
 	if ($max_characters < strlen( $content )) {
-		$content = beta_truncate_phrase( $content, $max_characters );
+		$content = exmachina_truncate_phrase( $content, $max_characters );
 		$no_more = false;
 	} else {
 		$no_more = true;
