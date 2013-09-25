@@ -34,7 +34,7 @@ Roadmap
 - Organize functions to appropiate structure file
 
 #### Version 0.7.0 - Front-end Organization
-+ Organize functions.php
+- Organize functions.php
 + Delete legacy folder
 + Organize front-end templates
 + Organize front-end stylesheets

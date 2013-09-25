@@ -37,54 +37,34 @@ if ( !defined('ABSPATH')) exit;
 require ( trailingslashit( get_template_directory() ) . 'lib/engine.php' );
 new ExMachina();
 
-if ( ! function_exists( 'beta_theme_setup' ) ) :
+/* Do theme setup on the 'after_setup_theme' hook. */
+add_action( 'after_setup_theme', 'beta_theme_setup' );
+
+if ( !function_exists( 'beta_theme_setup' ) ) {} // end if (!function_exists('beta_theme_setup'))
+
 /**
- * Sets up theme defaults and registers support for various WordPress features.
+ * Theme Setup Function
  *
- * Note that this function is hooked into the after_setup_theme hook, which runs
- * before the init hook. The init hook is too late for some features, such as indicating
- * support post thumbnails.
+ * This function adds support for theme features and defines the default theme
+ * actions and filters.
+ *
+ * @since 0.1.0
+ * @access public
+ * @return void
  */
 function beta_theme_setup() {
 
-  /* Get the theme prefix. */
+  /* Get action/filter hook prefix. */
   $prefix = exmachina_get_prefix();
 
-  /* The best thumbnail/image script ever. */
-  add_theme_support( 'get-the-image' );
-
-  /* Register menus. */
-  add_theme_support(
-    'exmachina-core-menus',
-    array( 'primary')
-  );
-
-  /* Register sidebars. */
-  add_theme_support(
-    'exmachina-core-sidebars',
-    array( 'primary' )
-  );
-
-  /* Load scripts. */
-  add_theme_support(
-    'exmachina-core-scripts',
-    array( 'comment-reply' )
-  );
-
-  /* Load styles. */
-  add_theme_support(
-    'exmachina-core-styles',
-    array( '25px', 'gallery', 'parent', 'style' )
-  );
-
-  /* Load shortcodes. */
-  add_theme_support( 'exmachina-core-shortcodes' );
-
+  /* Add theme support for core framework features. */
+  add_theme_support( 'exmachina-core-menus', array( 'primary') );
+  add_theme_support( 'exmachina-core-sidebars', array( 'primary' ) );
+  add_theme_support( 'exmachina-core-scripts', array( 'comment-reply' ) );
+  add_theme_support( 'exmachina-core-styles', array( '25px', 'gallery', 'parent', 'style' ) );
   add_theme_support( 'exmachina-core-theme-settings', array( 'about' ) );
-
-  /* Enable custom template hierarchy. */
+  add_theme_support( 'exmachina-core-shortcodes' );
   add_theme_support( 'exmachina-core-template-hierarchy' );
-
 
   /* Enable theme layouts (need to add stylesheet support). */
   add_theme_support(
@@ -93,43 +73,22 @@ function beta_theme_setup() {
     array( 'default' => '2c-l', 'customizer' => true )
   );
 
-  /* implement editor styling, so as to make the editor content match the resulting post output in the theme. */
-  add_editor_style();
-
-  /* Support pagination instead of prev/next links. */
+  /* Add theme support for framework extensions. */
+  add_theme_support( 'get-the-image' );
   add_theme_support( 'loop-pagination' );
-
-  /* Better captions for themes to style. */
   add_theme_support( 'cleaner-caption' );
-
-  /* Add default posts and comments RSS feed links to <head>.  */
-  add_theme_support( 'automatic-feed-links' );
-
-  /* Enable footer widgets. */
   add_theme_support( 'footer-widgets', 3 );
-
-  /* Enable wraps */
   add_theme_support( 'structural-wraps' );
-
-  /* Enable custom css */
   add_theme_support( 'custom-css' );
-
-  /* Enable custom footer */
   add_theme_support( 'custom-footer' );
-
-  /* Enable custom logo */
   add_theme_support( 'custom-logo' );
-
-  /* Enable responsive support */
   add_theme_support( 'responsive' );
 
-  /* Handle content width for embeds and images. */
+  /* Add theme support for WordPress features. */
+  add_theme_support( 'automatic-feed-links' );
+  add_editor_style();
+
+  /* Set content width. */
   exmachina_set_content_width( 640 );
 
-
-}
-endif; // beta_theme_setup
-
-add_action( 'after_setup_theme', 'beta_theme_setup' );
-
-
+} // end function beta_theme_setup()
