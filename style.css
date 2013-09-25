@@ -16,23 +16,19 @@ Beta WordPress theme is licensed under the GPL.
 
 */
 
-/* Import Fonts
+/* =Import Fonts
 ============================================================================ */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-/* Reset
+/* =Reset
 ============================================================================ */
 
-
 /* Baseline Reset (normalize.css 2.1.2)
-  Link: http://necolas.github.com/normalize.css/
 --------------------------------------------- */
-
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden]{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
 /* Box Sizing
 --------------------------------------------- */
-
 *,
 input[type="search"] {
   -webkit-box-sizing: border-box;
@@ -42,7 +38,6 @@ input[type="search"] {
 
 /* Float Clearing
 --------------------------------------------- */
-
 .clearfix:before, .clearfix:after {
   content: " ";
   display: table;
@@ -62,24 +57,8 @@ input[type="search"] {
   clear: both;
 }
 
-.row:before,
-.row:after {
-  display: table;
-  content: " ";
-}
-
-.row:after {
-  clear: both;
-}
-
-
-/*
-Defaults
----------------------------------------------------------------------------------------------------- */
-
-/* Typographical Elements
---------------------------------------------- */
-
+/* =Defaults
+============================================================================ */
 html {
   font-size: 62.5%; /* 10px browser default */
 }
@@ -93,6 +72,9 @@ body {
   background-color: #fff;
 }
 
+
+/* Typographical Elements
+--------------------------------------------- */
 a,
 button,
 input:focus,
@@ -150,26 +132,6 @@ ol {
   margin: 0 0 25px 48px;
 }
 
-ol ol {
-  list-style: upper-roman;
-}
-
-ol ol ol {
-  list-style: lower-roman;
-}
-
-ol ol ol ol {
-  list-style: upper-alpha;
-}
-
-ol ol ol ol ol {
-  list-style: lower-alpha;
-}
-
-ul ul, ol ol, ul ol, ol ul {
-  margin-bottom: 0;
-}
-
 dl {
   margin: 0 0 25px 5px;
 }
@@ -214,9 +176,30 @@ cite {
   font-style: normal;
 }
 
+/* List
+--------------------------------------------- */
+ol ol {
+  list-style: upper-roman;
+}
+
+ol ol ol {
+  list-style: lower-roman;
+}
+
+ol ol ol ol {
+  list-style: upper-alpha;
+}
+
+ol ol ol ol ol {
+  list-style: lower-alpha;
+}
+
+ul ul, ol ol, ul ol, ol ul {
+  margin-bottom: 0;
+}
+
 /* Table
 --------------------------------------------- */
-
 table {
   border: 1px solid #e5e5e5;
   border-collapse: collapse;
@@ -238,11 +221,6 @@ th,td {
   box-sizing: border-box;
 }
 
-.widget th,
-.widget td {
-  padding: 5px 2px;
-}
-
 th {
   border-bottom: 1px solid #e5e5e5;
   border-right: 1px solid #e5e5e5;
@@ -259,7 +237,6 @@ td {
 
 /* Headings
 --------------------------------------------- */
-
 h1,
 h2,
 h3,
@@ -301,7 +278,6 @@ h6 {
 
 /* Objects
 --------------------------------------------- */
-
 embed,
 iframe,
 img,
@@ -317,7 +293,6 @@ img {
 
 /* Forms
 --------------------------------------------- */
-
 input,
 select,
 textarea {
@@ -374,64 +349,8 @@ input[type="search"]::-webkit-search-results-button {
   display: none;
 }
 
-
-/*
-Structure and Layout
----------------------------------------------------------------------------------------------------- */
-
-/* Site Containers
---------------------------------------------- */
-
-.wrap {
-  margin: 0 auto;
-  max-width: 980px;
-}
-
-.site-inner {
-  clear: both;
-  padding-top: 40px;
-}
-
-/* Column Widths and Positions
---------------------------------------------- */
-
-/* Content */
-
-.content {
-  float: right;
-  width: 600px;
-}
-
-.layout-2c-r .content {
-  float: right;
-}
-
-.layout-2c-l .content {
-  float: left;
-}
-
-.layout-1c .content {
-  width: 100%;
-}
-
-/* Primary Sidebar */
-
-.sidebar-primary {
-  float: right;
-  width: 300px;
-}
-
-.layout-1c .sidebar-primary {
-  display: none;
-}
-
-.layout-2c-r .sidebar-primary {
-  float: left;
-}
-
-/* WordPress
---------------------------------------------- */
-
+/* =WordPress
+============================================================================ */
 .avatar {
   float: left;
 }
@@ -537,6 +456,11 @@ img.alignright,
   margin: 0 10px;
 }
 
+.widget th,
+.widget td {
+  padding: 5px 2px;
+}
+
 .widget_calendar table {
   width: 100%;
 }
@@ -551,6 +475,53 @@ img.alignright,
 
 .widget_search input.search-field {
   width: 100%;
+}
+
+/* =Structure & Layout
+============================================================================ */
+.wrap {
+  margin: 0 auto;
+  max-width: 980px;
+}
+
+.site-inner {
+  clear: both;
+  padding-top: 40px;
+}
+
+/* Column Widths and Positions
+--------------------------------------------- */
+
+/* Content */
+.content {
+  float: right;
+  width: 600px;
+}
+
+.layout-2c-r .content {
+  float: right;
+}
+
+.layout-2c-l .content {
+  float: left;
+}
+
+.layout-1c .content {
+  width: 100%;
+}
+
+/* Primary Sidebar */
+.sidebar-primary {
+  float: right;
+  width: 300px;
+}
+
+.layout-1c .sidebar-primary {
+  display: none;
+}
+
+.layout-2c-r .sidebar-primary {
+  float: left;
 }
 
 /* Headings
@@ -576,9 +547,8 @@ img.alignright,
   margin-bottom: 24px;
 }
 
-/*
-Site Header
----------------------------------------------------------------------------------------------------- */
+/* =Site Header
+============================================================================ */
 .site-header {
   background: none repeat scroll 0 0 #F5F5F5;
 }
@@ -589,7 +559,6 @@ Site Header
 
 /* Title Area
 --------------------------------------------- */
-
 .title-area {
   font-weight: 700;
   padding: 16px 0;
@@ -620,11 +589,8 @@ Site Header
   margin: 0;
 }
 
-
-/*
-Site Navigation
----------------------------------------------------------------------------------------------------- */
-
+/* =Site Navigation
+============================================================================ */
 .beta-nav-menu,
 .beta-nav-menu > ul {
   clear: both;
@@ -705,13 +671,11 @@ Site Navigation
   padding-right: 0;
 }
 
-/*
-Content Area
----------------------------------------------------------------------------------------------------- */
+/* =Content Area
+============================================================================ */
 
 /* Entries
 --------------------------------------------- */
-
 .entry, .hentry {
   margin-bottom: 40px;
 }
@@ -766,7 +730,6 @@ Content Area
 
 /* Entry Navigation
 --------------------------------------------- */
-
 .navigation {
   clear: both;
   font-size: 14px;
@@ -793,7 +756,6 @@ Content Area
 
 /* Pagination
 --------------------------------------------- */
-
 .pagination .page-numbers {
   padding: 8px 12px;
   border: 1px solid #F5F5F5;
@@ -807,7 +769,6 @@ Content Area
 
 /* Comments
 --------------------------------------------- */
-
 .entry-comments,
 #respond {
   background: #fff;
@@ -883,10 +844,8 @@ li.comment ol {
 }
 
 
-/*
-Sidebars
----------------------------------------------------------------------------------------------------- */
-
+/* =Sidebars
+============================================================================ */
 .sidebar {
   color: #999;
 }
@@ -921,10 +880,9 @@ Sidebars
   width: 100%;
 }
 
-/*
-Footer Widgets
----------------------------------------------------------------------------------------------------- */
 
+/* =Footer Widgets
+============================================================================ */
 .footer-widgets {
   border-top: 1px solid #F5F5F5;
   padding: 40px 0 16px;
@@ -952,10 +910,8 @@ Footer Widgets
   float: right;
 }
 
-/*
-Site Footer
----------------------------------------------------------------------------------------------------- */
-
+/* =Site Footer
+============================================================================ */
 .site-footer {
   border-top: 1px solid #F5F5F5;
   color: #999;
@@ -972,10 +928,9 @@ p.copyright {
   font-size: inherit;
 }
 
-/*
-Media Queries
----------------------------------------------------------------------------------------------------- */
 
+/* =Media Queries
+============================================================================ */
 @media only screen and (max-width: 1139px) {
 
   .wrap {
