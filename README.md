@@ -5,13 +5,32 @@ Beta theme is a responsive, SEO Friendly, HTML5 WordPress parent theme. It is de
 
 Roadmap
 -------
-#### Version 0.9.0 - Core Framework Organization
-- Cleanup core.php file
-- Cleanup context.php file
-- Cleanup i18n.php file
-- Switch exmachina_post_class to exmachina_entry_class
-
 #### Version 1.0.0 - Function Organization
++ deprecated.php - Migrate to new file template
++ deprecated.php - Remove unneeded deprecated functions
++ Add engine require for deprecated.php
++ meta.php - Migrate to new file template
++ meta.php - Add any additional meta functions
++ post-formats.php - Migrate to new file template
++ post-formats.php - Add any additional post format functions
++ template-hierarchy.php - Migrate to new file template
++ template.php - Migrate to new file template
++ media.php - Migrate to new file template
++ media.php - Merge with image.php
++ media.php - Add any additional media functions
++ Remove engine require for image.php
++ customize.php - Migrate to new file template
++ customize.php - Add any additional customize functions
++ shortcodes.php - Migrate to new file template
++ shortcodes.php - Add any additional shortcodes
++ widgets.php - Migrate to new file template
++ widgets.php - Organize widget loading functions
++ Add theme support for framework widgets
++ utility.php - Migrate to new file template
++ utility.php - Merge with wish-list.php
++ utility.php - Merge with extras.php
++ utility.php - Merge with template-tags.php
++ utility.php - Add any additional utility functions
 
 
 #### Version 1.1.0 - Widget Organization
@@ -80,3 +99,9 @@ Completed
 - Setup admin folders
 - Setup connect folder
 - Setup plugins folder
+
+#### Version 0.9.0 - Core Framework Organization
+- Cleanup core.php file
+- Cleanup context.php file
+- Cleanup i18n.php file
+- Switch exmachina_post_class to exmachina_entry_class
