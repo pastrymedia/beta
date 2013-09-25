@@ -33,7 +33,29 @@ Roadmap
 - Create blank structure files and connect via engine
 - Organize functions to appropiate structure file
 
-#### Version 0.7.0 - Framework Organization
+#### Version 0.7.0 - Front-end Organization
++ Organize functions.php
++ Delete legacy folder
++ Organize front-end templates
++ Organize front-end stylesheets
+
+#### Version 0.8.0 - Engine Organization
++ Organize engine.php
++ Organize file structure
+
+#### Version 0.9.0 - Widget Organization
++ Cleanup widget class files
++ Cleanup widget loader
++ Recode 404 template to no longer rely on widgets
+
+#### Version 1.0.0 - Core Framework Organization
+
+#### Version 1.1.0 - Function Organiation
+
+#### Version 1.2.0 - Menu Organization
+
+#### Version 1.3.0 - Sidebar Organiation
+
 
 Todo
 ----
