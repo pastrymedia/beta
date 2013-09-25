@@ -9,10 +9,9 @@ function beta_theme_inc() {
 
 	if ( is_admin() ) {
 		/* Load  theme settings page */
-		require  $beta_inc  . '/inc/admin/meta-box-theme-options.php';
-		require  $beta_inc  . '/inc/admin/meta-box-theme-comments.php';
-		require  $beta_inc  . '/inc/admin/meta-box-theme-archives.php';
-		require  $beta_inc  . '/inc/admin/meta-box-theme-general.php';
+		//require  $beta_inc  . '/inc/admin/meta-box-theme-comments.php';
+		//require  $beta_inc  . '/inc/admin/meta-box-theme-archives.php';
+		//require  $beta_inc  . '/inc/admin/meta-box-theme-general.php';
 	}
 
 	remove_action( 'wp_head', 'exmachina_meta_template', 4 );

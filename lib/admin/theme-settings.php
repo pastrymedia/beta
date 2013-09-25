@@ -1,12 +1,12 @@
 <?php
 /**
  * Handles the display and functionality of the theme settings page. This provides the needed hooks and
- * meta box calls for developers to create any number of theme settings needed. This file is only loaded if 
+ * meta box calls for developers to create any number of theme settings needed. This file is only loaded if
  * the theme supports the 'exmachina-core-theme-settings' feature.
  *
- * Provides the ability for developers to add custom meta boxes to the theme settings page by using the 
- * add_meta_box() function.  Developers should register their meta boxes on the 'add_meta_boxes' hook 
- * and register the meta box for 'appearance_page_theme-settings'.  To validate/sanitize data from 
+ * Provides the ability for developers to add custom meta boxes to the theme settings page by using the
+ * add_meta_box() function.  Developers should register their meta boxes on the 'add_meta_boxes' hook
+ * and register the meta box for 'appearance_page_theme-settings'.  To validate/sanitize data from
  * custom settings, devs should use the 'sanitize_option_{$prefix}_theme_settings' filter hook.
  *
  * @package    ExMachinaCore
@@ -21,7 +21,7 @@
 add_action( 'admin_menu', 'exmachina_settings_page_init' );
 
 /**
- * Initializes all the theme settings page functionality. This function is used to create the theme settings 
+ * Initializes all the theme settings page functionality. This function is used to create the theme settings
  * page, then use that as a launchpad for specific actions that need to be tied to the settings page.
  *
  * @since 0.7.0
@@ -57,6 +57,9 @@ function exmachina_settings_page_init() {
 		/* Filter the settings page capability so that it recognizes the 'edit_theme_options' cap. */
 		add_filter( "option_page_capability_{$prefix}_theme_settings", 'exmachina_settings_page_capability' );
 
+		/* Sanitize the scripts settings before adding them to the database. */
+		add_filter( "sanitize_option_{$prefix}_theme_settings", 'exmachina_theme_validate_settings' );
+
 		/* Add help tabs to the theme settings page. */
 		add_action( "load-{$exmachina->settings_page}", 'exmachina_settings_page_help' );
 
@@ -69,7 +72,12 @@ function exmachina_settings_page_init() {
 		/* Load the JavaScript and stylesheets needed for the theme settings screen. */
 		add_action( 'admin_enqueue_scripts', 'exmachina_settings_page_enqueue_scripts' );
 		add_action( 'admin_enqueue_scripts', 'exmachina_settings_page_enqueue_styles' );
+		add_action( 'admin_enqueue_scripts', 'exmachina_admin_scripts' );
 		add_action( "admin_footer-{$exmachina->settings_page}", 'exmachina_settings_page_load_scripts' );
+
+		/* Add help tabs to the theme settings page. */
+		add_action( "load-{$exmachina->settings_page}", 'exmachina_settings_page_help' );
+		add_action( "load-{$exmachina->settings_page}", 'exmachina_theme_settings_help' );
 	}
 }
 
@@ -96,9 +104,9 @@ function exmachina_get_settings_page_name() {
 }
 
 /**
- * Provides a hook for adding meta boxes as seen on the post screen in the WordPress admin.  This addition 
- * is needed because normal plugin/theme pages don't have this hook by default.  The other goal of this 
- * function is to provide a way for themes to load and execute meta box code only on the theme settings 
+ * Provides a hook for adding meta boxes as seen on the post screen in the WordPress admin.  This addition
+ * is needed because normal plugin/theme pages don't have this hook by default.  The other goal of this
+ * function is to provide a way for themes to load and execute meta box code only on the theme settings
  * page in the admin.  This way, they're not needlessly loading extra files.
  *
  * @since 1.2.0
@@ -110,7 +118,7 @@ function exmachina_settings_page_add_meta_boxes() {
 }
 
 /**
- * Loads the meta boxes packaged with the framework on the theme settings page.  These meta boxes are 
+ * Loads the meta boxes packaged with the framework on the theme settings page.  These meta boxes are
  * merely loaded with this function.  Meta boxes are only loaded if the feature is supported by the theme.
  *
  * @since 1.2.0
@@ -136,7 +144,7 @@ function exmachina_load_settings_page_meta_boxes() {
 
 /**
  * Validation/Sanitization callback function for theme settings.  This just returns the data passed to it.  Theme
- * developers should validate/sanitize their theme settings on the "sanitize_option_{$prefix}_theme_settings" 
+ * developers should validate/sanitize their theme settings on the "sanitize_option_{$prefix}_theme_settings"
  * hook.  This function merely exists for backwards compatibility.
  *
  * @since 0.7.0
@@ -204,7 +212,7 @@ function exmachina_settings_page() {
 				</div><!-- #poststuff -->
 
 				<?php submit_button( esc_attr__( 'Update Settings', 'exmachina-core' ), 'primary', 'submit', false ); // hence updated ?>
-				<input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults', 'beta' ); ?>" onclick="return confirm( '<?php print esc_js( __( 'Click OK to reset. Any theme settings will be lost!', 'beta' ) ); ?>' );" />
+				<input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults', 'exmachina-core' ); ?>" onclick="return confirm( '<?php print esc_js( __( 'Click OK to reset. Any theme settings will be lost!', 'exmachina-core' ) ); ?>' );" />
 
 			</form>
 
@@ -229,7 +237,7 @@ function exmachina_settings_field_id( $setting ) {
 }
 
 /**
- * Creates a settings field name attribute for use on the theme settings page.  This is a helper function for 
+ * Creates a settings field name attribute for use on the theme settings page.  This is a helper function for
  * use with the WordPress settings API.
  *
  * @since 1.0.0
@@ -240,7 +248,7 @@ function exmachina_settings_field_name( $setting ) {
 }
 
 /**
- * Adds a help tab to the theme settings screen if the theme has provided a 'Documentation URI' and/or 
+ * Adds a help tab to the theme settings screen if the theme has provided a 'Documentation URI' and/or
  * 'Support URI'.  Theme developers can add custom help tabs using get_current_screen()->add_help_tab().
  *
  * @since 1.3.0
@@ -308,7 +316,7 @@ function exmachina_settings_page_enqueue_scripts( $hook_suffix ) {
 		wp_enqueue_script( 'common' );
 		wp_enqueue_script( 'wp-lists' );
 		wp_enqueue_script( 'postbox' );
-	
+
 	}
 }
 
@@ -327,6 +335,68 @@ function exmachina_settings_page_load_scripts() { ?>
 		});
 		//]]>
 	</script><?php
+}
+
+/**
+ * Contextual help content.
+ */
+function exmachina_theme_settings_help() {
+
+	$screen = get_current_screen();
+
+	$theme_settings_help =
+		'<h3>' . __( 'Theme Settings', 'exmachina-core' ) . '</h3>' .
+		'<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Some child themes may add additional menu items to this list. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see.', 'exmachina-core' ) . '</p>';
+
+	$customize_help =
+		'<h3>' . __( 'Customize', 'exmachina-core' ) . '</h3>' .
+		'<p>'  . __( 'The theme customizer is available for a real time editing environment where theme options can be tried before being applied to the live site. Click \'Customize\' button below to personalize your theme', 'exmachina-core' ) . '</p>';
+
+	$screen->add_help_tab( array(
+		'id'      => 'beta-settings' . '-theme-settings',
+		'title'   => __( 'Theme Settings', 'exmachina-core' ),
+		'content' => $theme_settings_help,
+	) );
+	$screen->add_help_tab( array(
+		'id'      => 'beta-settings' . '-customize',
+		'title'   => __( 'Customize', 'exmachina-core' ),
+		'content' => $customize_help,
+	) );
+
+	//* Add help sidebar
+	$screen->set_help_sidebar(
+		'<p><strong>' . __( 'For more information:', 'exmachina-core' ) . '</strong></p>' .
+		'<p><a href="http://machinathemes.com/contact" target="_blank" title="' . __( 'Get Support', 'exmachina-core' ) . '">' . __( 'Get Support', 'exmachina-core' ) . '</a></p>'
+	);
+
+}
+
+/**
+ * Saves the scripts meta box settings by filtering the "sanitize_option_{$prefix}_theme_settings" hook.
+ *
+ * @since 0.3.0
+ * @param array $settings Array of theme settings passed by the Settings API for validation.
+ * @return array $settings
+ */
+function exmachina_theme_validate_settings( $settings ) {
+
+	if ( isset( $_POST['reset'] ) ) {
+		$settings = exmachina_get_default_theme_settings();
+		add_settings_error( 'exmachina-notices-reset', 'restore_defaults', __( 'Default setting restored.', 'exmachina-core' ), 'updated fade' );
+	}
+
+	/* Return the theme settings. */
+	return $settings;
+}
+
+/* Enqueue scripts (and related stylesheets) */
+function exmachina_admin_scripts( $hook_suffix ) {
+
+    if ( $hook_suffix == exmachina_get_settings_page_name() ) {
+
+	    wp_enqueue_script( 'exmachina-admin-js', esc_url( trailingslashit( EXMACHINA_JS ) . 'admin.js'), array( 'jquery' ), '20121231', false );
+
+    }
 }
 
 ?>

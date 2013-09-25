@@ -22,7 +22,7 @@ Roadmap
 - Move template tags functions
 
 #### Version 0.5.0 - Core Admin Cleanup
-+ Add meta-box-theme-options.php to theme-settings.php
+- Add meta-box-theme-options.php to theme-settings.php
 + Move comments metabox to core
 + Move archives metabox to core
 + Move general (scripts) metabox to core
