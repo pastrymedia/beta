@@ -90,9 +90,6 @@ function beta_theme_setup() {
     array( 'default' => '2c-l', 'customizer' => true )
   );
 
-  /* Add default theme settings */
-  add_filter( "{$prefix}_default_theme_settings", 'beta_default_theme_settings');
-
   /* implement editor styling, so as to make the editor content match the resulting post output in the theme. */
   add_editor_style();
 
@@ -182,36 +179,7 @@ function beta_sidebar_defaults($defaults) {
   return $defaults;
 }
 
-/**
- * Adds custom default theme settings.
- *
- * @since 0.3.0
- * @access public
- * @param array $settings The default theme settings.
- * @return array $settings
- */
 
-function beta_default_theme_settings( $settings ) {
-
-  $settings = array(
-    'comments_pages'            => 0,
-    'comments_posts'            => 1,
-    'trackbacks_pages'          => 0,
-    'trackbacks_posts'          => 1,
-    'content_archive'           => 'full',
-    'content_archive_limit'   => 0,
-    'content_archive_thumbnail' => 0,
-    'content_archive_more'      => '[Read more...]',
-    'image_size'                => 'thumbnail',
-    'posts_nav'                 => 'numeric',
-    'single_nav'                 => 0,
-    'header_scripts'            => '',
-    'footer_scripts'            => '',
-  );
-
-  return $settings;
-
-}
 
 /**
  * Dynamic element to wrap the site title and site description.

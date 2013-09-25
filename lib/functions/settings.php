@@ -1,8 +1,8 @@
 <?php
 /**
- * Functions for dealing with theme settings on both the front end of the site and the admin.  This allows us 
- * to set some default settings and make it easy for theme developers to quickly grab theme settings from 
- * the database.  This file is only loaded if the theme adds support for the 'exmachina-core-theme-settings' 
+ * Functions for dealing with theme settings on both the front end of the site and the admin.  This allows us
+ * to set some default settings and make it easy for theme developers to quickly grab theme settings from
+ * the database.  This file is only loaded if the theme adds support for the 'exmachina-core-theme-settings'
  * feature.
  *
  * @package    ExMachinaCore
@@ -14,8 +14,8 @@
  */
 
 /**
- * Loads the ExMachina theme settings once and allows the input of the specific field the user would 
- * like to show.  ExMachina theme settings are added with 'autoload' set to 'yes', so the settings are 
+ * Loads the ExMachina theme settings once and allows the input of the specific field the user would
+ * like to show.  ExMachina theme settings are added with 'autoload' set to 'yes', so the settings are
  * only loaded once on each page load.
  *
  * @since 0.7.0
@@ -58,8 +58,8 @@ function exmachina_get_setting( $option = '' ) {
 }
 
 /**
- * Sets up a default array of theme settings for use with the theme.  Theme developers should filter the 
- * "{$prefix}_default_theme_settings" hook to define any default theme settings.  WordPress does not 
+ * Sets up a default array of theme settings for use with the theme.  Theme developers should filter the
+ * "{$prefix}_default_theme_settings" hook to define any default theme settings.  WordPress does not
  * provide a hook for default settings at this time.
  *
  * @since 1.0.0
@@ -74,6 +74,22 @@ function exmachina_get_default_theme_settings() {
 
 	/* Get theme-supported meta boxes for the settings page. */
 	$supports = get_theme_support( 'exmachina-core-theme-settings' );
+
+	$settings = array(
+    'comments_pages'            => 0,
+    'comments_posts'            => 1,
+    'trackbacks_pages'          => 0,
+    'trackbacks_posts'          => 1,
+    'content_archive'           => 'full',
+    'content_archive_limit'   => 0,
+    'content_archive_thumbnail' => 0,
+    'content_archive_more'      => '[Read more...]',
+    'image_size'                => 'thumbnail',
+    'posts_nav'                 => 'numeric',
+    'single_nav'                 => 0,
+    'header_scripts'            => '',
+    'footer_scripts'            => '',
+  );
 
 	/* If the current theme supports the footer meta box and shortcodes, add default footer settings. */
 	if ( is_array( $supports[0] ) && in_array( 'footer', $supports[0] ) && current_theme_supports( 'exmachina-core-shortcodes' ) ) {

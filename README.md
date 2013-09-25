@@ -26,7 +26,7 @@ Roadmap
 + Move comments metabox to core
 + Move archives metabox to core
 + Move general (scripts) metabox to core
-+ Move settings defaults to core
+- Move settings defaults to core
 
 #### Version 0.6.0 - Core Structure Setup
 
