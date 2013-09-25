@@ -17,11 +17,16 @@ Roadmap
 #### Version 0.4.0 - Core Function Cleanup
 - Move image functions
 - Add overrides to shortcodes function
-+ Move customizer functions
+- Move customizer functions
 - Move extras functions
 - Move template tags functions
 
 #### Version 0.5.0 - Core Admin Cleanup
++ Add meta-box-theme-options.php to theme-settings.php
++ Move comments metabox to core
++ Move archives metabox to core
++ Move general (scripts) metabox to core
++ Move settings defaults to core
 
 #### Version 0.6.0 - Core Structure Setup
 
