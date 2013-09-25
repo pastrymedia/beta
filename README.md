@@ -23,12 +23,15 @@ Roadmap
 
 #### Version 0.5.0 - Core Admin Cleanup
 - Add meta-box-theme-options.php to theme-settings.php
-+ Move comments metabox to core
+- Move comments metabox to core
 - Move archives metabox to core
-+ Move general (scripts) metabox to core
+- Move general (scripts) metabox to core
 - Move settings defaults to core
 
 #### Version 0.6.0 - Core Structure Setup
++ Move html5.js to core JS directory
++ Create blank structure files and connect via engine
++ Organize functions to appropiate structure file
 
 #### Version 0.7.0 - Framework Organization
 
