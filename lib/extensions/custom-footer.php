@@ -1,28 +1,28 @@
 <?php
 /**
- * Functions for registering and setting theme settings that tie into the WordPress theme customizer.  
- * This file loads additional classes and adds settings to the customizer for the built-in ExMachina Core 
+ * Functions for registering and setting theme settings that tie into the WordPress theme customizer.
+ * This file loads additional classes and adds settings to the customizer for the built-in ExMachina Core
  * settings.
  */
 
 /* Load custom control classes. */
-add_action( 'customize_register', 'beta_load_footer_customize_controls', 1 );
+add_action( 'customize_register', 'exmachina_load_footer_customize_controls', 1 );
 
 /* Register custom sections, settings, and controls. */
-add_action( 'customize_register', 'beta_customize_footer_register' );
+add_action( 'customize_register', 'exmachina_customize_footer_register' );
 
 /* Add the footer content Ajax to the correct hooks. */
-add_action( 'wp_ajax_beta_customize_footer_content', 'beta_customize_footer_content_ajax' );
-add_action( 'wp_ajax_nopriv_beta_customize_footer_content', 'beta_customize_footer_content_ajax' );
+add_action( 'wp_ajax_exmachina_customize_footer_content', 'exmachina_customize_custom_footer_content_ajax' );
+add_action( 'wp_ajax_nopriv_exmachina_customize_footer_content', 'exmachina_customize_custom_footer_content_ajax' );
 
 /**
- * Loads framework-specific customize control classes.  Customize control classes extend the WordPress 
+ * Loads framework-specific customize control classes.  Customize control classes extend the WordPress
  * WP_Customize_Control class to create unique classes that can be used within the framework.
  *
  * @since 1.4.0
  * @access private
  */
-function beta_load_footer_customize_controls() {
+function exmachina_load_footer_customize_controls() {
 
 	/* Loads the textarea customize control class. */
 	require_once( trailingslashit( EXMACHINA_CLASSES ) . 'customize-control-textarea.php' );
@@ -35,17 +35,17 @@ function beta_load_footer_customize_controls() {
  * @access private
  * @param object $wp_customize
  */
-function beta_customize_footer_register( $wp_customize ) {
+function exmachina_customize_footer_register( $wp_customize ) {
 
 	/* Add the 'footer_insert' setting. */
 	$wp_customize->add_setting(
 		"custom_footer",
 		array(
-			'default'              => apply_filters( 'beta_footer_insert', '' ),
+			'default'              => apply_filters( exmachina_get_prefix() . '_footer_insert', '' ),
 			'type'                 => 'theme_mod',
 			'capability'           => 'edit_theme_options',
-			'sanitize_callback'    => 'beta_customize_sanitize',
-			'sanitize_js_callback' => 'beta_customize_sanitize',
+			'sanitize_callback'    => 'exmachina_customize_footer_sanitize',
+			'sanitize_js_callback' => 'exmachina_customize_footer_sanitize',
 			'transport'            => 'postMessage',
 		)
 	);
@@ -54,9 +54,9 @@ function beta_customize_footer_register( $wp_customize ) {
 	$wp_customize->add_control(
 		new ExMachina_Customize_Control_Textarea(
 			$wp_customize,
-			'beta-footer',
+			'exmachina-footer',
 			array(
-				'label'    => esc_html__( 'Footer', 'beta' ),
+				'label'    => esc_html__( 'Footer', 'exmachina-core' ),
 				'section'  => 'layout',
 				'settings' => "custom_footer",
 			)
@@ -65,12 +65,12 @@ function beta_customize_footer_register( $wp_customize ) {
 
 	/* If viewing the customize preview screen, add a script to show a live preview. */
 	if ( $wp_customize->is_preview() && !is_admin() )
-		add_action( 'wp_footer', 'beta_customize_preview_footer_script', 21 );
-	
+		add_action( 'wp_footer', 'exmachina_customize_preview_footer_script', 21 );
+
 }
 
 /**
- * Sanitizes the footer content on the customize screen.  Users with the 'unfiltered_html' cap can post 
+ * Sanitizes the footer content on the customize screen.  Users with the 'unfiltered_html' cap can post
  * anything.  For other users, wp_filter_post_kses() is ran over the setting.
  *
  * @since 1.4.0
@@ -79,7 +79,7 @@ function beta_customize_footer_register( $wp_customize ) {
  * @param object $object The setting object passed via WP_Customize_Setting.
  * @return mixed $setting
  */
-function beta_customize_sanitize( $setting, $object ) {
+function exmachina_customize_footer_sanitize( $setting, $object ) {
 
 	/* Get the theme prefix. */
 	$prefix = exmachina_get_prefix();
@@ -93,16 +93,16 @@ function beta_customize_sanitize( $setting, $object ) {
 }
 
 /**
- * Runs the footer content posted via Ajax through the do_shortcode() function.  This makes sure the 
+ * Runs the footer content posted via Ajax through the do_shortcode() function.  This makes sure the
  * shortcodes are output correctly in the live preview.
  *
  * @since 1.4.0
  * @access private
  */
-function beta_customize_footer_content_ajax() {
+function exmachina_customize_custom_footer_content_ajax() {
 
 	/* Check the AJAX nonce to make sure this is a valid request. */
-	check_ajax_referer( 'beta_customize_footer_content_nonce' );
+	check_ajax_referer( 'exmachina_customize_footer_content_nonce' );
 
 	/* If footer content has been posted, run it through the do_shortcode() function. */
 	if ( isset( $_POST['footer_content'] ) )
@@ -118,10 +118,10 @@ function beta_customize_footer_content_ajax() {
  * @since 1.4.0
  * @access private
  */
-function beta_customize_preview_footer_script() {
+function exmachina_customize_preview_footer_script() {
 
 	/* Create a nonce for the Ajax. */
-	$nonce = wp_create_nonce( 'beta_customize_footer_content_nonce' );
+	$nonce = wp_create_nonce( 'exmachina_customize_footer_content_nonce' );
 
 	?>
 	<script type="text/javascript">
@@ -130,10 +130,10 @@ function beta_customize_preview_footer_script() {
 		function( value ) {
 			value.bind(
 				function( to ) {
-					jQuery.post( 
-						'<?php echo admin_url( 'admin-ajax.php' ); ?>', 
-						{ 
-							action: 'beta_customize_footer_content',
+					jQuery.post(
+						'<?php echo admin_url( 'admin-ajax.php' ); ?>',
+						{
+							action: 'exmachina_customize_footer_content',
 							_ajax_nonce: '<?php echo $nonce; ?>',
 							footer_content: to
 						},

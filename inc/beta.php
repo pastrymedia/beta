@@ -28,9 +28,6 @@ function beta_theme_inc() {
 		require  $beta_inc  . '/inc/admin/meta-box-theme-general.php';
 	}
 
-	/* Load custom footer extension if supported. */
-	require_if_theme_supports( 'beta-custom-footer', $beta_inc . '/inc/extensions/custom-footer.php' );
-
 	remove_action( 'wp_head', 'exmachina_meta_template', 4 );
 
 }

@@ -115,7 +115,7 @@ function beta_theme_setup() {
   add_theme_support( 'custom-css' );
 
   /* Enable custom footer */
-  add_theme_support( 'beta-custom-footer' );
+  add_theme_support( 'custom-footer' );
 
   /* Enable custom logo */
   add_theme_support( 'custom-logo' );

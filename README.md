@@ -7,7 +7,7 @@ Roadmap
 -------
 #### Version 0.3.0 - Core Extension Cleanup
 - Remove child theme page
-+ Remove custom footer
+- Remove custom footer
 - Move footer widgets
 - Move responsive
 - Move wraps
