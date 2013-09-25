@@ -4,7 +4,7 @@
  */
 ?>
 
-<article id="post-<?php the_ID(); ?>" class="<?php exmachina_entry_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+<article id="post-<?php the_ID(); ?>" class="<?php exmachina_post_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 
 	<div class="entry-wrap">
 

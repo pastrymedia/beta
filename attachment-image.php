@@ -29,7 +29,7 @@ if ( !defined('ABSPATH')) exit;
 
         <?php the_post(); // Loads the post data. ?>
 
-        <article id="post-<?php the_ID(); ?>" class="<?php exmachina_entry_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
+        <article id="post-<?php the_ID(); ?>" class="<?php exmachina_post_class(); ?>" itemscope="itemscope" itemtype="http://schema.org/CreativeWork">
 
           <header class="entry-header">
             <h1 class="entry-title"><?php single_post_title(); ?></h1>
