@@ -128,6 +128,9 @@ class ExMachina {
 		/* Sets the path to the core framework languages directory. */
 		define( 'EXMACHINA_LANGUAGES', trailingslashit( EXMACHINA_DIR ) . 'languages' );
 
+		/* Sets the path to the core framework structure directory. */
+		define( 'EXMACHINA_STRUCTURE', trailingslashit( EXMACHINA_DIR ) . 'structure' );
+
 		/* Sets the path to the core framework images directory URI. */
 		define( 'EXMACHINA_IMAGES', trailingslashit( EXMACHINA_URI ) . 'images' );
 
@@ -298,6 +301,17 @@ class ExMachina {
 
 		/* Load the deprecated functions if supported. */
 		require_if_theme_supports( 'exmachina-core-deprecated', trailingslashit( EXMACHINA_FUNCTIONS ) . 'deprecated.php' );
+
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'archive.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'comments.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'footer.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'header.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'layout.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'loops.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'menu.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'post.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'search.php' );
+		require_once( trailingslashit( EXMACHINA_STRUCTURE ) . 'sidebar.php' );
 	}
 
 	/**
