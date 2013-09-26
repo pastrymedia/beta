@@ -19,8 +19,8 @@ Roadmap
 - media.php - Merge with image.php
 - media.php - Add any additional media functions
 - Remove engine require for image.php
-+ customize.php - Migrate to new file template
-+ customize.php - Add any additional customize functions
+- customize.php - Migrate to new file template
+- customize.php - Add any additional customize functions
 + shortcodes.php - Migrate to new file template
 + shortcodes.php - Add any additional shortcodes
 + widgets.php - Migrate to new file template
