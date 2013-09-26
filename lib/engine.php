@@ -449,17 +449,8 @@ class ExMachina {
     /* Load the template functions. */
     require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'template.php' );
 
-    /* Load the template tags functions. */
-    require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'template-tags.php' );
-
     /* Load the utility functions. */
     require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'utility.php' );
-
-    /* Load the extras functions. */
-    require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'extras.php' );
-
-    /* Load the wish-list functions. */
-    require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'wish-list.php' );
 
     /* Load the theme settings functions if supported. */
     require_if_theme_supports( 'exmachina-core-theme-settings', trailingslashit( EXMACHINA_FUNCTIONS ) . 'settings.php' );

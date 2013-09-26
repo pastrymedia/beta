@@ -25,11 +25,11 @@ Roadmap
 - shortcodes.php - Add any additional shortcodes
 - widgets.php - Migrate to new file template
 - widgets.php - Organize widget loading functions
-+ Add theme support for framework widgets
-+ utility.php - Migrate to new file template
-+ utility.php - Merge with wish-list.php
+- Add theme support for framework widgets
+- utility.php - Migrate to new file template
+- utility.php - Merge with wish-list.php
 + utility.php - Merge with extras.php
-+ utility.php - Merge with template-tags.php
+- utility.php - Merge with template-tags.php
 + utility.php - Add any additional utility functions
 
 

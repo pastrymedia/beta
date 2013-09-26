@@ -102,3 +102,56 @@ function exmachina_page_entry_meta() {
 function exmachina_excerpt_more( $more ) {
   return ' ... <a class="more-link" href="'. get_permalink( get_the_ID() ) . '">' . exmachina_get_setting( 'content_archive_more' ) . '</a>';
 }
+
+if ( ! function_exists( 'exmachina_content_nav' ) ) :
+/**
+ * Display navigation to next/previous pages when applicable
+ */
+function exmachina_content_nav( $nav_id ) {
+  global $wp_query, $post;
+
+  // Don't print empty markup on single pages if there's nowhere to navigate.
+  if ( is_single() ) {
+    $previous = ( is_attachment() ) ? get_post( $post->post_parent ) : get_adjacent_post( false, '', true );
+    $next = get_adjacent_post( false, '', false );
+
+    if ( ! $next && ! $previous )
+      return;
+  }
+
+  // Don't print empty markup in archives if there's only one page.
+  if ( $wp_query->max_num_pages < 2 && ( is_home() || is_archive() || is_search() ) )
+    return;
+
+  $nav_class = ( is_single() ) ? 'post-navigation' : 'paging-navigation';
+
+  ?>
+  <nav role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="navigation row  <?php echo $nav_class; ?>">
+
+  <?php if ( is_single() && !exmachina_get_setting( 'single_nav' ) ) : // navigation links for single posts ?>
+
+    <?php previous_post_link( '<div class="nav-previous alignleft">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'exmachina-core' ) . '</span> %title' ); ?>
+    <?php next_post_link( '<div class="nav-next alignright">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'exmachina-core' ) . '</span>' ); ?>
+
+  <?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
+
+    <?php
+    if (current_theme_supports( 'loop-pagination' ) && ( 'numeric' == exmachina_get_setting( 'posts_nav' ) ) ) {
+      loop_pagination();
+    } else {
+      if ( get_next_posts_link() ) : ?>
+      <div class="nav-previous alignleft"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Previous Page', 'exmachina-core' )); ?></div>
+      <?php endif; ?>
+
+      <?php if ( get_previous_posts_link() ) : ?>
+      <div class="nav-next alignright"><?php previous_posts_link( __( 'Next Page <span class="meta-nav">&rarr;</span>', 'exmachina-core' )); ?></div>
+      <?php endif;
+    }
+    ?>
+
+  <?php endif; ?>
+
+  </nav><!-- #<?php echo esc_html( $nav_id ); ?> -->
+  <?php
+}
+endif; // exmachina_content_nav
