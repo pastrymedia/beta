@@ -28,9 +28,9 @@ Roadmap
 - Add theme support for framework widgets
 - utility.php - Migrate to new file template
 - utility.php - Merge with wish-list.php
-+ utility.php - Merge with extras.php
+- utility.php - Merge with extras.php
 - utility.php - Merge with template-tags.php
-+ utility.php - Add any additional utility functions
+- utility.php - Add any additional utility functions
 
 
 #### Version 1.1.0 - Widget Organization

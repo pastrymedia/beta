@@ -728,3 +728,93 @@ function the_content_limit( $max_characters, $more_link_text = '(more...)', $str
   echo apply_filters( 'the_content_limit', $content );
 
 } // end function the_content_limit()
+
+/**
+ * Admin Redirect
+ *
+ * Redirect the user to an admin page and add query args to the URL string for
+ * alerts, etc.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/menu_page_url
+ * @link http://codex.wordpress.org/Function_Reference/add_query_arg
+ * @link http://codex.wordpress.org/Function_Reference/wp_redirect
+ *
+ * @since 1.0.10
+ * @access public
+ *
+ * @param  string $page       Menu slug.
+ * @param  array  $query_args Optional. Associative array of query string arguments.
+ * @return null               Return early if not on a page.
+ */
+function exmachina_admin_redirect( $page, array $query_args = array() ) {
+
+  /* If not a page, return. */
+  if ( ! $page )
+    return;
+
+  /* Define the menu page url. */
+  $url = html_entity_decode( menu_page_url( $page, 0 ) );
+
+  /* Loop through and unset the $query_args. */
+  foreach ( (array) $query_args as $key => $value ) {
+    if ( empty( $key ) && empty( $value ) ) {
+      unset( $query_args[$key] );
+    } // end if (empty($key) && empty($value))
+  } // end foreach ((array) $query_args as $key => $value)
+
+  /* Add the $query_args to the url. */
+  $url = add_query_arg( $query_args, $url );
+
+  /* Redirect to the admin page. */
+  wp_redirect( esc_url_raw( $url ) );
+
+} // end function exmachina_admin_redirect()
+
+/**
+ * Menu Page Check
+ *
+ * Check to see that the theme is targetting a specific admin page.
+ *
+ * @since 1.0.10
+ * @access public
+ *
+ * @global string   $page_hook  Page hook of the current page.
+ * @param  string   $pagehook   Page hook string to check.
+ * @return boolean              Returns true if the global $page_hook matches the given $pagehook.
+ */
+function exmachina_is_menu_page( $pagehook = '' ) {
+
+  /* Globalize the $page_hook variable. */
+  global $page_hook;
+
+  /* Return true if on the define $pagehook. */
+  if ( isset( $page_hook ) && $page_hook === $pagehook )
+    return true;
+
+  /* May be too early for $page_hook. */
+  if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] === $pagehook )
+    return true;
+
+  /* Otherwise, return false. */
+  return false;
+
+} // end function exmachina_is_menu_page()
+
+/**
+ * Settings Page Capability
+ *
+ * Returns the required capability for viewing and saving theme settings.
+ *
+ * @link http://codex.wordpress.org/Roles_and_Capabilities
+ *
+ * @uses exmachina_get_prefix() Gets the theme prefix.
+ *
+ * @since 1.0.10
+ * @access public
+ *
+ * @return string   The filtered page capability.
+ */
+function exmachina_settings_page_capability() {
+  return apply_filters( exmachina_get_prefix() . '_settings_capability', 'edit_theme_options' );
+
+} // end function exmachina_settings_page_capability()
