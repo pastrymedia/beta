@@ -21,8 +21,8 @@ Roadmap
 - Remove engine require for image.php
 - customize.php - Migrate to new file template
 - customize.php - Add any additional customize functions
-+ shortcodes.php - Migrate to new file template
-+ shortcodes.php - Add any additional shortcodes
+- shortcodes.php - Migrate to new file template
+- shortcodes.php - Add any additional shortcodes
 + widgets.php - Migrate to new file template
 + widgets.php - Organize widget loading functions
 + Add theme support for framework widgets
