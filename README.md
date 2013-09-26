@@ -23,8 +23,8 @@ Roadmap
 - customize.php - Add any additional customize functions
 - shortcodes.php - Migrate to new file template
 - shortcodes.php - Add any additional shortcodes
-+ widgets.php - Migrate to new file template
-+ widgets.php - Organize widget loading functions
+- widgets.php - Migrate to new file template
+- widgets.php - Organize widget loading functions
 + Add theme support for framework widgets
 + utility.php - Migrate to new file template
 + utility.php - Merge with wish-list.php
