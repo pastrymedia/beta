@@ -46,7 +46,7 @@ if ( !defined('ABSPATH')) exit;
  *
  * @uses apply_atomic() Gets the atomic filter hook.
  *
- * @since 1.0.4
+ * @since 1.0.5
  * @access public
  *
  * @return string Full path to the content template.

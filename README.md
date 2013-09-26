@@ -15,10 +15,10 @@ Roadmap
 - post-formats.php - Add any additional post format functions
 - template-hierarchy.php - Migrate to new file template
 - template.php - Migrate to new file template
-+ media.php - Migrate to new file template
-+ media.php - Merge with image.php
-+ media.php - Add any additional media functions
-+ Remove engine require for image.php
+- media.php - Migrate to new file template
+- media.php - Merge with image.php
+- media.php - Add any additional media functions
+- Remove engine require for image.php
 + customize.php - Migrate to new file template
 + customize.php - Add any additional customize functions
 + shortcodes.php - Migrate to new file template

@@ -446,9 +446,6 @@ class ExMachina {
     /* Load the metadata functions. */
     require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'meta.php' );
 
-    /* Load the image functions. */
-    require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'image.php' );
-
     /* Load the template functions. */
     require_once( trailingslashit( EXMACHINA_FUNCTIONS ) . 'template.php' );
 
