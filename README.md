@@ -5,46 +5,20 @@ Beta theme is a responsive, SEO Friendly, HTML5 WordPress parent theme. It is de
 
 Roadmap
 -------
-#### Version 1.0.0 - Function Organization
-- deprecated.php - Migrate to new file template
-- deprecated.php - Remove unneeded deprecated functions
-- Add engine require for deprecated.php
-- meta.php - Migrate to new file template
-- meta.php - Add any additional meta functions
-- post-formats.php - Migrate to new file template
-- post-formats.php - Add any additional post format functions
-- template-hierarchy.php - Migrate to new file template
-- template.php - Migrate to new file template
-- media.php - Migrate to new file template
-- media.php - Merge with image.php
-- media.php - Add any additional media functions
-- Remove engine require for image.php
-- customize.php - Migrate to new file template
-- customize.php - Add any additional customize functions
-- shortcodes.php - Migrate to new file template
-- shortcodes.php - Add any additional shortcodes
-- widgets.php - Migrate to new file template
-- widgets.php - Organize widget loading functions
-- Add theme support for framework widgets
-- utility.php - Migrate to new file template
-- utility.php - Merge with wish-list.php
-- utility.php - Merge with extras.php
-- utility.php - Merge with template-tags.php
-- utility.php - Add any additional utility functions
+#### Version 1.1.0 - Scripts Organization
++ scripts.php - Migrate to new file template.
++ Setup main JavaScript file
++ Setup plugin JavaScript file
 
+#### Version 1.2.0 - Styles Organization
++ styles.php - Migrate to new file template.
++ Setup normalize CSS stylesheet.
 
-#### Version 1.1.0 - Widget Organization
-+ Cleanup widget class files
-+ Cleanup widget loader
-+ Recode 404 template to no longer rely on widgets
+#### Version 1.3.0 - Menu Organization
 
+#### Version 1.4.0 - Sidebar Organization
 
-
-
-
-#### Version 1.2.0 - Menu Organization
-
-#### Version 1.3.0 - Sidebar Organiation
+#### Version 1.5.0 - Widget Organization
 
 
 Todo
@@ -105,3 +79,30 @@ Completed
 - Cleanup context.php file
 - Cleanup i18n.php file
 - Switch exmachina_post_class to exmachina_entry_class
+
+#### Version 1.0.0 - Function Organization
+- deprecated.php - Migrate to new file template
+- deprecated.php - Remove unneeded deprecated functions
+- Add engine require for deprecated.php
+- meta.php - Migrate to new file template
+- meta.php - Add any additional meta functions
+- post-formats.php - Migrate to new file template
+- post-formats.php - Add any additional post format functions
+- template-hierarchy.php - Migrate to new file template
+- template.php - Migrate to new file template
+- media.php - Migrate to new file template
+- media.php - Merge with image.php
+- media.php - Add any additional media functions
+- Remove engine require for image.php
+- customize.php - Migrate to new file template
+- customize.php - Add any additional customize functions
+- shortcodes.php - Migrate to new file template
+- shortcodes.php - Add any additional shortcodes
+- widgets.php - Migrate to new file template
+- widgets.php - Organize widget loading functions
+- Add theme support for framework widgets
+- utility.php - Migrate to new file template
+- utility.php - Merge with wish-list.php
+- utility.php - Merge with extras.php
+- utility.php - Merge with template-tags.php
+- utility.php - Add any additional utility functions
