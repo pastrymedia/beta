@@ -6,9 +6,9 @@ Beta theme is a responsive, SEO Friendly, HTML5 WordPress parent theme. It is de
 Roadmap
 -------
 #### Version 1.2.0 - Styles Organization
-+ styles.php - Migrate to new file template.
-+ Add normalize.css and normalize.min.css
-+ Setup normalize CSS stylesheet.
+- styles.php - Migrate to new file template.
+- Add normalize.css and normalize.min.css
+- Setup normalize CSS stylesheet.
 
 #### Version 1.3.0 - Menu Organization
 
