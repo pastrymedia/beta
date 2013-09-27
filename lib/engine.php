@@ -407,10 +407,10 @@ class ExMachina {
       return;
 
     /* Load the admin builder class. */
-    //require_once( trailingslashit( EXMACHINA_CLASSES ) . 'admin.class.php' );
+    require_once( trailingslashit( EXMACHINA_CLASSES ) . 'admin.class.php' );
 
     /* Load the settings sanitization class. */
-    //require_once( trailingslashit( EXMACHINA_CLASSES ) . 'sanitize.class.php' );
+    require_once( trailingslashit( EXMACHINA_CLASSES ) . 'sanitize.class.php' );
 
   } // end function exmachina_load_classes()
 
