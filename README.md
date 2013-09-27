@@ -10,8 +10,11 @@ Roadmap
 - Build out sanitize.class.php
 - Connect classes to engine.php
 - Move admin assets over to core framework
-+ admin.php - Migrate to new file template
-+ settings.php - Migrate to new file template
+- admin.php - Migrate to new file template
+- settings.php - Migrate to new file template
++ Clean out theme-settings.php
++ Compare with original theme-settings.php
++ Bring back capability function
 + Replace instances of get_setting
 
 

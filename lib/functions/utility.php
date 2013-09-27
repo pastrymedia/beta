@@ -814,7 +814,55 @@ function exmachina_is_menu_page( $pagehook = '' ) {
  *
  * @return string   The filtered page capability.
  */
-//function exmachina_settings_page_capability() {
-//  return apply_filters( exmachina_get_prefix() . '_settings_capability', 'edit_theme_options' );
+function exmachina_settings_page_capability() {
+  return apply_filters( exmachina_get_prefix() . '_settings_capability', 'edit_theme_options' );
 
-//} // end function exmachina_settings_page_capability()
+} // end function exmachina_settings_page_capability()
+
+/**
+ * Get Help Sidebar
+ *
+ * Adds a help tab to the theme settings screen if the theme has provided a
+ * 'Documentation URI' and/or 'Support URI'. Theme developers can add custom help
+ * tabs using get_current_screen()->add_help_tab().
+ *
+ * @since 1.5.6
+ * @access public
+ *
+ * @return void
+ */
+function exmachina_get_help_sidebar() {
+
+  /* Get the parent theme data. */
+  $theme = wp_get_theme( get_template() );
+  $doc_uri = $theme->get( 'Documentation URI' );
+  $support_uri = $theme->get( 'Support URI' );
+
+  /* If the theme has provided a documentation or support URI, add them to the help text. */
+  if ( !empty( $doc_uri ) || !empty( $support_uri ) ) {
+
+    /* Open an unordered list for the help text. */
+    $help = '<ul>';
+
+    /* Add the Documentation URI. */
+    if ( !empty( $doc_uri ) )
+      $help .= '<li><a href="' . esc_url( $doc_uri ) . '">' . __( 'Documentation', 'exmachina-core' ) . '</a></li>';
+
+    /* Add the Support URI. */
+    if ( !empty( $support_uri ) )
+      $help .= '<li><a href="' . esc_url( $support_uri ) . '">' . __( 'Support', 'exmachina-core' ) . '</a></li>';
+
+    /* Close the unordered list for the help text. */
+    $help .= '</ul>';
+
+    /* Add a help tab with links for documentation and support. */
+    get_current_screen()->add_help_tab(
+      array(
+        'id' => 'default',
+        'title' => esc_attr( $theme->get( 'Name' ) ),
+        'content' => $help
+      )
+    );
+  }
+
+} // end function exmachina_get_help_sidebar()

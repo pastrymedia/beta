@@ -934,6 +934,7 @@ abstract class ExMachina_Admin_Metaboxes extends ExMachina_Admin {
         <h3>
           <?php submit_button( $this->page_ops['save_button_text'], 'primary update-button pull-right', 'submit', false, array( 'id' => '' ) ); ?>
           <?php submit_button( $this->page_ops['reset_button_text'], 'secondary reset-button exmachina-js-confirm-reset', $this->get_field_name( 'reset' ), false, array( 'id' => '' ) ); ?>
+          <input type="submit" class="reset-button button-secondary" name="reset" value="<?php esc_attr_e( 'Restore Defaults', 'exmachina-core' ); ?>" onclick="return confirm( '<?php print esc_js( __( 'Click OK to reset. Any theme settings will be lost!', 'exmachina-core' ) ); ?>' );" />
 
         </h3>
       </div><!-- .settings-toolbar -->
