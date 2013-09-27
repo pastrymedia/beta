@@ -163,7 +163,7 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
         'single_nav'                => 0,
         'header_scripts'            => '',
         'footer_scripts'            => '',
-        'footer_insert'             => '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link].', 'exmachina-core' ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link] and [theme-link].', 'exmachina-core' ) . '</p>',
+        'footer_insert'             => 'Copyright &copy; ' . date( 'Y' ) . ' All Rights Reserved',
       )
     ); // end $default_settings
 
@@ -487,6 +487,85 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_save()
+
+  /**
+   * Footer Settings Metabox Display
+   *
+   * Callback to display the 'Footer Settings' metabox. Creates a metabox for
+   * the theme settings page, which holds a textarea for custom footer text within
+   * the theme.
+   *
+   * Settings:
+   * ~~~~~~~~~
+   * 'footer_insert'
+   *
+   * To use this feature, the theme must support the 'footer' argument
+   * for the 'exmachina-core-theme-settings' feature.
+   *
+   * @todo Add header info content
+   * @todo Add default footer insert content function
+   *
+   * @link http://codex.wordpress.org/Function_Reference/wp_editor
+   * @link http://codex.wordpress.org/Function_Reference/esc_textarea
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_footer() {
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+          <tr>
+            <td class="uk-width-1-1 postbox-fieldset">
+              <div class="fieldset-wrap uk-margin uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <p class="uk-margin-top-remove"><?php _e( 'You can add custom <abbr title="Hypertext Markup Language">HTML</abbr> and/or shortcodes, which will be automatically inserted into your theme.', 'exmachina-core' ); ?></p>
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <?php
+                      /* Add a textarea using the wp_editor() function to make it easier on users to add custom content. */
+                      wp_editor(
+                        $this->get_field_value( 'footer_insert' ), // Editor content.
+                        $this->get_field_id( 'footer_insert' ),    // Editor ID.
+                        array(
+                          'tinymce'       => false, // Don't use TinyMCE in a meta box.
+                          'textarea_rows' => 8,     // Set the number of textarea rows.
+                          'media_buttons' => false,
+                        ) );
+                      ?>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                  <p class="uk-text-muted"><?php _e( 'Shortcodes and some <abbr title="Hypertext Markup Language">HTML</abbr> is allowed.', 'exmachina-core' ); ?></p>
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_footer()
 
   /*-------------------------------------------------------------------------*/
   /* Begin side priority metabox callbacks. */

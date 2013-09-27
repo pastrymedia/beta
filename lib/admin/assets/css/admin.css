@@ -183,6 +183,11 @@ textarea.wp-editor-area {
   border: 0 none;
 }
 
+textarea.wp-editor-area:focus {
+  background: #fff;
+}
+
+
 /* Textarea */
 textarea.vertical-resize {
   resize: vertical;
