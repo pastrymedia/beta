@@ -6,7 +6,7 @@ Beta theme is a responsive, SEO Friendly, HTML5 WordPress parent theme. It is de
 Roadmap
 -------
 #### Version 1.4.0 - Sidebar Organization
-+ sidebars.php - Migrate to new file template.
+- sidebars.php - Migrate to new file template.
 
 #### Version 1.5.0 - Widget Organization
 
