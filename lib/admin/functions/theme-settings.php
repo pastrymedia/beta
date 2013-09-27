@@ -46,6 +46,15 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
    * the page id, page title, menu position, default settings, and sanitization
    * hooks.
    *
+   * @link http://codex.wordpress.org/Function_Reference/wp_get_theme
+   * @link http://codex.wordpress.org/Function_Reference/get_template
+   * @link http://codex.wordpress.org/Function_Reference/get_theme_root
+   * @link http://codex.wordpress.org/Function_Reference/get_template_directory
+   *
+   * @uses exmachina_get_prefix()
+   * @uses \ExMachina_Admin::create()
+   * @uses \ExMachina_Admin_Theme_Settings::sanitizer_filters()
+   *
    * @todo prefix settings filters.
    * @todo possibly split out this method.
    * @todo create function to control capability.
@@ -263,6 +272,8 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
    * @link  http://codex.wordpress.org/Class_Reference/WP_Screen/add_help_tab
    * @link  http://codex.wordpress.org/Class_Reference/WP_Screen/set_help_sidebar
    *
+   * @uses exmachina_get_help_sidebar() Gets the help sidebar content.
+   *
    * @since 1.5.5
    */
   public function settings_page_help() {
@@ -309,6 +320,14 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
    * Registers metaboxes for the settings page. Metaboxes are only registered if
    * supported by the theme and the user capabilitiy allows it.
    *
+   * @link http://codex.wordpress.org/Function_Reference/add_meta_box
+   * @link http://codex.wordpress.org/Function_Reference/wp_get_theme
+   * @link http://codex.wordpress.org/Function_Reference/get_theme_support
+   *
+   * @uses exmachina_get_prefix() Gets the theme prefix.
+   * @uses \ExMachina_Admin_Theme_Settings::hidden_fields()
+   * @uses \ExMachina_Admin_Theme_Settings::exmachina_metabox_theme_display_save()
+   *
    * @todo prefix/add action hooks.
    *
    * @since 1.5.5
@@ -327,6 +346,76 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
 
     /* Get theme-supported meta boxes for the settings page. */
     $supports = get_theme_support( 'exmachina-core-theme-settings' );
+
+    /* If there are any supported meta boxes, load them. */
+    if ( is_array( $supports[0] ) ) {
+
+      /* Load the 'Theme Updates' meta box if it is supported. */
+      if ( in_array( 'updates', $supports[0] ) )
+      add_meta_box( 'exmachina-core-updates', __( '<i class="uk-icon-download"></i> Theme Updates', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_updates' ), $this->pagehook, 'normal', 'high' );
+
+      /* Load the 'Style Selector' meta box if it is supported. */
+      if ( in_array( 'style', $supports[0] ) )
+      add_meta_box( 'exmachina-core-style', __( '<i class="uk-icon-adjust"></i> Style Selector', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_style' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Branding' meta box if it is supported. */
+      if ( in_array( 'brand', $supports[0] ) )
+      add_meta_box( 'exmachina-core-branding', __( '<i class="uk-icon-bullseye"></i> Brand Settings', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_brand' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Feeds' meta box if it is supported. */
+      if ( in_array( 'feeds', $supports[0] ) )
+      add_meta_box( 'exmachina-core-feeds', __( '<i class="uk-icon-rss"></i> Feed Settings', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_feeds' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Layout' meta box if it is supported. */
+      if ( in_array( 'layout', $supports[0] ) )
+      add_meta_box( 'exmachina-core-layout', __( '<i class="uk-icon-columns"></i> Global Layout', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_layout' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Header' meta box if it is supported. */
+      if ( in_array( 'header', $supports[0] ) )
+      add_meta_box( 'exmachina-core-header', __( '<i class="uk-icon-cog"></i> Custom Header', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_header' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Menus' meta box if it is supported. */
+      if ( in_array( 'menus', $supports[0] ) )
+      add_meta_box( 'exmachina-core-menus', __( '<i class="uk-icon-compass"></i> Menu Settings', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_menus' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Breadcrumbs' meta box if it is supported. */
+      if ( in_array( 'breadcrumbs', $supports[0] ) )
+      add_meta_box( 'exmachina-core-breadcrumbs', __( '<i class="uk-icon-cog"></i> Breadcrumbs', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_breadcrumbs' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Comments' meta box if it is supported. */
+      if ( in_array( 'comments', $supports[0] ) )
+      add_meta_box( 'exmachina-core-comments', __( '<i class="uk-icon-comments-alt"></i> Comments <span class="amp">&amp;</span> Trackbacks', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_comments' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Archives' meta box if it is supported. */
+      if ( in_array( 'archives', $supports[0] ) )
+      add_meta_box( 'exmachina-core-archives', __( '<i class="uk-icon-archive"></i> Content Archives', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_archives' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Header & Footer Scripts' meta box if it is supported. */
+      if ( in_array( 'scripts', $supports[0] ) )
+      add_meta_box( 'exmachina-core-scripts', __( '<i class="uk-icon-code"></i> Header <span class="amp">&amp;</span> Footer Scripts', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_scripts' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'Footer' meta box if it is supported. */
+      if ( in_array( 'footer', $supports[0] ) )
+      add_meta_box( 'exmachina-core-footer', __( '<i class="uk-icon-reorder"></i>  Footer settings', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_footer' ), $this->pagehook, 'normal', 'default' );
+
+      /* Load the 'About' metabox if it is supported. */
+      if ( in_array( 'about', $supports[0] ) ) {
+
+        /* Adds the About box for the parent theme. */
+        add_meta_box( 'exmachina-core-about-theme', sprintf( __( '<i class="uk-icon-info-sign"></i> About %s', 'exmachina-core' ), $theme->get( 'Name' ) ), array( $this, 'exmachina_metabox_theme_display_about' ), $this->pagehook, 'side', 'default' );
+
+        /* If the user is using a child theme, add an About box for it. */
+        if ( is_child_theme() ) {
+          $child = wp_get_theme();
+          add_meta_box( 'exmachina-core-about-child', sprintf( __( '<i class="uk-icon-info-sign"></i> About %s', 'exmachina-core' ), $child->get( 'Name' ) ), array( $this, 'exmachina_metabox_theme_display_about' ), $this->pagehook, 'side', 'default' );
+        }
+      } // end if  in_array('about', $supports[0]))
+
+      /* Load the 'Help' meta box if it is supported. */
+      if ( in_array( 'help', $supports[0] ) )
+      add_meta_box( 'exmachina-core-help', __( '<i class="uk-icon-question-sign"></i> Need Help', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_help' ), $this->pagehook, 'side', 'default' );
+
+    } // end if (is_array($supports[0]))
 
     /* Trigger the theme settings metabox action hook. */
     do_action( 'exmachina_theme_settings_metaboxes', $this->pagehook );
@@ -398,6 +487,144 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_save()
+
+  /*-------------------------------------------------------------------------*/
+  /* Begin side priority metabox callbacks. */
+  /*-------------------------------------------------------------------------*/
+
+  /**
+   * About Theme Metabox Display
+   *
+   * Callback to display the 'About Theme' metabox. Creates a meta box for the
+   * theme settings page, which displays information about the theme. If a child
+   * theme is in use, an additional meta box will be added with its information.
+   *
+   * Fields:
+   * ~~~~~~~
+   * none
+   *
+   * To use this feature, the theme must support the 'about' argument in the
+   * 'exmachina-core-theme-settings' feature.
+   *
+   * @link http://codex.wordpress.org/Function_Reference/wp_get_theme
+   * @link http://codex.wordpress.org/Function_Reference/get_template
+   *
+   * @since 1.5.5
+   * @access public
+   *
+   * @param  object $object Variable passed through the do_meta_boxes() call.
+   * @param  array  $box    Specific information about the meta box being loaded.
+   * @return void
+   */
+  function exmachina_metabox_theme_display_about( $object, $box ) {
+
+    /* Grab theme information for the parent/child theme. */
+    $theme = ( 'exmachina-core-about-child' == $box['id'] ) ? wp_get_theme() : wp_get_theme( get_template() );
+
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table">
+        <!-- Begin Table Body -->
+        <tbody>
+          <tr>
+            <td class="uk-width-1-1 postbox-fieldset">
+              <div class="fieldset-wrap uk-margin uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <img class="uk-align-center uk-thumbnail uk-thumbnail-medium" src="<?php echo esc_url( get_stylesheet_directory_uri() . '/screenshot.png' ); ?>" alt="<?php echo esc_attr( $theme->get( 'Name' ) ); ?>">
+                      <dl class="uk-description-list uk-description-list-horizontal">
+                        <dt class="uk-text-bold"><?php _e( 'Theme:', 'exmachina-core' ); ?></dt>
+                        <dd><a href="<?php echo esc_url( $theme->get( 'ThemeURI' ) ); ?>" title="<?php echo esc_attr( $theme->get( 'Name' ) ); ?>"><?php echo $theme->get( 'Name' ); ?></a></dd>
+                        <dt class="uk-text-bold"><?php _e( 'Author:', 'exmachina-core' ); ?></dt>
+                        <dd><a href="<?php echo esc_url( $theme->get( 'AuthorURI' ) ); ?>" title="<?php echo esc_attr( $theme->get( 'Author' ) ); ?>"><?php echo $theme->get( 'Author' ); ?></a></dd>
+                      </dl>
+                      <dl class="uk-description-list">
+                        <dt class="uk-text-bold"><?php _e( 'Description:', 'exmachina-core' ); ?></dt>
+                        <dd><?php echo $theme->get( 'Description' ); ?></dd>
+                      </dl>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_about()
+
+  /**
+   * Help Settings Metabox Display
+   *
+   * Callback to display the 'Help Settings' metabox. Creates a metabox on the
+   * theme settings page which directs the user to a contextual help tabs.
+   *
+   * Fields:
+   * ~~~~~~~
+   * none
+   *
+   * To use this feature, the theme must support the 'help' argument in the
+   * 'exmachina-core-theme-settings' feature.
+   *
+   * @link http://codex.wordpress.org/Function_Reference/wp_get_theme
+   *
+   * @todo  create variable/function to get theme support answers.
+   * @todo  add programatic link to help: http://wordpress.stackexchange.com/questions/10810/how-to-control-contextual-help-section-by-code
+   *
+   * @since 1.5.5
+   * @access public
+   *
+   * @return void
+   */
+  function exmachina_metabox_theme_display_help() {
+
+    /* Get theme information. */
+    $theme = wp_get_theme();
+
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table">
+        <!-- Begin Table Body -->
+        <tbody>
+          <tr>
+            <td class="uk-width-1-1 postbox-fieldset">
+              <div class="fieldset-wrap uk-margin uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <p class="help-block"><?php _e( 'Struggling with some of the theme options or settings? Click on the "Help" tab above.', 'exmachina-core' ); ?></p>
+                      <p class="help-block"><?php echo sprintf( __( 'You can also visit the %s <a href="%s" target="_blank">support forum</a>', 'exmachina-core' ), $theme->{'Name'}, 'http://www.machinathemes.com/support/' ); ?></p>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_help()
+
+  /*-------------------------------------------------------------------------*/
+  /* End the metabox callbacks. */
+  /*-------------------------------------------------------------------------*/
 
 } // end class ExMachina_Admin_Theme_Settings
 
