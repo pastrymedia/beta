@@ -1,0 +1,96 @@
+/*! ExMachina Admin Minicolors CSS v1.0.0 | (c) 2013, Machina Themes | http://machinathemes.com/ */
+
+/**
+ * ExMachina Admin Minicolors CSS
+ *
+ * @package     ExMachina
+ * @subpackage  Admin Assets
+ * @version     1.0.0
+ * @copyright   Copyright (c) 2013, Machina Themes
+ */
+
+/*
+=Defaults
+============================================================================ */
+.minicolors {
+  display: inline-block;
+  margin: 3px 10px 5px 0;
+  z-index: 1;
+}
+
+.minicolors-focus {
+  z-index: 2;
+}
+
+.minicolors-theme-default.minicolors-swatch-left .minicolors-input {
+  margin-left: -1px;
+  margin-right: auto;
+}
+
+.minicolors-theme-default.minicolors-focus .minicolors-input,
+.minicolors-theme-default.minicolors-focus .minicolors-swatch {
+  border-color: #ddd;
+}
+
+.minicolors-swatch {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  text-align: left;
+  border: solid 1px #ddd;
+}
+
+.minicolors-swatch SPAN {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: none;
+  box-shadow: inset 0 14px 7px rgba(255, 255, 255, .1);
+  display: inline-block;
+}
+
+/*
+=Panel
+============================================================================ */
+.minicolors-panel {
+  top: 29px;
+  left: 0;
+  border: solid 1px #ddd;
+}
+
+.minicolors-position-left .minicolors-panel {
+  left: -83px;
+}
+
+/*
+=Color Pickers
+============================================================================ */
+.minicolors-grid .minicolors-picker {
+  width: 10px;
+  height: 10px;
+}
+
+/*
+=Theme
+============================================================================ */
+.minicolors-theme-default .minicolors-swatch {
+  top: 0;
+  left: 0;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  text-align: left;
+  border: solid 1px #ddd;
+}
+
+.minicolors-theme-default .minicolors-input {
+  margin: 0px;
+  margin-right: 3px;
+  border: solid 1px #ddd;
+  width: 65px;
+  height: 30px;
+  border-radius: 0;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .04);
+  padding: 4px 5px;
+  margin-right: -1px;
+}
