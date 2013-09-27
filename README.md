@@ -9,7 +9,7 @@ Roadmap
 - Build out admin.class.php
 - Build out sanitize.class.php
 - Connect classes to engine.php
-+ Move admin assets over to core framework
+- Move admin assets over to core framework
 + admin.php - Migrate to new file template
 + settings.php - Migrate to new file template
 + Replace instances of get_setting

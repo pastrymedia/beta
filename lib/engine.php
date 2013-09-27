@@ -668,7 +668,7 @@ class ExMachina {
     if ( is_admin() ) {
 
       /* Load the main admin file. */
-      require_once( trailingslashit( EXMACHINA_ADMIN ) . 'admin.php' );
+      require_once( trailingslashit( EXMACHINA_ADMIN_FUNCTIONS ) . 'admin.php' );
 
       /* Load the theme settings feature if supported. */
       require_if_theme_supports( 'exmachina-core-theme-settings', trailingslashit( EXMACHINA_ADMIN ) . 'theme-settings.php' );
