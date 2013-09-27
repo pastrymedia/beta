@@ -46,6 +46,13 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
    * the page id, page title, menu position, default settings, and sanitization
    * hooks.
    *
+   * @todo prefix settings filters.
+   * @todo possibly split out this method.
+   * @todo create function to control capability.
+   * @todo add filter to settings field (???)
+   * @todo add filters to page/menu titles
+   * @todo maybe remove page_ops for defaults
+   *
    * @since 1.5.5
    */
   function __construct() {
@@ -262,6 +269,34 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
 
     /* Get the current screen. */
     $screen = get_current_screen();
+
+    /* Get the sidebar content. */
+    $template_help = exmachina_get_help_sidebar();
+
+    $theme_settings_help =
+    '<h3>' . __( 'Theme Settings', 'exmachina-core' ) . '</h3>' .
+    '<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see.', 'exmachina-core' ) . '</p>';
+
+    $screen->add_help_tab( array(
+    'id'      => $this->pagehook . '-theme-settings',
+    'title'   => __( 'Theme Settings', 'exmachina-core' ),
+    'content' => $theme_settings_help,
+    ) );
+
+    $customize_help =
+    '<h3>' . __( 'Customize', 'exmachina-core' ) . '</h3>' .
+    '<p>'  . __( 'The theme customizer is available for a real time editing environment where theme options can be tried before being applied to the live site. Click \'Customize\' button below to personalize your theme', 'exmachina-core' ) . '</p>';
+
+    $screen->add_help_tab( array(
+    'id'      => $this->pagehook . '-customize',
+    'title'   => __( 'Customize', 'exmachina-core' ),
+    'content' => $customize_help,
+    ) );
+
+    /* Add help sidebar. */
+    $screen->set_help_sidebar(
+      $template_help
+    );
 
     /* Trigger the help content action hook. */
     do_action( 'exmachina_theme_settings_help', $this->pagehook );

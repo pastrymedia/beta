@@ -835,34 +835,54 @@ function exmachina_get_help_sidebar() {
 
   /* Get the parent theme data. */
   $theme = wp_get_theme( get_template() );
+  $theme_uri = $theme->get( 'ThemeURI' );
+  $author_uri = $theme->get( 'AuthorURI' );
   $doc_uri = $theme->get( 'Documentation URI' );
   $support_uri = $theme->get( 'Support URI' );
+
+  /* If the theme has provided a theme or author URI, add them to the help text. */
+  if ( !empty( $theme_uri ) || !empty( $author_uri ) ) {
+
+    /* Open an unordered list for the help text. */
+    $help = '<p><strong>' . sprintf( esc_html__( '%1s %2s:', 'exmachina-core' ), __( 'About', 'exmachina-core' ), $theme->get( 'Name' ) ) . '</strong></p>';
+    //$help = '<p><strong>' . __( 'For more information:', 'exmachina-core' ) . '</strong></p>';
+    $help .= '<ul>';
+
+    /* Add the Documentation URI. */
+    if ( !empty( $theme_uri ) )
+      $help .= '<li><a href="' . esc_url( $theme_uri ) . '" target="_blank" title="' . __( 'Theme Homepage', 'exmachina-core' ) . '">' . __( 'Theme Homepage', 'exmachina-core' ) . '</a></li>';
+
+    /* Add the Support URI. */
+    if ( !empty( $author_uri ) )
+      $help .= '<li><a href="' . esc_url( $author_uri ) . '" target="_blank" title="' . __( 'Author Homepage', 'exmachina-core' ) . '">' . __( 'Author Homepage', 'exmachina-core' ) . '</a></li>';
+
+    /* Close the unordered list for the help text. */
+    $help .= '</ul>';
+
+  }
+
 
   /* If the theme has provided a documentation or support URI, add them to the help text. */
   if ( !empty( $doc_uri ) || !empty( $support_uri ) ) {
 
     /* Open an unordered list for the help text. */
-    $help = '<ul>';
+    $help .= '<p><strong>' . __( 'For more information:', 'exmachina-core' ) . '</strong></p>';
+    $help .= '<ul>';
 
     /* Add the Documentation URI. */
     if ( !empty( $doc_uri ) )
-      $help .= '<li><a href="' . esc_url( $doc_uri ) . '">' . __( 'Documentation', 'exmachina-core' ) . '</a></li>';
+      $help .= '<li><a href="' . esc_url( $doc_uri ) . '" target="_blank" title="' . __( 'Documentation', 'exmachina-core' ) . '">' . __( 'Documentation', 'exmachina-core' ) . '</a></li>';
 
     /* Add the Support URI. */
     if ( !empty( $support_uri ) )
-      $help .= '<li><a href="' . esc_url( $support_uri ) . '">' . __( 'Support', 'exmachina-core' ) . '</a></li>';
+      $help .= '<li><a href="' . esc_url( $support_uri ) . '" target="_blank" title="' . __( 'Support', 'exmachina-core' ) . '">' . __( 'Support', 'exmachina-core' ) . '</a></li>';
 
     /* Close the unordered list for the help text. */
     $help .= '</ul>';
 
-    /* Add a help tab with links for documentation and support. */
-    get_current_screen()->add_help_tab(
-      array(
-        'id' => 'default',
-        'title' => esc_attr( $theme->get( 'Name' ) ),
-        'content' => $help
-      )
-    );
   }
+
+  /* Return the help content. */
+  return $help;
 
 } // end function exmachina_get_help_sidebar()
