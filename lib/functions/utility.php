@@ -814,7 +814,7 @@ function exmachina_is_menu_page( $pagehook = '' ) {
  *
  * @return string   The filtered page capability.
  */
-function exmachina_settings_page_capability() {
-  return apply_filters( exmachina_get_prefix() . '_settings_capability', 'edit_theme_options' );
+//function exmachina_settings_page_capability() {
+//  return apply_filters( exmachina_get_prefix() . '_settings_capability', 'edit_theme_options' );
 
-} // end function exmachina_settings_page_capability()
+//} // end function exmachina_settings_page_capability()
