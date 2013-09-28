@@ -129,6 +129,8 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
       array(
         'theme_version'             => EXMACHINA_VERSION,
         'db_version'                => EXMACHINA_DB_VERSION,
+        'release_date'              => EXMACHINA_RELEASE_DATE,
+        'license_key'               => '',
         'update'                    => 1,
         'update_email'              => 0,
         'update_email_address'      => '',
@@ -241,6 +243,8 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
         'style_selection',
         'theme_version',
         'image_size',
+        'license_key',
+        'release_date',
     ) );
 
     /* Apply the safe HTML sanitization filter. */
@@ -307,6 +311,13 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     'content' => $customize_help,
     ) );
 
+    $updates_help =
+      '<h3>' . __( 'Theme Updates', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'The information box allows you to see the current ExMachina theme information and display if desired.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'Normally, this should be unchecked. You can also set to enable automatic updates.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'This does not mean the updates happen automatically without your permission; it will just notify you that an update is available. You must select it to perform the update.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'If you provide an email address and select to notify that email address when the update is available, your site will email you when the update can be performed. No, updates only affect files being updated.', 'exmachina-core' ) . '</p>';
+
     $feeds_help =
       '<h3>' . __( 'Custom Feeds', 'exmachina-core' ) . '</h3>' .
       '<p>'  . __( 'If you use Feedburner to handle your rss feed(s) you can use this function to set your site\'s native feed to redirect to your Feedburner feed.', 'exmachina-core' ) . '</p>' .
@@ -318,33 +329,41 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
       '<p>'  . __( 'This box lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.', 'exmachina-core' ) . '</p>';
 
     $comments_help =
-    '<h3>' . __( 'Comments <span class="amp">&amp;</span> Trackbacks', 'exmachina-core' ) . '</h3>' .
-    '<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.', 'exmachina-core' ) . '</p>';
+      '<h3>' . __( 'Comments <span class="amp">&amp;</span> Trackbacks', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.', 'exmachina-core' ) . '</p>';
 
     $archives_help =
-    '<h3>' . __( 'Content Archives', 'exmachina-core' ) . '</h3>' .
-    '<p>'  . __( 'You may change the site wide Content Archives options to control what displays in the site\'s Archives.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'Archives include any pages using the blog template, category pages, tag pages, date archive, author archives, and the latest posts if there is no custom home page.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'The first option allows you to display the full post or the post excerpt. The Display full post setting will display the entire post including HTML code up to the <!--more--> tag if used (this is HTML for the comment tag that is not displayed in the browser).', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'The Display post excerpt setting will display the first 55 words of the post after also stripping any included HTML or the manual/custom excerpt added in the post edit screen.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'It may also be coupled with the second field "Limit content to [___] characters" to limit the content to a specific number of letters or spaces.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'The \'Include post image?\' setting allows you to show a thumbnail of the first attached image or currently set featured image.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'This option should not be used with the post content unless the content is limited to avoid duplicate images.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'The \'Image Size\' list is populated by the available image sizes defined in the theme.', 'exmachina-core' ) . '</p>' .
-    '<p>'  . __( 'Post Navigation format allows you to select one of two navigation methods.', 'exmachina-core' ) . '</p>';
-    '<p>'  . __( 'There is also a checkbox to disable previous & next navigation links on single post', 'exmachina-core' ) . '</p>';
+      '<h3>' . __( 'Content Archives', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'You may change the site wide Content Archives options to control what displays in the site\'s Archives.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'Archives include any pages using the blog template, category pages, tag pages, date archive, author archives, and the latest posts if there is no custom home page.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'The first option allows you to display the full post or the post excerpt. The Display full post setting will display the entire post including HTML code up to the <!--more--> tag if used (this is HTML for the comment tag that is not displayed in the browser).', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'The Display post excerpt setting will display the first 55 words of the post after also stripping any included HTML or the manual/custom excerpt added in the post edit screen.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'It may also be coupled with the second field "Limit content to [___] characters" to limit the content to a specific number of letters or spaces.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'The \'Include post image?\' setting allows you to show a thumbnail of the first attached image or currently set featured image.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'This option should not be used with the post content unless the content is limited to avoid duplicate images.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'The \'Image Size\' list is populated by the available image sizes defined in the theme.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'Post Navigation format allows you to select one of two navigation methods.', 'exmachina-core' ) . '</p>';
+      '<p>'  . __( 'There is also a checkbox to disable previous & next navigation links on single post', 'exmachina-core' ) . '</p>';
 
     $scripts_help =
-    '<h3>' . __( 'Header <span class="amp">&amp;</span> Footer Scripts', 'exmachina-core' ) . '</h3>' .
-    '<p>'  . __( 'This provides you with two fields that will output to the head section of your site and just before the closing body tag. These will appear on every page of the site and are a great way to add analytic code, Google Font and other scripts. You cannot use PHP in these fields.', 'exmachina-core' ) . '</p>';
+      '<h3>' . __( 'Header <span class="amp">&amp;</span> Footer Scripts', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'This provides you with two fields that will output to the head section of your site and just before the closing body tag. These will appear on every page of the site and are a great way to add analytic code, Google Font and other scripts. You cannot use PHP in these fields.', 'exmachina-core' ) . '</p>';
 
     $footer_help =
-    '<h3>' . __( 'Footer Settings', 'exmachina-core' ) . '</h3>' .
-    '<p>'  . __( 'Help content goes here', 'exmachina-core' ) . '</p>';
+      '<h3>' . __( 'Footer Settings', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'Help content goes here', 'exmachina-core' ) . '</p>';
 
     /* Load the help tabs that are supported by the theme. */
     if ( is_array( $supports[0] ) ) {
+
+      /* Load the 'Updates' meta box if it is supported. */
+      if ( in_array( 'updates', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-updates',
+          'title'   => __( 'Theme Updates', 'exmachina-core' ),
+          'content' => $updates_help,
+        ) );
 
       /* Load the 'Feeds' meta box if it is supported. */
       if ( in_array( 'feeds', $supports[0] ) )
@@ -581,6 +600,146 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_save()
+
+  /**
+   * Theme Updates Metabox Display
+   *
+   * Callback to display the 'Theme Updates' metabox. Creates a metabox for the
+   * theme settings page, which allows theme updates.
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'theme_version'
+   * 'license_key'
+   *
+   * To use this feature, the theme must support the 'updates' argument for the
+   * 'exmachina-core-theme-settings' feature.
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_updates() {
+
+    /* Get theme information. */
+    $theme = wp_get_theme( get_template() );
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table postbox-bordered">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label class="uk-text-bold"><?php _e( 'Theme Version:', 'exmachina-core' ); ?></label>
+            </td>
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls uk-form-controls-condensed">
+                      <!-- Begin Form Inputs -->
+                      <strong><?php _e( 'Version:', 'exmachina-core' ); ?></strong> <?php echo $this->get_field_value( 'theme_version' ); ?> &#x000B7; <strong><?php _e( 'Released:', 'exmachina-core' ); ?></strong> <?php echo $this->get_field_value( 'release_date' ); ?>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'license_key' ); ?>" class="uk-text-bold"><?php _e( 'License Key:', 'exmachina-core' ); ?></label>
+            </td>
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <input type="text" name="<?php echo $this->get_field_name( 'license_key' ); ?>" id="<?php echo $this->get_field_id( 'license_key' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'license_key' ) ); ?>" placeholder="Enter your license key" size="50" />
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'update' ); ?>" class="uk-text-bold"><?php _e( 'Automatic Updates:', 'exmachina-core' ); ?></label>
+            </td>
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <label for="<?php echo $this->get_field_id( 'update' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'update' ); ?>" id="<?php echo $this->get_field_id( 'update' ); ?>" value="1"<?php checked( $this->get_field_value( 'update' ) ) . disabled( is_super_admin(), 0 ); ?> />
+                      <?php _e( 'Enable Automatic Updates', 'exmachina-core' ); ?></label>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'update_email' ); ?>" class="uk-text-bold"><?php _e( 'Update Email:', 'exmachina-core' ); ?></label>
+            </td>
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <label for="<?php echo $this->get_field_id( 'update_email' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'update_email' ); ?>" id="<?php echo $this->get_field_id( 'update_email' ); ?>" value="1"<?php checked( $this->get_field_value( 'update_email' ) ) . disabled( is_super_admin(), 0 ); ?> />
+                      <?php _e( 'Notify', 'exmachina-core' ); ?></label>
+                      <input type="text" name="<?php echo $this->get_field_name( 'update_email_address' ); ?>" id="<?php echo $this->get_field_id( 'update_email_address' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'update_email_address' ) ); ?>" placeholder="enter your e-mail address" size="30"<?php disabled( 0, is_super_admin() ); ?> />
+                      <label for="<?php echo $this->get_field_id( 'update_email_address' ); ?>"><?php _e( 'when updates are available', 'exmachina-core' ); ?></label>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+
+
+                  <p class="uk-text-muted"><?php printf( __( 'If you provide an email address above, you will be notified via email when a new version of %1s is available.', 'exmachina-core' ), $theme->get( 'Name' ) ); ?></p>
+
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_updates()
 
   /**
    * Feed Settings Metabox Display
