@@ -212,7 +212,7 @@ function exmachina_footer_content() {
 
   /* Only run the code if the theme supports the ExMachina Core theme settings. */
   if ( current_theme_supports( 'exmachina-core-theme-settings' ) )
-    echo apply_atomic_shortcode( 'footer_content', exmachina_get_setting( 'footer_insert' ) );
+    echo apply_atomic_shortcode( 'footer_content', exmachina_get_option( 'footer_insert' ) );
 
 } // end function exmachina_footer_content()
 

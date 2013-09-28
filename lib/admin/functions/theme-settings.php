@@ -163,7 +163,7 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
         'single_nav'                => 0,
         'header_scripts'            => '',
         'footer_scripts'            => '',
-        'footer_insert'             => 'Copyright &copy; ' . date( 'Y' ) . ' All Rights Reserved',
+        'footer_insert'             => exmachina_default_footer_insert(),
       )
     ); // end $default_settings
 

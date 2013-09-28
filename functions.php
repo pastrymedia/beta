@@ -81,7 +81,7 @@ function beta_theme_setup() {
   add_theme_support( 'footer-widgets', 3 );
   add_theme_support( 'structural-wraps' );
   add_theme_support( 'custom-css' );
-  add_theme_support( 'custom-footer' );
+  //add_theme_support( 'custom-footer' );
   add_theme_support( 'custom-logo' );
   add_theme_support( 'responsive' );
 

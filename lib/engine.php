@@ -634,9 +634,6 @@ class ExMachina {
     /* Load the Custom Logo extension if supported. */
     require_if_theme_supports( 'custom-logo', trailingslashit( EXMACHINA_EXTENSIONS ) . 'custom-logo.php' );
 
-    /* Load the Custom Footer extension if supported. */
-    require_if_theme_supports( 'custom-footer', trailingslashit( EXMACHINA_EXTENSIONS ) . 'custom-footer.php' );
-
   } // end function exmachina_load_extensions()
 
   /**

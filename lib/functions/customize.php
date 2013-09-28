@@ -119,7 +119,7 @@ function exmachina_customize_register( $wp_customize ) {
   $prefix = exmachina_get_prefix();
 
   /* Get the default theme settings. */
-  $default_settings = exmachina_get_default_theme_settings();
+  //$default_settings = exmachina_get_default_theme_settings();
 
   /* Add the footer section, setting, and control if theme supports the 'footer' setting. */
   if ( is_array( $supports[0] ) && in_array( 'footer', $supports[0] ) ) {
@@ -138,7 +138,7 @@ function exmachina_customize_register( $wp_customize ) {
     $wp_customize->add_setting(
       "{$prefix}_theme_settings[footer_insert]",
       array(
-        'default'              => $default_settings['footer_insert'],
+        'default'              => exmachina_get_option( 'footer_insert' ),
         'type'                 => 'option',
         'capability'           => 'edit_theme_options',
         'sanitize_callback'    => 'exmachina_customize_sanitize',
