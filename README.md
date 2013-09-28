@@ -12,10 +12,10 @@ Roadmap
 - Move admin assets over to core framework
 - admin.php - Migrate to new file template
 - settings.php - Migrate to new file template
-+ Clean out theme-settings.php
+- Clean out theme-settings.php
 - Compare with original theme-settings.php
 - Bring back capability function
-+ Replace instances of get_setting
+- Replace instances of get_setting
 
 
 

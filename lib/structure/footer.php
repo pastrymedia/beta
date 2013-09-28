@@ -29,9 +29,26 @@ function exmachina_custom_footer_scripts() {
 
 function exmachina_default_footer_insert() {
 
-  $settings = '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link].', 'exmachina-core' ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link] and [theme-link].', 'exmachina-core' ) . '</p>';
+  /* Get the theme prefix. */
+  $prefix = exmachina_get_prefix();
 
-  return $settings;
+  /* Get theme-supported meta boxes for the settings page. */
+  $supports = get_theme_support( 'exmachina-core-theme-settings' );
+
+  /* If the current theme supports the footer meta box and shortcodes, add default footer settings. */
+  if ( is_array( $supports[0] ) && in_array( 'footer', $supports[0] ) && current_theme_supports( 'exmachina-core-shortcodes' ) ) {
+
+    /* If there is a child theme active, add the [child-link] shortcode to the $footer_insert. */
+    if ( is_child_theme() )
+      $settings = '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link].', 'exmachina-core' ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link], [theme-link], and [child-link].', 'exmachina-core' ) . '</p>';
+
+    /* If no child theme is active, leave out the [child-link] shortcode. */
+    else
+      $settings = '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link].', 'exmachina-core' ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link] and [theme-link].', 'exmachina-core' ) . '</p>';
+  }
+
+  /* Return the $settings array and provide a hook for overwriting the default settings. */
+  return apply_filters( "{$prefix}_default_theme_settings", $settings );
 
 }
 

@@ -137,9 +137,9 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
         'blog_title'                => 'text',
         'style_selection'           => '',
         'site_layout'               => '',
-        'nav_extras'                => '',
-        'nav_extras_twitter_id'     => '',
-        'nav_extras_twitter_text'   => __( 'Follow me on Twitter', 'exmachina-core' ),
+        'primary_nav_extras'                => '',
+        'primary_nav_extras_twitter_id'     => '',
+        'primary_nav_extras_twitter_text'   => __( 'Follow me on Twitter', 'exmachina-core' ),
         'feed_uri'                  => '',
         'redirect_feed'             => 0,
         'comments_feed_uri'         => '',
@@ -236,8 +236,8 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
         'blog_cat_exclude',
         'blog_title',
         'content_archive',
-        'nav_extras',
-        'nav_extras_twitter_id',
+        'primary_nav_extras',
+        'primary_nav_extras_twitter_id',
         'posts_nav',
         'site_layout',
         'style_selection',
@@ -250,7 +250,7 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     /* Apply the safe HTML sanitization filter. */
     exmachina_add_option_filter( 'safe_html', $this->settings_field,
       array(
-        'nav_extras_twitter_text',
+        'primary_nav_extras_twitter_text',
         'content_archive_more',
     ) );
 
@@ -324,6 +324,17 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
       '<p>'  . __( 'By filling in the feed links calling for the main site feed, it will display as a link to Feedburner.', 'exmachina-core' ) . '</p>' .
       '<p>'  . __( 'By checking the "Redirect Feed" box, all traffic to default feed links will be redirected to the Feedburner link instead.', 'exmachina-core' ) . '</p>';
 
+      $navigation_help =
+      '<h3>' . __( 'Navigation', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'The Primary Navigation Extras typically display on the right side of your Primary Navigation menu.', 'exmachina-core' ) . '</p>' .
+      '<ul>' .
+        '<li>' . __( 'Today\'s date displays the current date', 'exmachina-core' ) . '</li>' .
+        '<li>' . __( 'RSS feed link displays a link to the RSS feed for your site that a reader can use to subscribe to your site using the feedreader of their choice.', 'exmachina-core' ) . '</li>' .
+        '<li>' . __( 'Search form displays a small search form utilizing the WordPress search functionality.', 'exmachina-core' ) . '</li>' .
+        '<li>' . __( 'Twitter link displays a link to your Twitter profile, as indicated in Twitter ID setting. Enter only your user name in this setting.', 'exmachina-core' ) . '</li>' .
+      '</ul>' .
+      '<p>'  . __( 'These options can be extended or limited by the child theme.', 'exmachina-core' ) . '</p>';
+
     $breadcrumbs_help =
       '<h3>' . __( 'Breadcrumbs', 'exmachina-core' ) . '</h3>' .
       '<p>'  . __( 'This box lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.', 'exmachina-core' ) . '</p>';
@@ -371,6 +382,14 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
           'id'      => $this->pagehook . '-feeds',
           'title'   => __( 'Custom Feeds', 'exmachina-core' ),
           'content' => $feeds_help,
+        ) );
+
+      /* Load the 'Menus' meta box if it is supported. */
+      if ( in_array( 'menus', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-navigation',
+          'title'   => __( 'Navigation' , 'exmachina-core' ),
+          'content' => $navigation_help,
         ) );
 
       /* Load the 'Breadcrumbs' meta box if it is supported. */
@@ -945,6 +964,113 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_feeds()
+
+  /**
+   * Menu Settings Metabox Display
+   *
+   * Callback to display the 'Menu Settings' metabox. Creates a metabox for the
+   * theme settings page, which allows customization of the navigation menus.
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'primary_nav_extras'
+   * 'primary_nav_extras_twitter_id'
+   * 'primary_nav_extras_text'
+   *
+   * @todo write header info text
+   * @todo add additional menu features
+   * @todo duplicate functionality for other menus.
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * To use this feature, the theme must support the 'menus' argument for the
+   * 'exmachina-core-theme-settings' feature and each custom menu must be both
+   * supported and active.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_menus() {
+
+    /* Get theme-supported menus. */
+    $menus = get_theme_support( 'exmachina-core-menus' );
+
+    /* If there is no array of menus IDs, return. */
+    if ( !is_array( $menus[0] ) )
+      return;
+
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table postbox-bordered">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+          <?php if ( in_array( 'primary', $menus[0] ) ) : ?>
+          <tr>
+            <td class="uk-width-2-10 postbox-label">
+              <label class="uk-text-bold">Primary Menu Settings
+              <span class="uk-text-muted" data-uk-tooltip title="Lorem Ipsum is simply dummy text of the printing and typesetting industry."><sup><i class="uk-icon-question-sign"></i></sup></span>
+              </label>
+              <p class="uk-margin-top-remove uk-text-muted">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            </td>
+            <td class="uk-width-8-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-margin uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1 uk-form-horizontal">
+                  <legend><?php _e( 'Primary Navigation', 'exmachina-core' ); ?></legend>
+                  <?php if ( ! has_nav_menu( 'primary' ) ) : ?>
+                  <p class="uk-margin-top-remove"><span class="uk-badge">NOTE</span> <?php printf( __( 'In order to view the Primary navigation menu settings, you must build a <a href="%s">custom menu</a>, then assign it to the Primary Menu Location.', 'exmachina-core' ), admin_url( 'nav-menus.php' ) ); ?></p>
+                  <?php else : ?>
+                  <div id="exmachina-primary-nav-extras" class="uk-form-row">
+                    <label class="uk-form-label" for="<?php echo $this->get_field_id( 'primary_nav_extras' ); ?>"><?php _e( 'Display the following:', 'exmachina-core' ); ?></label>
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <select name="<?php echo $this->get_field_name( 'primary_nav_extras' ); ?>" id="<?php echo $this->get_field_id( 'primary_nav_extras' ); ?>">
+                        <option value=""><?php _e( 'None', 'exmachina-core' ) ?></option>
+                        <option value="date"<?php selected( $this->get_field_value( 'primary_nav_extras' ), 'date' ); ?>><?php _e( 'Today\'s date', 'exmachina-core' ); ?></option>
+                        <option value="rss"<?php selected( $this->get_field_value( 'primary_nav_extras' ), 'rss' ); ?>><?php _e( 'RSS feed links', 'exmachina-core' ); ?></option>
+                        <option value="search"<?php selected( $this->get_field_value( 'primary_nav_extras' ), 'search' ); ?>><?php _e( 'Search form', 'exmachina-core' ); ?></option>
+                        <option value="twitter"<?php selected( $this->get_field_value( 'primary_nav_extras' ), 'twitter' ); ?>><?php _e( 'Twitter link', 'exmachina-core' ); ?></option>
+                      </select>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                  <div id="exmachina-primary-nav-extras-twitter-id" class="uk-form-row">
+                    <label for="<?php echo $this->get_field_id( 'primary_nav_extras_twitter_id' ); ?>"><?php _e( 'Enter Twitter ID:', 'exmachina-core' ); ?></label>
+                    <div class="uk-form-controls">
+                      <input type="text" name="<?php echo $this->get_field_name( 'nav_extras_twitter_id' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_twitter_id' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'nav_extras_twitter_id' ) ); ?>" placeholder="Text input" size="27" />
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                  <div id="exmachina-primary-nav-extras-twitter-text" class="uk-form-row">
+                    <label for="<?php echo $this->get_field_id( 'primary_nav_extras_twitter_text' ); ?>"><?php _e( 'Twitter Link Text:', 'exmachina-core' ); ?></label>
+                    <div class="uk-form-controls">
+                      <input type="text" name="<?php echo $this->get_field_name( 'nav_extras_twitter_text' ); ?>" id="<?php echo $this->get_field_id( 'nav_extras_twitter_text' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'nav_extras_twitter_text' ) ); ?>" placeholder="Text input" size="27" />
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                <?php endif; ?>
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+          <?php endif; ?>
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_menus()
 
   /**
    * Breadcrumb Settings Metabox Display
