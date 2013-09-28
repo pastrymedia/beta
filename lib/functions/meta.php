@@ -46,20 +46,6 @@ add_action( 'init', 'exmachina_register_meta' );
  */
 function exmachina_register_meta() {
 
-  /* Register meta if the theme supports the 'exmachina-core-seo' feature. */
-  if ( current_theme_supports( 'exmachina-core-seo' ) ) {
-
-    /* Register 'Title', 'Description', and 'Keywords' meta for posts. */
-    register_meta( 'post', 'Title', 'exmachina_sanitize_meta' );
-    register_meta( 'post', 'Description', 'exmachina_sanitize_meta' );
-    register_meta( 'post', 'Keywords', 'exmachina_sanitize_meta' );
-
-    /* Register 'Title', 'Description', and 'Keywords' meta for users. */
-    register_meta( 'user', 'Title', 'exmachina_sanitize_meta' );
-    register_meta( 'user', 'Description', 'exmachina_sanitize_meta' );
-    register_meta( 'user', 'Keywords', 'exmachina_sanitize_meta' );
-  }
-
   /* Register meta if the theme supports the 'exmachina-core-template-hierarchy' feature. */
   if ( current_theme_supports( 'exmachina-core-template-hierarchy' ) ) {
 

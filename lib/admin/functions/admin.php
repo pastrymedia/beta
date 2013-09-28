@@ -125,9 +125,6 @@ function exmachina_admin_custom_icons() {
  */
 function exmachina_admin_load_post_meta_boxes() {
 
-  /* Load the SEO post meta box. */
-  require_if_theme_supports( 'exmachina-core-seo', trailingslashit( EXMACHINA_ADMIN ) . 'meta-box-post-seo.php' );
-
   /* Load the post template meta box. */
   require_if_theme_supports( 'exmachina-core-template-hierarchy', trailingslashit( EXMACHINA_ADMIN ) . 'meta-box-post-template.php' );
 

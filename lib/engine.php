@@ -346,10 +346,6 @@ class ExMachina {
     /* Add semantic markup HTML5 feature. */
     add_theme_support( 'html5' );
 
-    /* Remove support for the core SEO component if the WP SEO plugin is installed. */
-    if ( defined( 'WPSEO_VERSION' ) )
-      remove_theme_support( 'exmachina-core-seo' );
-
     /* Remove support for the the Breadcrumb Trail extension if the plugin is installed. */
     if ( function_exists( 'breadcrumb_trail' ) )
       remove_theme_support( 'breadcrumb-trail' );
@@ -460,9 +456,6 @@ class ExMachina {
 
     /* Load the menus functions if supported. */
     require_if_theme_supports( 'exmachina-core-menus', trailingslashit( EXMACHINA_FUNCTIONS ) . 'menus.php' );
-
-    /* Load the core SEO component if supported. */
-    require_if_theme_supports( 'exmachina-core-seo', trailingslashit( EXMACHINA_FUNCTIONS ) . 'core-seo.php' );
 
     /* Load the shortcodes if supported. */
     require_if_theme_supports( 'exmachina-core-shortcodes', trailingslashit( EXMACHINA_FUNCTIONS ) . 'shortcodes.php' );
