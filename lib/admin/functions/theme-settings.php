@@ -307,9 +307,9 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     'content' => $customize_help,
     ) );
 
-    $scripts_help =
-    '<h3>' . __( 'Header <span class="amp">&amp;</span> Footer Scripts', 'exmachina-core' ) . '</h3>' .
-    '<p>'  . __( 'This provides you with two fields that will output to the head section of your site and just before the closing body tag. These will appear on every page of the site and are a great way to add analytic code, Google Font and other scripts. You cannot use PHP in these fields.', 'exmachina-core' ) . '</p>';
+    $breadcrumbs_help =
+      '<h3>' . __( 'Breadcrumbs', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'This box lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.', 'exmachina-core' ) . '</p>';
 
     $comments_help =
     '<h3>' . __( 'Comments <span class="amp">&amp;</span> Trackbacks', 'exmachina-core' ) . '</h3>' .
@@ -329,15 +329,25 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     '<p>'  . __( 'Post Navigation format allows you to select one of two navigation methods.', 'exmachina-core' ) . '</p>';
     '<p>'  . __( 'There is also a checkbox to disable previous & next navigation links on single post', 'exmachina-core' ) . '</p>';
 
+    $scripts_help =
+    '<h3>' . __( 'Header <span class="amp">&amp;</span> Footer Scripts', 'exmachina-core' ) . '</h3>' .
+    '<p>'  . __( 'This provides you with two fields that will output to the head section of your site and just before the closing body tag. These will appear on every page of the site and are a great way to add analytic code, Google Font and other scripts. You cannot use PHP in these fields.', 'exmachina-core' ) . '</p>';
+
+    $footer_help =
+    '<h3>' . __( 'Footer Settings', 'exmachina-core' ) . '</h3>' .
+    '<p>'  . __( 'Help content goes here', 'exmachina-core' ) . '</p>';
+
     /* Load the help tabs that are supported by the theme. */
     if ( is_array( $supports[0] ) ) {
 
-      /* Load the 'Header & Footer Scripts' meta box if it is supported. */
-      if ( in_array( 'scripts', $supports[0] ) )
+
+
+      /* Load the 'Breadcrumbs' meta box if it is supported. */
+      if ( in_array( 'breadcrumbs', $supports[0] ) )
         $screen->add_help_tab( array(
-          'id'      => $this->pagehook . '-scripts',
-          'title'   => __( 'Header & Footer Scripts', 'exmachina-core' ),
-          'content' => $scripts_help,
+          'id'      => $this->pagehook . '-breadcrumbs',
+          'title'   => __( 'Breadcrumbs', 'exmachina-core' ),
+          'content' => $breadcrumbs_help,
         ) );
 
       /* Load the 'Comments' meta box if it is supported. */
@@ -355,6 +365,24 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
           'title'   => __( 'Content Archives', 'exmachina-core' ),
           'content' => $archives_help,
         ) );
+
+      /* Load the 'Header & Footer Scripts' meta box if it is supported. */
+      if ( in_array( 'scripts', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-scripts',
+          'title'   => __( 'Header & Footer Scripts', 'exmachina-core' ),
+          'content' => $scripts_help,
+        ) );
+
+      /* Load the 'Footer' meta box if it is supported. */
+      if ( in_array( 'footer', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-footer',
+          'title'   => __( 'Footer Settings', 'exmachina-core' ),
+          'content' => $footer_help,
+        ) );
+
+
 
     } // end if (is_array($supports[0]))
 
@@ -434,7 +462,7 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
 
       /* Load the 'Breadcrumbs' meta box if it is supported. */
       if ( in_array( 'breadcrumbs', $supports[0] ) )
-      add_meta_box( 'exmachina-core-breadcrumbs', __( '<i class="uk-icon-cog"></i> Breadcrumbs', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_breadcrumbs' ), $this->pagehook, 'normal', 'default' );
+      add_meta_box( 'exmachina-core-breadcrumbs', __( '<i class="uk-icon-chevron-right"></i> Breadcrumbs', 'exmachina-core' ), array( $this, 'exmachina_metabox_theme_display_breadcrumbs' ), $this->pagehook, 'normal', 'default' );
 
       /* Load the 'Comments' meta box if it is supported. */
       if ( in_array( 'comments', $supports[0] ) )
@@ -541,6 +569,112 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_save()
+
+  /**
+   * Breadcrumb Settings Metabox Display
+   *
+   * Callback to display the 'Breadcrumb Settings' metabox. Creates a metabox
+   * for the theme settings page, which allows customization of the breadcrumb
+   * trail.
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'breadcrumb_front_page'
+   * 'breadcrumb_posts_page'
+   * 'breadcrumb_home'
+   * 'breadcrumb_single'
+   * 'breadcrumb_page'
+   * 'breadcrumb_archive'
+   * 'breadcrumb_404'
+   * 'breadcrumb_attachment'
+   *
+   * To use this feature, the theme must support the 'breadcrumbs' argument for
+   * the 'exmachina-core-theme-settings' feature.
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_breadcrumbs() {
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table postbox-bordered">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Breadcrumbs are a great way of letting your visitors find out where they are on your site with just a glance. You can enable/disable them on certain areas of your site.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label class="uk-text-bold"><?php _e( 'Enable Breadcrumbs on:', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <ul class="checkbox-list horizontal">
+
+                        <?php if ( 'page' === get_option( 'show_on_front' ) ) : ?>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_front_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_front_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_front_page' ) ); ?> />
+                          <?php _e( 'Front Page', 'exmachina-core' ); ?></label></li>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_posts_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_posts_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_posts_page' ) ); ?> />
+                          <?php _e( 'Posts Page', 'exmachina-core' ); ?></label></li>
+
+                        <?php else : ?>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_home' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_home' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_home' ) ); ?> />
+                          <?php _e( 'Homepage', 'exmachina-core' ); ?></label></li>
+
+                        <?php endif; ?>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_single' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_single' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_single' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_single' ) ); ?> />
+                          <?php _e( 'Posts', 'exmachina-core' ); ?></label></li>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_page' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_page' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_page' ) ); ?> />
+                          <?php _e( 'Pages', 'exmachina-core' ); ?></label></li>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_archive' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_archive' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_archive' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_archive' ) ); ?> />
+                          <?php _e( 'Archives', 'exmachina-core' ); ?></label></li>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_404' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_404' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_404' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_404' ) ); ?> />
+                          <?php _e( '404 Page', 'exmachina-core' ); ?></label></li>
+
+                          <li><label for="<?php echo $this->get_field_id( 'breadcrumb_attachment' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'breadcrumb_attachment' ); ?>" id="<?php echo $this->get_field_id( 'breadcrumb_attachment' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_attachment' ) ); ?> />
+                          <?php _e( 'Attachment Page', 'exmachina-core' ); ?></label></li>
+
+                      </ul>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_breadcrumbs()
 
   /**
    * Comments & Trackbacks Metabox Display
