@@ -50,19 +50,19 @@ function exmachina_entry_header() {
 function exmachina_entry() {
 
   if ( is_home() || is_archive() || is_search() ) {
-    if(exmachina_get_setting( 'content_archive_thumbnail' )) {
-      get_the_image( array( 'meta_key' => 'Thumbnail', 'default_size' => exmachina_get_setting( 'image_size' ) ) );
+    if(exmachina_get_option( 'content_archive_thumbnail' )) {
+      get_the_image( array( 'meta_key' => 'Thumbnail', 'default_size' => exmachina_get_option( 'image_size' ) ) );
     }
 
 
-    if ( 'excerpts' === exmachina_get_setting( 'content_archive' ) ) {
-      if ( exmachina_get_setting( 'content_archive_limit' ) )
-        the_content_limit( (int) exmachina_get_setting( 'content_archive_limit' ), exmachina_get_setting( 'content_archive_more' ) );
+    if ( 'excerpts' === exmachina_get_option( 'content_archive' ) ) {
+      if ( exmachina_get_option( 'content_archive_limit' ) )
+        the_content_limit( (int) exmachina_get_option( 'content_archive_limit' ), exmachina_get_option( 'content_archive_more' ) );
       else
         the_excerpt();
     }
     else {
-      the_content( exmachina_get_setting( 'content_archive_more' ) );
+      the_content( exmachina_get_option( 'content_archive_more' ) );
     }
   }
 
@@ -100,7 +100,7 @@ function exmachina_page_entry_meta() {
 
 
 function exmachina_excerpt_more( $more ) {
-  return ' ... <a class="more-link" href="'. get_permalink( get_the_ID() ) . '">' . exmachina_get_setting( 'content_archive_more' ) . '</a>';
+  return ' ... <a class="more-link" href="'. get_permalink( get_the_ID() ) . '">' . exmachina_get_option( 'content_archive_more' ) . '</a>';
 }
 
 if ( ! function_exists( 'exmachina_content_nav' ) ) :
@@ -128,7 +128,7 @@ function exmachina_content_nav( $nav_id ) {
   ?>
   <nav role="navigation" id="<?php echo esc_attr( $nav_id ); ?>" class="navigation row  <?php echo $nav_class; ?>">
 
-  <?php if ( is_single() && !exmachina_get_setting( 'single_nav' ) ) : // navigation links for single posts ?>
+  <?php if ( is_single() && !exmachina_get_option( 'single_nav' ) ) : // navigation links for single posts ?>
 
     <?php previous_post_link( '<div class="nav-previous alignleft">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'exmachina-core' ) . '</span> %title' ); ?>
     <?php next_post_link( '<div class="nav-next alignright">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'exmachina-core' ) . '</span>' ); ?>
@@ -136,7 +136,7 @@ function exmachina_content_nav( $nav_id ) {
   <?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
 
     <?php
-    if (current_theme_supports( 'loop-pagination' ) && ( 'numeric' == exmachina_get_setting( 'posts_nav' ) ) ) {
+    if (current_theme_supports( 'loop-pagination' ) && ( 'numeric' == exmachina_get_option( 'posts_nav' ) ) ) {
       loop_pagination();
     } else {
       if ( get_next_posts_link() ) : ?>

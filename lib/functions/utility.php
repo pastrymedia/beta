@@ -201,7 +201,7 @@ function exmachina_site_description() {
  * @link http://codex.wordpress.org/Function_Reference/current_theme_supports
  *
  * @uses apply_atomic_shortcode() Applies the contextual shortcode.
- * @uses exmachina_get_setting()  Gets the setting from the options db.
+ * @uses exmachina_get_option()  Gets the setting from the options db.
  *
  * @since 1.0.10
  * @access public
