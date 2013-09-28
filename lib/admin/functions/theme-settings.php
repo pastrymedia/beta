@@ -611,6 +611,9 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
    * ~~~~~~~
    * 'theme_version'
    * 'license_key'
+   * 'update'
+   * 'update_email'
+   * 'update_email_address'
    *
    * To use this feature, the theme must support the 'updates' argument for the
    * 'exmachina-core-theme-settings' feature.
@@ -740,6 +743,111 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_updates()
+
+  /**
+   * Style Selector Metabox Display
+   *
+   * Callback to display the 'Style Selector' metabox. Creates a metabox for the
+   * theme settings page, which allows users to select a custom style. The style
+   * selector can be enabled and populated by adding an associated array of
+   * style => title when initiating support for exmachina-style-selector in the
+   * child theme functions.php file.
+   *
+   * ~~~
+   * $color_styles = array(
+   *     'childtheme-red'   => __( 'Red', 'childthemedomain' ),
+   *     'childtheme-green' => __( 'Green', 'childthemedomain' ),
+   *     'childtheme-blue'  => __( 'Blue', 'childthemedomain' ),
+   * );
+   * add_theme_support( 'exmachina-style-selector', $color_styles );
+   * ~~~
+   *
+   * When selected, the style will be added as a body class which can be used
+   * within style.css to target elements when using a specific style.
+   *
+   * ~~~
+   * h1 { background: #000; }
+   * .childtheme-red h1 { background: #f00; }
+   * ~~~
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'style_selection'
+   *
+   * To use this feature, the theme must support the 'feeds' argument for the
+   * 'exmachina-core-theme-settings' feature.
+   *
+   * @todo write header info text
+   *
+   * @link http://codex.wordpress.org/WordPress_Feeds
+   * @link http://codex.wordpress.org/Customizing_Feeds
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_style() {
+
+    $current = $this->get_field_value( 'style_selection' );
+    $styles  = get_theme_support( 'exmachina-style-selector' );
+
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table postbox-bordered">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'style_selection' ); ?>" class="uk-text-bold"><?php _e( 'Color Style:', 'exmachina-core' ); ?></label>
+            </td>
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <select name="<?php echo $this->get_field_name( 'style_selection' ); ?>" id="<?php echo $this->get_field_id( 'style_selection' ); ?>">
+                        <option value=""><?php _e( 'Default', 'exmachina-core' ); ?></option>
+                        <?php
+                        if ( ! empty( $styles ) ) {
+                          $styles = array_shift( $styles );
+                          foreach ( (array) $styles as $style => $title ) {
+                            ?><option value="<?php echo esc_attr( $style ); ?>"<?php selected( $current, $style ); ?>><?php echo esc_html( $title ); ?></option><?php
+                          }
+                        }
+                        ?>
+                      </select>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                  <p class="uk-text-muted"><?php _e( 'Please select the color style from the drop down list and save your settings.', 'exmachina-core' ); ?></p>
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_style()
 
   /**
    * Feed Settings Metabox Display
