@@ -460,9 +460,8 @@ ul.checkbox-list.horizontal li {
 /* Alert Close
 --------------------------------------------*/
 .exmachina-metaboxes .uk-alert-close {
-  margin: 0.3em 0;
+  margin: 0.6em 0;
   padding: 2px;
-  float: right;
 }
 
 /* Description List

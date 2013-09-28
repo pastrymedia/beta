@@ -886,3 +886,25 @@ function exmachina_get_help_sidebar() {
   return $help;
 
 } // end function exmachina_get_help_sidebar()
+
+/**
+ * Code Markup
+ *
+ * Mark up content with code tags. Escapes all HTML, so '<' gets changed to
+ * '&lt;' and displays correctly. Used almost exclusively within labels and
+ * text in user interfaces.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/esc_html
+ *
+ * @since 1.5.5
+ * @access public
+ *
+ * @param  string $content Content to be wrapped in code tags.
+ * @return string          Content wrapped in code tags.
+ */
+function exmachina_code( $content ) {
+
+  /* Returns the code markup. */
+  return '<code>' . esc_html( $content ) . '</code>';
+
+} // end function exmachina_code()

@@ -22,7 +22,7 @@ add_action( exmachina_get_prefix() . '_footer', 'exmachina_custom_footer_insert'
  */
 function exmachina_custom_footer_scripts() {
 
-  echo exmachina_get_setting( 'footer_scripts' );
+  echo exmachina_get_option( 'footer_scripts' );
 
 }
 

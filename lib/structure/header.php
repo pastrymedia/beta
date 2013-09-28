@@ -36,7 +36,7 @@ function exmachina_conditional_styles() {
  */
 function exmachina_custom_header_scripts() {
 
-  echo exmachina_get_setting( 'header_scripts' );
+  echo exmachina_get_option( 'header_scripts' );
 
 }
 

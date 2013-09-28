@@ -284,6 +284,9 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     /* Get the sidebar content. */
     $template_help = exmachina_get_help_sidebar();
 
+    /* Get theme-supported meta boxes for the settings page. */
+    $supports = get_theme_support( 'exmachina-core-theme-settings' );
+
     $theme_settings_help =
     '<h3>' . __( 'Theme Settings', 'exmachina-core' ) . '</h3>' .
     '<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see.', 'exmachina-core' ) . '</p>';
@@ -303,6 +306,23 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     'title'   => __( 'Customize', 'exmachina-core' ),
     'content' => $customize_help,
     ) );
+
+    $scripts_help =
+    '<h3>' . __( 'Header <span class="amp">&amp;</span> Footer Scripts', 'exmachina-core' ) . '</h3>' .
+    '<p>'  . __( 'This provides you with two fields that will output to the head section of your site and just before the closing body tag. These will appear on every page of the site and are a great way to add analytic code, Google Font and other scripts. You cannot use PHP in these fields.', 'exmachina-core' ) . '</p>';
+
+    /* Load the help tabs that are supported by the theme. */
+    if ( is_array( $supports[0] ) ) {
+
+      /* Load the 'Header & Footer Scripts' meta box if it is supported. */
+      if ( in_array( 'scripts', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-scripts',
+          'title'   => __( 'Header & Footer Scripts', 'exmachina-core' ),
+          'content' => $scripts_help,
+        ) );
+
+    } // end if (is_array($supports[0]))
 
     /* Add help sidebar. */
     $screen->set_help_sidebar(
@@ -487,6 +507,116 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_save()
+
+  /**
+   * Header & Footer Scripts Metabox Display
+   *
+   * Callback to display the 'Header & Footer Scripts' metabox. Creates a metabox
+   * for the theme settings page, which holds textareas to add custom scripts
+   * (CSS or JS) within the header or the footer of the theme.
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'header_scripts'
+   * 'footer_scripts'
+   *
+   * To use this feature, the theme must support the 'scripts' argument for
+   * the 'exmachina-core-theme-settings' feature.
+   *
+   * @todo write header info text
+   * @todo CSS a no-lined legend and/or a non-lined table row
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_scripts() {
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+          <tr>
+            <td class="uk-width-1-1 postbox-fieldset">
+              <div class="fieldset-wrap uk-margin uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <legend><?php _e( 'Header Scripts', 'exmachina-core' ); ?></legend>
+                  <p class="uk-margin-top-remove"><label for="<?php echo $this->get_field_id( 'header_scripts' ); ?>"><?php printf( __( 'Enter scripts or code you would like output to %s:', 'exmachina-core' ), exmachina_code( 'wp_head()' ) ); ?></label></p>
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <textarea class="input-block-level vertical-resize code exmachina-code-area" name="<?php echo $this->get_field_name( 'header_scripts' ); ?>" id="<?php echo $this->get_field_id( 'header_scripts' ); ?>" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'header_scripts' ) ); ?></textarea>
+                      <link rel="stylesheet" href="<?php echo EXMACHINA_ADMIN_VENDOR . '/codemirror/css/theme/monokai.min.css'; ?>">
+                      <script>
+                        jQuery(document).ready(function($){
+                            var editor_header_scripts = CodeMirror.fromTextArea(document.getElementById('<?= $this->get_field_id( 'header_scripts' );?>'), {
+                                lineNumbers: true,
+                                tabmode: 'indent',
+                                mode: 'htmlmixed',
+                                theme: 'monokai'
+                            });
+                        });
+                      </script>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                  <p class="uk-text-muted"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'exmachina-core' ), exmachina_code( 'wp_head()' ), exmachina_code( '</head>' ) ); ?></p>
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+          <tr>
+            <td class="uk-width-1-1 postbox-fieldset">
+              <div class="fieldset-wrap uk-margin uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <legend><?php _e( 'Footer Scripts', 'exmachina-core' ); ?></legend>
+                  <p class="uk-margin-top-remove"><label for="<?php echo $this->get_field_id( 'footer_scripts' ); ?>"><?php printf( __( 'Enter scripts or code you would like output to %s:', 'exmachina-core' ), exmachina_code( 'wp_footer()' ) ); ?></label></p>
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <textarea class="input-block-level vertical-resize code exmachina-code-area" name="<?php echo $this->get_field_name( 'footer_scripts' ); ?>" id="<?php echo $this->get_field_id( 'footer_scripts' ); ?>" cols="78" rows="8"><?php echo esc_textarea( $this->get_field_value( 'footer_scripts' ) ); ?></textarea>
+                      <link rel="stylesheet" href="<?php echo EXMACHINA_ADMIN_VENDOR . '/codemirror/css/theme/monokai.min.css'; ?>">
+                      <script>
+                        jQuery(document).ready(function($){
+                            var editor_header_scripts = CodeMirror.fromTextArea(document.getElementById('<?= $this->get_field_id( 'footer_scripts' );?>'), {
+                                lineNumbers: true,
+                                tabmode: 'indent',
+                                mode: 'htmlmixed',
+                                theme: 'monokai'
+                            });
+                        });
+                      </script>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                  <p class="uk-text-muted"><?php printf( __( 'The %1$s hook executes immediately before the closing %2$s tag in the document source.', 'exmachina-core' ), exmachina_code( 'wp_footer()' ), exmachina_code( '</body>' ) ); ?></p>
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_scripts()
 
   /**
    * Footer Settings Metabox Display
