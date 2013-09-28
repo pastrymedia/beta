@@ -204,7 +204,9 @@ function exmachina_video_attachment( $mime = false, $file = false ) {
 
 } // end function exmachina_video_attachment()
 
-/* === Images === */
+/*-------------------------------------------------------------------------*/
+/* === Image Functions === */
+/*-------------------------------------------------------------------------*/
 
 /**
  * Get Image ID

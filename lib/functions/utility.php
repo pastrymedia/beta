@@ -1257,3 +1257,296 @@ function exmachina_feed_redirect() {
   }
 
 } // end function exmachina_feed_redirect()
+
+/*-------------------------------------------------------------------------*/
+/* Author Box Functions */
+/*-------------------------------------------------------------------------*/
+
+/**
+ * Enable the author box for ALL users.
+ *
+ * @since 1.4.1
+ *
+ * @param array $args Optional. Arguments for enabling author box. Default is empty array.
+ */
+function exmachina_enable_author_box( $args = array() ) {
+
+  $args = wp_parse_args( $args, array( 'type' => 'single' ) );
+
+  if ( 'single' === $args['type'] )
+    add_filter( 'get_the_author_exmachina_author_box_single', '__return_true' );
+  elseif ( 'archive' === $args['type'] )
+    add_filter( 'get_the_author_exmachina_author_box_archive', '__return_true' );
+
+}
+
+/*-------------------------------------------------------------------------*/
+/* Template Redirect Functions */
+/*-------------------------------------------------------------------------*/
+
+add_action( 'template_redirect', 'exmachina_custom_field_redirect' );
+/**
+ * Redirect singular page to an alternate URL.
+ *
+ */
+function exmachina_custom_field_redirect() {
+
+  if ( ! is_singular() )
+    return;
+
+  if ( $url = exmachina_get_custom_field( 'redirect' ) ) {
+
+    wp_redirect( esc_url_raw( $url ), 301 );
+    exit;
+
+  }
+
+}
+
+/*-------------------------------------------------------------------------*/
+/* Theme Support Functions */
+/*-------------------------------------------------------------------------*/
+
+/**
+ * Return a specific value from the associative array passed as the second argument to `add_theme_support()`.
+ *
+ * @since 1.9.0
+ *
+ * @param string $feature The theme feature.
+ * @param string $arg     The theme feature argument.
+ * @param string $default Fallback if value is blank or doesn't exist.
+ *
+ * @return mixed Return $default if theme doesn't support $feature, or $arg key doesn't exist.
+ */
+function exmachina_get_theme_support_arg( $feature, $arg, $default = '' ) {
+
+  $support = get_theme_support( $feature );
+
+  if ( ! $support || ! isset( $support[0] ) || ! array_key_exists( $arg, (array) $support[0] ) )
+    return $default;
+
+  return $support[0][ $arg ];
+
+}
+
+/*-------------------------------------------------------------------------*/
+/* Plugin Functions */
+/*-------------------------------------------------------------------------*/
+
+/**
+ * Detect active plugin by constant, class or function existence.
+ *
+ * @since 1.6.0
+ *
+ * @param array $plugins Array of array for constants, classes and / or functions to check for plugin existence.
+ *
+ * @return boolean True if plugin exists or false if plugin constant, class or function not detected.
+ */
+function exmachina_detect_plugin( array $plugins ) {
+
+  //* Check for classes
+  if ( isset( $plugins['classes'] ) ) {
+    foreach ( $plugins['classes'] as $name ) {
+      if ( class_exists( $name ) )
+        return true;
+    }
+  }
+
+  //* Check for functions
+  if ( isset( $plugins['functions'] ) ) {
+    foreach ( $plugins['functions'] as $name ) {
+      if ( function_exists( $name ) )
+        return true;
+    }
+  }
+
+  //* Check for constants
+  if ( isset( $plugins['constants'] ) ) {
+    foreach ( $plugins['constants'] as $name ) {
+      if ( defined( $name ) )
+        return true;
+    }
+  }
+
+  //* No class, function or constant found to exist
+  return false;
+
+}
+
+/**
+ * Build links to install plugins.
+ *
+ * @since 2.0.0
+ *
+ * @param string $plugin_slug Plugin slug.
+ * @param string $text        Plugin name.
+ *
+ * @return string              HTML markup for links.
+ */
+function exmachina_plugin_install_link( $plugin_slug = '', $text = '' ) {
+
+  if ( is_main_site() ) {
+    $url = network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
+  }
+  else {
+    $url = admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
+  }
+
+  $title_text = sprintf( __( 'Install %s', 'exmachina' ), $text );
+
+  return sprintf( '<a href="%s" class="thickbox" title="%s">%s</a>', esc_url( $url ), esc_attr( $title_text ), esc_html( $text ) );
+
+}
+
+/*-------------------------------------------------------------------------*/
+/* Customize Functions */
+/*-------------------------------------------------------------------------*/
+
+/**
+ * Check whether we are currently viewing the site via the WordPress Customizer.
+ *
+ * @since 2.0.0
+ *
+ * @global $wp_customize Customizer.
+ *
+ * @return boolean Return true if viewing page via Customizer, false otherwise.
+ */
+function exmachina_is_customizer() {
+
+  global $wp_customize;
+
+  if ( isset( $wp_customize ) )
+    return true;
+
+  return false;
+
+}
+
+/*-------------------------------------------------------------------------*/
+/* PostType Functions */
+/*-------------------------------------------------------------------------*/
+
+/**
+ * Get the `post_type` from the global `$post` if supplied value is empty.
+ *
+ * @since 2.0.0
+ *
+ * @global WP_Post $post Post object.
+ *
+ * @param string $post_type_name Post type name.
+ *
+ * @return string
+ */
+function exmachina_get_global_post_type_name( $post_type_name = '' ) {
+
+  if ( ! $post_type_name ) {
+    global $post;
+    $post_type_name = $post->post_type;
+  }
+  return $post_type_name;
+
+}
+
+/**
+ * Get list of custom post type objects which need an archive settings page.
+ *
+ * Archive settings pages are added for CPTs that:
+ *
+ * - are public,
+ * - are set to show the UI,
+ * - are set to show in the admin menu,
+ * - have an archive enabled,
+ * - not one of the built-in types,
+ * - support "exmachina-cpt-archive-settings".
+ *
+ * This last item means that if you're using an archive template and don't want ExMachina interfering with it with these
+ * archive settings, then don't add the support. This support check is handled in
+ * {@link exmachina_has_post_type_archive_support()}.
+ *
+ * Applies the `exmachina_cpt_archives_args` filter, to change the conditions for which post types are deemed valid.
+ *
+ * The results are held in a static variable, since they won't change over the course of a request.
+ *
+ * @since 2.0.0
+ *
+ * @return array
+ */
+function exmachina_get_cpt_archive_types() {
+
+  static $exmachina_cpt_archive_types;
+  if ( $exmachina_cpt_archive_types )
+    return $exmachina_cpt_archive_types;
+
+  $args = apply_filters(
+    'exmachina_cpt_archives_args',
+    array(
+      'public'       => true,
+      'show_ui'      => true,
+      'show_in_menu' => true,
+      'has_archive'  => true,
+      '_builtin'     => false,
+    )
+  );
+
+  $exmachina_cpt_archive_types = get_post_types( $args, 'objects' );
+
+  return $exmachina_cpt_archive_types;
+
+}
+
+/**
+ * Get list of custom post type names which need an archive settings page.
+ *
+ * @since 2.0.0
+ *
+ * @uses exmachina_get_cpt_archive_types() Get list of custom post type objects which need an archive settings page.
+ *
+ * @return array Custom post type names.
+ */
+function exmachina_get_cpt_archive_types_names() {
+
+  $post_type_names = array();
+  foreach ( exmachina_get_cpt_archive_types() as $post_type )
+    $post_type_names[] = $post_type->name;
+
+  return $post_type_names;
+
+}
+
+/**
+ * Check if a post type supports an archive setting page.
+ *
+ * @since 2.0.0
+ *
+ * @uses exmachina_get_global_post_type_name()   Get the `post_type` from the global `$post` if supplied value is empty.
+ * @uses exmachina_get_cpt_archive_types_names() Get list of custom post type names which need an archive settings page.
+ *
+ * @param string $post_type_name Post type name.
+ *
+ * @return bool True if custom post type name has support, false otherwise.
+ */
+function exmachina_has_post_type_archive_support( $post_type_name = '' ) {
+
+  $post_type_name = exmachina_get_global_post_type_name( $post_type_name );
+
+  return in_array( $post_type_name, exmachina_get_cpt_archive_types_names() ) &&
+    post_type_supports( $post_type_name, 'exmachina-cpt-archives-settings' );
+
+}
+
+/*-------------------------------------------------------------------------*/
+/* HTML5 Functions */
+/*-------------------------------------------------------------------------*/
+
+/**
+ * Determine if HTML5 is activated by the child theme.
+ *
+ * @since 2.0.0
+ *
+ * @return bool True if current theme supports exmachina-html5, false otherwise.
+ */
+function exmachina_html5() {
+
+  return current_theme_supports( 'html5' );
+
+}
