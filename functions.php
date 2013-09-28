@@ -92,4 +92,8 @@ function beta_theme_setup() {
   /* Set content width. */
   exmachina_set_content_width( 640 );
 
+
+
 } // end function beta_theme_setup()
+
+
