@@ -307,6 +307,12 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     'content' => $customize_help,
     ) );
 
+    $feeds_help =
+      '<h3>' . __( 'Custom Feeds', 'exmachina-core' ) . '</h3>' .
+      '<p>'  . __( 'If you use Feedburner to handle your rss feed(s) you can use this function to set your site\'s native feed to redirect to your Feedburner feed.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'By filling in the feed links calling for the main site feed, it will display as a link to Feedburner.', 'exmachina-core' ) . '</p>' .
+      '<p>'  . __( 'By checking the "Redirect Feed" box, all traffic to default feed links will be redirected to the Feedburner link instead.', 'exmachina-core' ) . '</p>';
+
     $breadcrumbs_help =
       '<h3>' . __( 'Breadcrumbs', 'exmachina-core' ) . '</h3>' .
       '<p>'  . __( 'This box lets you define where the "Breadcrumbs" display. The Breadcrumb is the navigation tool that displays where a visitor is on the site at any given moment.', 'exmachina-core' ) . '</p>';
@@ -340,7 +346,13 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     /* Load the help tabs that are supported by the theme. */
     if ( is_array( $supports[0] ) ) {
 
-
+      /* Load the 'Feeds' meta box if it is supported. */
+      if ( in_array( 'feeds', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-feeds',
+          'title'   => __( 'Custom Feeds', 'exmachina-core' ),
+          'content' => $feeds_help,
+        ) );
 
       /* Load the 'Breadcrumbs' meta box if it is supported. */
       if ( in_array( 'breadcrumbs', $supports[0] ) )
@@ -569,6 +581,103 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_save()
+
+  /**
+   * Feed Settings Metabox Display
+   *
+   * Callback to display the 'Feed Settings' metabox. Creates a metabox for the
+   * theme settings page, which allows a custom redirect of the default WordPress
+   * feeds.
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'feed_uri'
+   * 'redirect_feed'
+   * 'comments_feed_uri'
+   * 'redirect_comments_feed'
+   *
+   * To use this feature, the theme must support the 'feeds' argument for the
+   * 'exmachina-core-theme-settings' feature.
+   *
+   * @todo write header info text
+   * @todo add different placeholder text
+   *
+   * @link http://codex.wordpress.org/WordPress_Feeds
+   * @link http://codex.wordpress.org/Customizing_Feeds
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_feeds() {
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table postbox-bordered">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'feed_uri' ); ?>" class="uk-text-bold"><?php _e( 'Enter your custom feed URL:', 'exmachina-core' ); ?></label>
+            </td>
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <input type="text" name="<?php echo $this->get_field_name( 'feed_uri' ); ?>" id="<?php echo $this->get_field_id( 'feed_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'feed_uri' ) ); ?>" placeholder="http://customfeedurl.com" size="50" />
+                      <label for="<?php echo $this->get_field_id( 'redirect_feed' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'redirect_feed' ); ?>" id="<?php echo $this->get_field_id( 'redirect_feed' ); ?>" value="1"<?php checked( $this->get_field_value( 'redirect_feed' ) ); ?> />
+                      <?php _e( 'Redirect Feed?', 'exmachina-core' ); ?></label>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'comments_feed_uri' ); ?>" class="uk-text-bold"><?php _e( 'Enter your custom comments feed URL:', 'exmachina-core' ); ?></label>
+            </td>
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <input type="text" name="<?php echo $this->get_field_name( 'comments_feed_uri' ); ?>" id="<?php echo $this->get_field_id( 'comments_feed_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'comments_feed_uri' ) ); ?>" placeholder="http://customfeedurl.com" size="50" />
+                      <label for="<?php echo $this->get_field_id( 'redirect_comments_feed' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'redirect_comments_feed' ); ?>" id="<?php echo $this->get_field_id( 'redirect_comments_feed' ); ?>" value="1"<?php checked( $this->get_field_value( 'redirect_comments_feed' ) ); ?> />
+                      <?php _e( 'Redirect Feed?', 'exmachina-core' ); ?></label>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td><!-- .postbox-fieldset -->
+          </tr>
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_feeds()
 
   /**
    * Breadcrumb Settings Metabox Display
