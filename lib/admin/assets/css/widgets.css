@@ -13,3 +13,42 @@
 Structure
 ============================================================================ */
 
+/* Widgets ----------- */
+
+.exmachina-widget-column {
+  float: left;
+  width: 250px;
+}
+
+.exmachina-widget-column-right {
+  margin-left: 10px;
+}
+
+.exmachina-widget-column-box {
+  background: #f1f1f1;
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  padding: 10px 10px 0;
+}
+
+.exmachina-widget-column-box-top {
+  margin-top: 0;
+}
+
+.exmachina-pagechecklist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.exmachina-image-size-selector {
+  max-width: 205px;
+}
+
+.no-js .hide-if-no-js {
+  display: none;
+}
+
+.widget-control-actions {
+  clear: both;
+}

@@ -30,6 +30,26 @@ function exmachina_conditional_styles() {
 <?php
 }
 
+add_action( 'wp_head', 'exmachina_html5_ie_fix' );
+/**
+ * Load the html5 shiv for IE8 and below. Can't enqueue with IE conditionals.
+ *
+ * @since 1.6.0
+ *
+ * @uses exmachina_html5() Check for HTML5 support.
+ *
+ * @return Return early if HTML5 not supported.
+ *
+ */
+function exmachina_html5_ie_fix() {
+
+  if ( ! exmachina_html5() )
+    return;
+
+  echo '<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->' . "\n";
+
+}
+
 
 /**
  * Echo header scripts in to wp_head().

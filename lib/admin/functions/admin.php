@@ -90,6 +90,21 @@ function exmachina_admin_custom_icons() {
         #toplevel_page_theme-settings.wp-has-current-submenu .wp-menu-image {
           background-position:6px 7px!important;
         }
+        #adminmenu .toplevel_page_theme-settings .wp-menu-image img {
+          height: 16px;
+          width: 16px;
+        }
+
+        .admin-color-mp6 #adminmenu .toplevel_page_theme-settings .wp-menu-image img {
+          display: none;
+        }
+
+        .admin-color-mp6 #adminmenu .toplevel_page_theme-settings .wp-menu-image:before {
+          content: '\f011';
+          font-family: "FontAwesome" !important;
+          font-size: 20px;
+          font-weight: normal;
+        }
     </style>
   <?php
 
