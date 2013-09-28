@@ -311,6 +311,11 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     '<h3>' . __( 'Header <span class="amp">&amp;</span> Footer Scripts', 'exmachina-core' ) . '</h3>' .
     '<p>'  . __( 'This provides you with two fields that will output to the head section of your site and just before the closing body tag. These will appear on every page of the site and are a great way to add analytic code, Google Font and other scripts. You cannot use PHP in these fields.', 'exmachina-core' ) . '</p>';
 
+    $comments_help =
+    '<h3>' . __( 'Comments <span class="amp">&amp;</span> Trackbacks', 'exmachina-core' ) . '</h3>' .
+    '<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.', 'exmachina-core' ) . '</p>';
+
     /* Load the help tabs that are supported by the theme. */
     if ( is_array( $supports[0] ) ) {
 
@@ -320,6 +325,14 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
           'id'      => $this->pagehook . '-scripts',
           'title'   => __( 'Header & Footer Scripts', 'exmachina-core' ),
           'content' => $scripts_help,
+        ) );
+
+      /* Load the 'Comments' meta box if it is supported. */
+      if ( in_array( 'comments', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-comments',
+          'title'   => __( 'Comments & Trackbacks', 'exmachina-core' ),
+          'content' => $comments_help,
         ) );
 
     } // end if (is_array($supports[0]))
@@ -507,6 +520,116 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_save()
+
+  /**
+   * Comments & Trackbacks Metabox Display
+   *
+   * Callback to display the 'Comment & Trackbacks' metabox. Creates a metabox
+   * for the theme settings page, which allows customization of the comment
+   * and trackback settings on pages and posts.
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'comments_posts'
+   * 'comments_pages'
+   * 'trackback_posts'
+   * 'trackback_pages'
+   *
+   * To use this feature, the theme must support the 'comments' argument for
+   * the 'exmachina-core-theme-settings' feature.
+   *
+   * @todo write header info text
+   * @todo write description text
+   * @todo cleanup form layout
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_comments() {
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table postbox-bordered">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'Comments and Trackbacks can also be disabled on a per post/page basis.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label class="uk-text-bold"><?php _e( 'Enable Comments:', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <ul class="checkbox-list horizontal">
+
+                        <li><label for="<?php echo $this->get_field_id( 'comments_posts' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'comments_posts' ); ?>" id="<?php echo $this->get_field_id( 'comments_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_posts' ) ); ?> />
+                        <?php _e( 'on posts?', 'exmachina-core' ); ?></label></li>
+
+                        <li><label for="<?php echo $this->get_field_id( 'comments_pages' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'comments_pages' ); ?>" id="<?php echo $this->get_field_id( 'comments_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_pages' ) ); ?> />
+                        <?php _e( 'on pages?', 'exmachina-core' ); ?></label></li>
+
+                      </ul>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label class="uk-text-bold"><?php _e( 'Enable Trackbacks:', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <ul class="checkbox-list horizontal">
+
+                        <li><label for="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_posts' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_posts' ) ); ?> />
+                        <?php _e( 'on posts?', 'exmachina-core' ); ?></label></li>
+
+                        <li><label for="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>"><input type="checkbox" name="<?php echo $this->get_field_name( 'trackbacks_pages' ); ?>" id="<?php echo $this->get_field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_pages' ) ); ?> />
+                        <?php _e( 'on pages?', 'exmachina-core' ); ?></label></li>
+
+                      </ul>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_comments()
 
   /**
    * Header & Footer Scripts Metabox Display

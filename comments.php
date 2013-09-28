@@ -30,9 +30,9 @@ if ( !defined('ABSPATH')) exit;
 if ( post_password_required() || ( !have_comments() && !comments_open() && !pings_open() ) )
   return;
 
-if ( is_singular( 'post' ) && ( !exmachina_get_setting( 'trackbacks_posts' ) && !exmachina_get_setting( 'comments_posts' ) ) )
+if ( is_singular( 'post' ) && ( !exmachina_get_option( 'trackbacks_posts' ) && !exmachina_get_option( 'comments_posts' ) ) )
   return;
-elseif ( is_singular( 'page' ) && ( !exmachina_get_setting( 'trackbacks_pages' ) && !exmachina_get_setting( 'comments_pages' ) ) )
+elseif ( is_singular( 'page' ) && ( !exmachina_get_option( 'trackbacks_pages' ) && !exmachina_get_option( 'comments_pages' ) ) )
   return;
 
 ?>
