@@ -68,3 +68,26 @@ function exmachina_register_menus() {
     register_nav_menu( 'subsidiary', _x( 'Subsidiary', 'nav menu location', 'exmachina-core' ) );
 
 } // end function exmachina_register_menus()
+
+/**
+ * Determine if a child theme supports a particular nav menu.
+ *
+ * @since 1.6.0
+ *
+ * @param string $menu Name of the menu to check support for.
+ *
+ * @return boolean True if menu supported, false otherwise.
+ */
+function exmachina_nav_menu_supported( $menu ) {
+
+  if ( ! current_theme_supports( 'exmachina-core-menus' ) )
+    return false;
+
+  $menus = get_theme_support( 'exmachina-core-menus' );
+
+  if ( array_key_exists( $menu, (array) $menus[0] ) )
+    return true;
+
+  return false;
+
+} // end function exmachina_nav_menu_supported()
