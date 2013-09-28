@@ -5,26 +5,12 @@ Beta theme is a responsive, SEO Friendly, HTML5 WordPress parent theme. It is de
 
 Roadmap
 -------
-#### Version 1.6.0 - Functions Migration
-+ Migrate load-styles.php
-+ Migrate load-scripts.php
-+ Migrate compat.php
-+ Migrate deprecated.php
-+ Migrate feed.php
-+ Migrate formatting.php
-+ Migrate general.php
-+ Migrate image.php
-+ Migrate markup.php
-+ Migrate menu.php
-+ Migrate options.php
-+ Migrate seo.php
-+ Migrate upgrade.php
-+ Migrate widgetize.php
-+ Migrate widgets.php
-+ Migrate post.php shortcodes
-+ Migrate footer.php shortcodes
+#### Version 1.7.0 - SEO Migration
++ Remove core SEO Functions
++ Remove core SEO term meta
++ Remove core SEO user meta
 
-#### Version 1.7.0 - Admin Migration
+#### Version 1.8.0 - Admin Migration
 + Migrate cpt-archive-settings.php
 + Migrate import-export.php
 + Migrate inpost-metaboxes.php
@@ -148,3 +134,22 @@ Completed
 - Compare with original theme-settings.php
 - Bring back capability function
 - Replace instances of get_setting
+
+#### Version 1.6.0 - Functions Migration
+- Migrate load-styles.php
+- Migrate load-scripts.php
+- Migrate compat.php
+- Migrate deprecated.php
+- Migrate feed.php
+- Migrate formatting.php
+- Migrate general.php
+- Migrate image.php
+- Migrate markup.php
+- Migrate menu.php
+- Migrate options.php
+- Migrate seo.php
+- Migrate upgrade.php
+- Migrate widgetize.php
+- Migrate widgets.php
+- Migrate post.php shortcodes
+- Migrate footer.php shortcodes
