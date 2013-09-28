@@ -62,7 +62,7 @@ function beta_theme_setup() {
   add_theme_support( 'exmachina-core-sidebars', array( 'primary' ) );
   add_theme_support( 'exmachina-core-scripts', array( 'comment-reply' ) );
   add_theme_support( 'exmachina-core-styles', array( '25px', 'gallery', 'parent', 'style' ) );
-  add_theme_support( 'exmachina-core-theme-settings', array( 'comments', 'scripts', 'footer', 'about', 'help' ) );
+  add_theme_support( 'exmachina-core-theme-settings', array( 'archives', 'comments', 'scripts', 'footer', 'about', 'help' ) );
   add_theme_support( 'exmachina-core-shortcodes' );
   add_theme_support( 'exmachina-core-template-hierarchy' );
   add_theme_support( 'exmachina-core-deprecated' );

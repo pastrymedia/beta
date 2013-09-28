@@ -316,6 +316,19 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     '<p>'  . __( 'This allows a site wide decision on whether comments and trackbacks (notifications when someone links to your page) are enabled for posts and pages.', 'exmachina-core' ) . '</p>' .
     '<p>'  . __( 'If you enable comments or trackbacks here, it can be disabled on an individual post or page. If you disable here, they cannot be enabled on an individual post or page.', 'exmachina-core' ) . '</p>';
 
+    $archives_help =
+    '<h3>' . __( 'Content Archives', 'exmachina-core' ) . '</h3>' .
+    '<p>'  . __( 'You may change the site wide Content Archives options to control what displays in the site\'s Archives.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'Archives include any pages using the blog template, category pages, tag pages, date archive, author archives, and the latest posts if there is no custom home page.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'The first option allows you to display the full post or the post excerpt. The Display full post setting will display the entire post including HTML code up to the <!--more--> tag if used (this is HTML for the comment tag that is not displayed in the browser).', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'The Display post excerpt setting will display the first 55 words of the post after also stripping any included HTML or the manual/custom excerpt added in the post edit screen.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'It may also be coupled with the second field "Limit content to [___] characters" to limit the content to a specific number of letters or spaces.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'The \'Include post image?\' setting allows you to show a thumbnail of the first attached image or currently set featured image.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'This option should not be used with the post content unless the content is limited to avoid duplicate images.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'The \'Image Size\' list is populated by the available image sizes defined in the theme.', 'exmachina-core' ) . '</p>' .
+    '<p>'  . __( 'Post Navigation format allows you to select one of two navigation methods.', 'exmachina-core' ) . '</p>';
+    '<p>'  . __( 'There is also a checkbox to disable previous & next navigation links on single post', 'exmachina-core' ) . '</p>';
+
     /* Load the help tabs that are supported by the theme. */
     if ( is_array( $supports[0] ) ) {
 
@@ -333,6 +346,14 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
           'id'      => $this->pagehook . '-comments',
           'title'   => __( 'Comments & Trackbacks', 'exmachina-core' ),
           'content' => $comments_help,
+        ) );
+
+      /* Load the 'Archives' meta box if it is supported. */
+      if ( in_array( 'archives', $supports[0] ) )
+        $screen->add_help_tab( array(
+          'id'      => $this->pagehook . '-archives',
+          'title'   => __( 'Content Archives', 'exmachina-core' ),
+          'content' => $archives_help,
         ) );
 
     } // end if (is_array($supports[0]))
@@ -630,6 +651,240 @@ class ExMachina_Admin_Theme_Settings extends ExMachina_Admin_Metaboxes {
     <!-- End Markup -->
     <?php
   } // end function exmachina_metabox_theme_display_comments()
+
+  /**
+   * Content Archives Metabox Display
+   *
+   * Callback to display the 'Content Archives' metabox. Creates a metabox
+   * for the theme settings page, which allows customization of the content
+   * archives.
+   *
+   * Fields:
+   * ~~~~~~~
+   * 'content_archive'
+   * 'content_archive_limit'
+   * 'content_archive_more'
+   * 'content_archive_thumbnail'
+   * 'image_size'
+   * 'posts_nav'
+   * 'single_nav'
+   *
+   * To use this feature, the theme must support the 'archives' argument for
+   * the 'exmachina-core-theme-settings' feature.
+   *
+   * @uses \ExMachina_Admin::get_field_id()    Construct field ID.
+   * @uses \ExMachina_Admin::get_field_name()  Construct field name.
+   * @uses \ExMachina_Admin::get_field_value() Retrieve value of key under $this->settings_field.
+   *
+   * @since 1.5.5
+   */
+  function exmachina_metabox_theme_display_archives() {
+    ?>
+    <!-- Begin Markup -->
+    <div class="postbox-inner-wrap">
+      <table class="uk-table postbox-table postbox-bordered">
+        <!-- Begin Table Header -->
+        <thead>
+          <tr>
+            <td class="postbox-header info" colspan="2">
+              <p><?php _e( 'These options will affect any blog listings page, including archive, author, blog, category, search, and tag pages.', 'exmachina-core' ); ?></p>
+            </td><!-- .postbox-header -->
+          </tr>
+        </thead>
+        <!-- End Table Header -->
+        <!-- Begin Table Body -->
+        <tbody>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'content_archive' ); ?>" class="uk-text-bold"><?php _e( 'Select one of the following:', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <select name="<?php echo $this->get_field_name( 'content_archive' ); ?>" id="<?php echo $this->get_field_id( 'content_archive' ); ?>">
+                      <?php
+                      $archive_display = apply_filters(
+                        'exmachina_archive_display_options',
+                        array(
+                          'full'     => __( 'Display full post', 'exmachina-core' ),
+                          'excerpts' => __( 'Display post excerpts', 'exmachina-core' ),
+                        )
+                      );
+                      foreach ( (array) $archive_display as $value => $name )
+                        echo '<option value="' . esc_attr( $value ) . '"' . selected( $this->get_field_value( 'content_archive' ), esc_attr( $value ), false ) . '>' . esc_html( $name ) . '</option>' . "\n";
+                      ?>
+                      </select>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'content_archive_limit' ); ?>" class="uk-text-bold"><?php _e( 'Content limit:', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <label for="<?php echo $this->get_field_id( 'content_archive_limit' ); ?>"><?php _e( 'Limit content to', 'exmachina-core' ); ?>
+                      <input type="text" name="<?php echo $this->get_field_name( 'content_archive_limit' ); ?>" id="<?php echo $this->get_field_id( 'content_archive_limit' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'content_archive_limit' ) ); ?>" size="3" />
+                      <?php _e( 'characters', 'exmachina-core' ); ?></label>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                  <p class="uk-text-muted"><?php _e( 'Select "Display post excerpts" will limit the text and strip all formatting from the text displayed. Set 0 characters will display the first 55 words (default).', 'exmachina-core' ); ?></p>
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label class="uk-text-bold"><?php _e( 'More Text (if applicable):', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <input type="text" name="<?php echo $this->get_field_name( 'content_archive_more' ); ?>" id="<?php echo $this->get_field_id( 'content_archive_more' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'content_archive_more' ) ); ?>" size="25" />
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label class="uk-text-bold"><?php _e( 'Include the Featured Image?', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <label for="<?php echo $this->get_field_id( 'content_archive_thumbnail' ); ?>">
+                      <input type="checkbox" name="<?php echo $this->get_field_name( 'content_archive_thumbnail' ); ?>" id="<?php echo $this->get_field_id( 'content_archive_thumbnail' ); ?>" value="1" <?php checked( $this->get_field_value( 'content_archive_thumbnail' ) ); ?> />
+                      <?php _e( 'Include the Featured Image?', 'exmachina-core' ); ?></label>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'image_size' ); ?>" class="uk-text-bold"><?php _e( 'Image Size:', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <select name="<?php echo $this->get_field_name( 'image_size' ); ?>" id="<?php echo $this->get_field_id( 'image_size' ); ?>">
+                      <?php
+                      $sizes = exmachina_get_image_sizes();
+                      foreach ( (array) $sizes as $name => $size )
+                        echo '<option value="' . esc_attr( $name ) . '"' . selected( $this->get_field_value( 'image_size' ), $name, FALSE ) . '>' . esc_html( $name ) . ' (' . absint( $size['width'] ) . ' &#x000D7; ' . absint( $size['height'] ) . ')</option>' . "\n";
+                      ?>
+                      </select>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'posts_nav' ); ?>" class="uk-text-bold"><?php _e( 'Select Post Navigation Format:', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <select name="<?php echo $this->get_field_name( 'posts_nav' ); ?>" id="<?php echo $this->get_field_id( 'posts_nav' ); ?>">
+                        <option value="prev-next"<?php selected( 'prev-next', $this->get_field_value( 'posts_nav' ) ); ?>><?php _e( 'Previous / Next', 'exmachina-core' ); ?></option>
+                        <option value="numeric"<?php selected( 'numeric', $this->get_field_value( 'posts_nav' ) ); ?>><?php _e( 'Numeric', 'exmachina-core' ); ?></option>
+                      </select>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+          <tr class="uk-table-middle">
+            <td class="uk-width-3-10 postbox-label">
+              <label for="<?php echo $this->get_field_id( 'single_nav' ); ?>" class="uk-text-bold"><?php _e( 'Disable single post navigation link?', 'exmachina-core' ); ?></label>
+            </td>
+
+            <td class="uk-width-7-10 postbox-fieldset">
+              <div class="fieldset-wrap uk-grid">
+                <!-- Begin Fieldset -->
+                <fieldset class="uk-form uk-width-1-1">
+                  <div class="uk-form-row">
+                    <div class="uk-form-controls">
+                      <!-- Begin Form Inputs -->
+                      <label for="<?php echo $this->get_field_id( 'single_nav' ); ?>">
+                      <input type="checkbox" name="<?php echo $this->get_field_name( 'single_nav' ); ?>" id="<?php echo $this->get_field_id( 'single_nav' ); ?>" value="1" <?php checked( $this->get_field_value( 'single_nav' ) ); ?> />
+                      <?php _e( 'Disable single post navigation link?', 'exmachina-core' ); ?></label>
+                      <!-- End Form Inputs -->
+                    </div><!-- .uk-form-controls -->
+                  </div><!-- .uk-form-row -->
+                </fieldset>
+                <!-- End Fieldset -->
+              </div><!-- .fieldset-wrap -->
+            </td>
+          </tr>
+
+
+        </tbody>
+        <!-- End Table Body -->
+      </table>
+    </div><!-- .postbox-inner-wrap -->
+    <!-- End Markup -->
+    <?php
+  } // end function exmachina_metabox_theme_display_archives()
 
   /**
    * Header & Footer Scripts Metabox Display
